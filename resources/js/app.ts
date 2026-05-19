@@ -1,8 +1,8 @@
 import { createInertiaApp } from "@inertiajs/vue3";
-import { ZiggyVue } from 'ziggy-js';
+import { ZiggyVue } from "ziggy-js";
 
 createInertiaApp({
     withApp(app) {
-        app.use(ZiggyVue)
+        app.use(ZiggyVue);
     },
 });
