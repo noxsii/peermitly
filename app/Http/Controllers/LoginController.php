@@ -21,6 +21,7 @@ final class LoginController
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
+            'remember' => ['nullable'],
         ]);
 
         // TODO: LoginAction (Auth) — Auth::attempt + Session-Handling. Eigene Spec.
