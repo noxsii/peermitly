@@ -11,6 +11,6 @@ final class LoginController
 {
     public function index(): Response
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('auth/Login');
     }
 }
