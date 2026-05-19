@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4.0",
+        "inertiajs/inertia-laravel": "^3.1",
         "laravel/framework": "^12.59.0",
         "nunomaduro/essentials": "^1.2.0"
     },
@@ -42,14 +43,6 @@
         }
     },
     "scripts": {
-        "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "bun install",
-            "bun run build"
-        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "bunx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"bun run dev\" --names=server,queue,logs,vite --kill-others"
@@ -89,11 +82,14 @@
         ],
         "test:unit": "XDEBUG_MODE=\"coverage\" pest --parallel --coverage --exactly=100.0",
         "test:types": "phpstan",
+        "lint:check": [
+            "pint --parallel --test",
+            "rector --dry-run"
+        ],
         "test": [
-            "@test:type-coverage",
-            "@test:unit",
-            "@test:lint",
-            "@test:types"
+            "@php artisan config:clear --ansi",
+            "@lint:check",
+            "@php artisan test --parallel"
         ]
     },
     "extra": {
