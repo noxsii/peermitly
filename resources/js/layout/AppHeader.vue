@@ -59,7 +59,6 @@ const appearanceOptions: Array<{
         </div>
 
         <div class="flex items-center justify-end gap-2">
-
             <DropdownMenu>
                 <DropdownMenuTrigger as-child>
                     <Button
