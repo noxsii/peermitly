@@ -5,8 +5,10 @@ import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 const showPassword = ref(false);
+const remember = ref(false);
 </script>
 
 <template>
@@ -74,6 +76,18 @@ const showPassword = ref(false);
                     <p v-if="errors.password" class="text-destructive text-sm">
                         {{ errors.password }}
                     </p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <Switch
+                        id="remember"
+                        v-model:checked="remember"
+                        name="remember"
+                        value="1"
+                    />
+                    <Label for="remember" class="cursor-pointer">
+                        Remember me
+                    </Label>
                 </div>
 
                 <Button type="submit" class="w-full" :disabled="processing">
