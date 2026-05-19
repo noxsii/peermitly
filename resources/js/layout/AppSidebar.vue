@@ -14,10 +14,6 @@ import type { NavItem } from "@/types";
 
 const primary: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Operations", href: "/dashboard", icon: Layers },
-    { label: "Map", href: "/dashboard", icon: Map },
-    { label: "Notifications", href: "/dashboard", icon: Bell },
-    { label: "Saved", href: "/dashboard", icon: Bookmark },
 ];
 
 const secondary: NavItem[] = [

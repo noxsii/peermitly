@@ -59,7 +59,6 @@ const appearanceOptions: Array<{
         </div>
 
         <div class="flex items-center justify-end gap-2">
-            <Button size="sm" class="rounded-full px-4"> Submit work </Button>
 
             <DropdownMenu>
                 <DropdownMenuTrigger as-child>
