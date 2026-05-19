@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Form, Head } from "@inertiajs/vue3";
-import { Loader2 } from "@lucide/vue";
+import { Eye, EyeOff, Loader2 } from "@lucide/vue";
+import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -16,7 +19,7 @@ import { Label } from "@/components/ui/label";
             class="bg-card text-card-foreground w-full max-w-md rounded-2xl border p-8 shadow-sm"
         >
             <div class="mb-6 space-y-1">
-                <h1 class="text-2xl font-semibold tracking-tight">Sign in</h1>
+                <h1 class="text-2xl font-semibold tracking-tight">Sign in 👋</h1>
                 <p class="text-muted-foreground text-sm">
                     Enter your email and password to continue.
                 </p>
@@ -45,14 +48,29 @@ import { Label } from "@/components/ui/label";
 
                 <div class="space-y-2">
                     <Label for="password">Password</Label>
-                    <Input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autocomplete="current-password"
-                        required
-                        :aria-invalid="!!errors.password"
-                    />
+                    <div class="relative">
+                        <Input
+                            id="password"
+                            name="password"
+                            :type="showPassword ? 'text' : 'password'"
+                            autocomplete="current-password"
+                            required
+                            class="pr-10"
+                            :aria-invalid="!!errors.password"
+                        />
+                        <button
+                            type="button"
+                            :aria-label="
+                                showPassword ? 'Hide password' : 'Show password'
+                            "
+                            :aria-pressed="showPassword"
+                            class="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 flex items-center justify-center rounded-md px-3 outline-none focus-visible:ring-2"
+                            @click="showPassword = !showPassword"
+                        >
+                            <EyeOff v-if="showPassword" class="size-4" />
+                            <Eye v-else class="size-4" />
+                        </button>
+                    </div>
                     <p v-if="errors.password" class="text-destructive text-sm">
                         {{ errors.password }}
                     </p>
