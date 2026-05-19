@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useAppearance } from "@/composables/useAppearance";
+import Logo from "@/layout/Logo.vue";
 import type { Appearance, PageProps } from "@/types";
 
 const page = usePage<PageProps>();
@@ -42,11 +43,7 @@ const appearanceOptions: Array<{
         class="bg-background grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-4"
     >
         <div class="flex items-center">
-            <div
-                class="bg-primary text-primary-foreground flex size-9 items-center justify-center rounded-xl font-semibold"
-            >
-                P
-            </div>
+            <Logo />
         </div>
 
         <div class="relative w-full max-w-xl justify-self-center">
