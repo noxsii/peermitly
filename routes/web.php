@@ -9,3 +9,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', static fn (): View => view('app'));
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
