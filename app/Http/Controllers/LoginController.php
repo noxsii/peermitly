@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\AttemptLoginAction;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,15 +17,15 @@ final class LoginController
         return Inertia::render('auth/Login');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(LoginRequest $request, AttemptLoginAction $attempt): RedirectResponse
     {
-        $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-            'remember' => ['nullable'],
-        ]);
+        $attempt->handle(
+            $request,
+            $request->string('email')->toString(),
+            $request->string('password')->toString(),
+            $request->boolean('remember'),
+        );
 
-        // TODO: LoginAction (Auth) — Auth::attempt + Session-Handling. Eigene Spec.
-        return back()->withErrors(['email' => 'Sign in is not implemented yet.']);
+        return redirect()->intended(route('dashboard'));
     }
 }
