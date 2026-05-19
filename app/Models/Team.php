@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\CarbonImmutable;
 use Database\Factories\TeamFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -33,15 +34,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @mixin Model
  */
+#[Fillable('name', 'owner_id')]
 final class Team extends Model
 {
     /** @use HasFactory<TeamFactory> */
     use HasFactory, HasUuids;
-
-    /**
-     * @var array<int, string>
-     */
-    protected $guarded = [];
 
     /**
      * Columns that should receive auto-generated UUIDs (not the primary key).

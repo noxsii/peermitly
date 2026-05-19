@@ -24,7 +24,7 @@ final class TeamFactory extends Factory
         ];
     }
 
-    public function for(User $owner, $relationship = null): self
+    public function ownedBy(User $owner): self
     {
         return $this->state(fn (array $attributes): array => [
             'owner_id' => $owner->id,

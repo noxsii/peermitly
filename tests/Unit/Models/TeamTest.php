@@ -16,7 +16,7 @@ test('team has bigint id and separate uuid column', function (): void {
 
 test('team belongs to owner user', function (): void {
     $owner = User::factory()->create();
-    $team = Team::factory()->for($owner)->create();
+    $team = Team::factory()->ownedBy($owner)->create();
 
     expect($team->owner->is($owner))->toBeTrue();
     expect($team->owner_id)->toBe($owner->id);
@@ -47,7 +47,7 @@ test('user current team relation resolves', function (): void {
 
 test('user owned teams relation lists teams where user is owner', function (): void {
     $owner = User::factory()->create();
-    Team::factory()->for($owner)->count(2)->create();
+    Team::factory()->ownedBy($owner)->count(2)->create();
 
     expect($owner->ownedTeams)->toHaveCount(2);
 });
@@ -60,7 +60,7 @@ test('team route key is uuid', function (): void {
 
 test('deleting owner cascades and deletes their teams', function (): void {
     $owner = User::factory()->create();
-    $team = Team::factory()->for($owner)->create();
+    $team = Team::factory()->ownedBy($owner)->create();
     $teamId = $team->id;
 
     $owner->delete();

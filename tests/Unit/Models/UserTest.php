@@ -16,5 +16,6 @@ test('to array', function (): void {
             'role',
             'created_at',
             'updated_at',
+            'current_team_id',
         ]);
 });
