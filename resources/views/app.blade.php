@@ -2,10 +2,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite('resources/js/app.ts')
+    @vite(['resources/css/app.css', 'resources/js/app.ts'])
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=abel:400" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=akshar:300,400,500,700" rel="stylesheet" />
 
     <x-inertia::head />
 </head>

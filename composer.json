@@ -12,6 +12,7 @@
         "php": "^8.4.0",
         "inertiajs/inertia-laravel": "^3.1",
         "laravel/framework": "^12.59.0",
+        "laravel/tinker": "^3.0",
         "nunomaduro/essentials": "^1.2.0"
     },
     "require-dev": {

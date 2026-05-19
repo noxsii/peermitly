@@ -14,4 +14,9 @@ export default defineConfig({
         vue(),
         inertia(),
     ],
+    server: {
+        watch: {
+            ignored: ['**/.junie/**', '**/.superpowers/**'],
+        },
+    },
 });
