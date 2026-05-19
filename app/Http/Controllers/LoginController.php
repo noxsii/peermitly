@@ -24,6 +24,6 @@ final class LoginController
         ]);
 
         // TODO: LoginAction (Auth) — Auth::attempt + Session-Handling. Eigene Spec.
-        return back()->withErrors(['email' => 'Anmeldung noch nicht implementiert.']);
+        return back()->withErrors(['email' => 'Sign in is not implemented yet.']);
     }
 }

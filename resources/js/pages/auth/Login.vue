@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { Form, Head } from "@inertiajs/vue3";
+import { Loader2 } from "@lucide/vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 </script>
 
 <template>
-    <Head title="Login" />
+    <Head title="Sign in" />
 
     <main
         class="bg-muted/40 flex min-h-screen items-center justify-center px-4"
@@ -15,9 +16,9 @@ import { Label } from "@/components/ui/label";
             class="bg-card text-card-foreground w-full max-w-md rounded-2xl border p-8 shadow-sm"
         >
             <div class="mb-6 space-y-1">
-                <h1 class="text-2xl font-semibold tracking-tight">Anmelden</h1>
+                <h1 class="text-2xl font-semibold tracking-tight">Sign in</h1>
                 <p class="text-muted-foreground text-sm">
-                    E-Mail und Passwort eingeben, um fortzufahren.
+                    Enter your email and password to continue.
                 </p>
             </div>
 
@@ -28,7 +29,7 @@ import { Label } from "@/components/ui/label";
                 #default="{ errors, processing }"
             >
                 <div class="space-y-2">
-                    <Label for="email">E-Mail</Label>
+                    <Label for="email">Email</Label>
                     <Input
                         id="email"
                         name="email"
@@ -43,7 +44,7 @@ import { Label } from "@/components/ui/label";
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="password">Passwort</Label>
+                    <Label for="password">Password</Label>
                     <Input
                         id="password"
                         name="password"
@@ -58,7 +59,8 @@ import { Label } from "@/components/ui/label";
                 </div>
 
                 <Button type="submit" class="w-full" :disabled="processing">
-                    {{ processing ? "Anmelden..." : "Anmelden" }}
+                    <Loader2 v-if="processing" class="size-4 animate-spin" />
+                    Sign in
                 </Button>
             </Form>
         </div>
