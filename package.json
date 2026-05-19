@@ -4,14 +4,17 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "lint": "prettier --write resources/",
-        "test:lint": "prettier --check resources/"
+        "lint": "oxlint --fix resources/ && prettier --write resources/",
+        "lint:js": "oxlint resources/",
+        "lint:js:fix": "oxlint --fix resources/",
+        "test:lint": "oxlint resources/ && prettier --check resources/"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.3.0",
         "concurrently": "^9.2.1",
         "laravel-vite-plugin": "^3.1.0",
         "npm-check-updates": "^22.2.0",
+        "oxlint": "^1.66.0",
         "playwright": "^1.60.0",
         "prettier": "^3.8.3",
         "prettier-plugin-organize-imports": "^4.3.0",
