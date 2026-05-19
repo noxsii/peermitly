@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Carbon\CarbonImmutable;
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,22 +14,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $uuid
  * @property string $name
  * @property int $owner_id
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, User> $currentUsers
+ * @property-read int|null $current_users_count
  * @property-read User $owner
  * @property-read Collection<int, User> $users
- * @property-read Collection<int, User> $currentUsers
+ * @property-read int|null $users_count
  *
  * @method static TeamFactory factory($count = null, $state = [])
  * @method static Builder<static>|Team newModelQuery()
  * @method static Builder<static>|Team newQuery()
  * @method static Builder<static>|Team query()
+ * @method static Builder<static>|Team whereCreatedAt($value)
+ * @method static Builder<static>|Team whereId($value)
+ * @method static Builder<static>|Team whereName($value)
+ * @method static Builder<static>|Team whereOwnerId($value)
+ * @method static Builder<static>|Team whereUpdatedAt($value)
+ * @method static Builder<static>|Team whereUuid($value)
  *
  * @mixin Model
  */

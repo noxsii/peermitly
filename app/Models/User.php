@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\UserRole;
-use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -20,23 +19,26 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $email
- * @property CarbonImmutable|null $email_verified_at
+ * @property Carbon|null $email_verified_at
  * @property string $password
  * @property UserRole $role
- * @property int|null $current_team_id
  * @property string|null $remember_token
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property int|null $current_team_id
+ * @property-read Team|null $currentTeam
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Team|null $currentTeam
- * @property-read Collection<int, Team> $teams
  * @property-read Collection<int, Team> $ownedTeams
+ * @property-read int|null $owned_teams_count
+ * @property-read Collection<int, Team> $teams
+ * @property-read int|null $teams_count
  *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User newModelQuery()
