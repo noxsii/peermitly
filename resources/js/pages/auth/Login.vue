@@ -21,7 +21,9 @@ const remember = ref(false);
             class="bg-card text-card-foreground w-full max-w-md rounded-2xl border p-8 shadow-sm"
         >
             <div class="mb-6 space-y-1">
-                <h1 class="text-2xl font-semibold tracking-tight">Sign in 👋</h1>
+                <h1 class="text-2xl font-semibold tracking-tight">
+                    Sign in 👋
+                </h1>
                 <p class="text-muted-foreground text-sm">
                     Enter your email and password to continue.
                 </p>

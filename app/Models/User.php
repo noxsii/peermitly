@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -21,6 +22,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $email
  * @property CarbonImmutable|null $email_verified_at
  * @property string $password
+ * @property UserRole $role
  * @property string|null $remember_token
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
@@ -38,6 +40,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static Builder<static>|User whereName($value)
  * @method static Builder<static>|User wherePassword($value)
  * @method static Builder<static>|User whereRememberToken($value)
+ * @method static Builder<static>|User whereRole($value)
  * @method static Builder<static>|User whereUpdatedAt($value)
  *
  * @mixin Model
@@ -66,6 +69,7 @@ final class User extends Authenticatable implements MustVerifyEmail
             'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
             'remember_token' => 'string',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

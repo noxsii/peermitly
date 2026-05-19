@@ -13,8 +13,7 @@
         "inertiajs/inertia-laravel": "^3.1",
         "laravel/framework": "^12.59.0",
         "laravel/tinker": "^3.0.2",
-        "nunomaduro/essentials": "^1.2.0",
-        "tightenco/ziggy": "^2.6"
+        "tightenco/ziggy": "^2.6.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7",
