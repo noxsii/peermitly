@@ -1,9 +1,5 @@
 export type { Appearance } from "./appearance";
-export type {
-    ApiToken,
-    ApiTokenAbility,
-    IssuedApiToken,
-} from "./api-token";
+export type { ApiToken, ApiTokenAbility, IssuedApiToken } from "./api-token";
 export type { AuthUser, User, UserRole } from "./user";
 export type {
     CustomerOption,

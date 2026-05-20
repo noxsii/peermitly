@@ -27,13 +27,11 @@ final class LicenseKeyFactory extends Factory
     public function definition(): array
     {
         $key = 'LIC-'.mb_strtoupper(Str::random(4)).'-'.mb_strtoupper(Str::random(4)).'-'.mb_strtoupper(Str::random(4));
-        $normalized = (new NormalizeLicenseKeyAction())->handle($key, false);
+        $normalized = new NormalizeLicenseKeyAction()->handle($key, false);
 
         return [
             'team_id' => Team::factory(),
-            'license_key_type_id' => LicenseKeyType::factory()->state(function (array $attributes, $licenseKey) {
-                return ['team_id' => $licenseKey?->team_id ?? Team::factory()];
-            }),
+            'license_key_type_id' => LicenseKeyType::factory()->state(fn (array $attributes, $licenseKey): array => ['team_id' => $licenseKey?->team_id ?? Team::factory()]),
             'product_id' => Product::factory(),
             'customer_id' => null,
             'created_by' => User::factory(),

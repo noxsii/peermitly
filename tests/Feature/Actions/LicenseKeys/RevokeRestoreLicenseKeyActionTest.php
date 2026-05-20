@@ -9,7 +9,7 @@ use App\Models\LicenseKey;
 test('revoke sets status, reason, and timestamp', function (): void {
     $key = LicenseKey::factory()->active()->create();
 
-    $revoked = (new RevokeLicenseKeyAction())->handle($key, 'Customer cancelled');
+    $revoked = new RevokeLicenseKeyAction()->handle($key, 'Customer cancelled');
 
     expect($revoked->status->value)->toBe('revoked');
     expect($revoked->revoked_at)->not->toBeNull();
@@ -19,7 +19,7 @@ test('revoke sets status, reason, and timestamp', function (): void {
 test('restore brings revoked active key back to active', function (): void {
     $key = LicenseKey::factory()->revoked()->create();
 
-    $restored = (new RestoreLicenseKeyAction())->handle($key);
+    $restored = new RestoreLicenseKeyAction()->handle($key);
 
     expect($restored->status->value)->toBe('active');
     expect($restored->revoked_at)->toBeNull();
@@ -35,7 +35,7 @@ test('restore picks expired status when expires_at is past', function (): void {
         'revoked_reason' => 'foo',
     ]);
 
-    $restored = (new RestoreLicenseKeyAction())->handle($key);
+    $restored = new RestoreLicenseKeyAction()->handle($key);
 
     expect($restored->status->value)->toBe('expired');
 });
@@ -49,7 +49,7 @@ test('restore picks pending status for never-activated key', function (): void {
         'revoked_reason' => 'foo',
     ]);
 
-    $restored = (new RestoreLicenseKeyAction())->handle($key);
+    $restored = new RestoreLicenseKeyAction()->handle($key);
 
     expect($restored->status->value)->toBe('pending');
 });

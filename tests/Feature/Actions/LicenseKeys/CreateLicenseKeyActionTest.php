@@ -15,7 +15,7 @@ test('creates pending key with team scope from type', function (): void {
     $type = LicenseKeyType::factory()->forTeam($team)->create();
     $product = Product::factory()->forTeam($team)->create();
 
-    $licenseKey = app(CreateLicenseKeyAction::class)->handle(
+    $licenseKey = resolve(CreateLicenseKeyAction::class)->handle(
         $type,
         $product,
         null,
@@ -41,7 +41,7 @@ test('lifetime key has null validity_amount', function (): void {
     $type = LicenseKeyType::factory()->forTeam($team)->create();
     $product = Product::factory()->forTeam($team)->create();
 
-    $licenseKey = app(CreateLicenseKeyAction::class)->handle(
+    $licenseKey = resolve(CreateLicenseKeyAction::class)->handle(
         $type,
         $product,
         null,

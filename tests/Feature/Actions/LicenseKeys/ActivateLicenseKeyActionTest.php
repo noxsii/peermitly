@@ -13,7 +13,7 @@ test('activate sets status to active and computes expires_at', function (): void
         'validity_unit' => 'months',
     ]);
 
-    $activated = (new ActivateLicenseKeyAction())->handle($key);
+    $activated = new ActivateLicenseKeyAction()->handle($key);
 
     expect($activated->status->value)->toBe('active');
     expect($activated->activated_at)->not->toBeNull();
@@ -27,7 +27,7 @@ test('lifetime key sets expires_at to null on activate', function (): void {
         'expires_at' => null,
     ]);
 
-    $activated = (new ActivateLicenseKeyAction())->handle($key);
+    $activated = new ActivateLicenseKeyAction()->handle($key);
 
     expect($activated->status->value)->toBe('active');
     expect($activated->expires_at)->toBeNull();
@@ -57,7 +57,7 @@ test('activate with hwid creates activation row', function (): void {
         'requires_hwid_check' => true,
     ]);
 
-    (new ActivateLicenseKeyAction())->handle($key, 'machine-abc-123');
+    new ActivateLicenseKeyAction()->handle($key, 'machine-abc-123');
 
     expect(DB::table('license_key_activations')
         ->where('license_key_id', $key->id)

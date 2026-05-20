@@ -26,7 +26,7 @@ final class SettingsController
                     ->get(),
             )),
             'tokenAbilities' => array_map(
-                static fn (string $ability) => ['value' => $ability, 'label' => $ability],
+                static fn (string $ability): array => ['value' => $ability, 'label' => $ability],
                 TokenAbility::all(),
             ),
         ]);
