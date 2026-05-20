@@ -15,6 +15,7 @@ final class UpdateLicenseKeyRequest extends FormRequest
     {
         return [
             'customer_uuid' => ['nullable', 'uuid', 'exists:customers,uuid'],
+            'customer_email' => ['nullable', 'email', 'max:200'],
             'max_activations' => ['nullable', 'integer', 'min:1'],
             'requires_hwid_check' => ['required', 'boolean'],
             'metadata' => ['nullable', 'array'],

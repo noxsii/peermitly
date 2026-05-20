@@ -19,6 +19,7 @@ final class StoreLicenseKeyRequest extends FormRequest
             'license_key_type_uuid' => ['required', 'uuid', 'exists:license_key_types,uuid'],
             'product_uuid' => ['required', 'uuid', 'exists:products,uuid'],
             'customer_uuid' => ['nullable', 'uuid', 'exists:customers,uuid'],
+            'customer_email' => ['nullable', 'email', 'max:200'],
             'validity_unit' => ['required', Rule::enum(LicenseValidityUnit::class)],
             'validity_amount' => ['required_unless:validity_unit,lifetime', 'nullable', 'integer', 'min:1'],
             'max_activations' => ['nullable', 'integer', 'min:1'],
