@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Deferred, Link } from "@inertiajs/vue3";
-import { Download, KeyRound, Plus, Settings2 } from "@lucide/vue";
+import { Download, KeyRound, Package, Plus, Settings2 } from "@lucide/vue";
 import { ref } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
 import BulkCreateLicenseKeyDialog from "@/components/dialogs/BulkCreateLicenseKeyDialog.vue";
@@ -31,6 +31,12 @@ const bulkOpen = ref(false);
 <template>
     <PageLayout title="License Keys">
         <template #actions>
+            <Link href="/license-keys/products">
+                <Button variant="ghost" size="sm">
+                    <Package class="size-4" />
+                    Manage products
+                </Button>
+            </Link>
             <Link href="/license-keys/types">
                 <Button variant="ghost" size="sm">
                     <Settings2 class="size-4" />

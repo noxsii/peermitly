@@ -108,22 +108,11 @@ final class LicenseKeyController
     public function show(LicenseKey $licenseKey): Response
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
+        $teamId = (int) auth()->user()?->current_team_id;
 
         return Inertia::render('license-keys/Show', [
             'licenseKey' => Inertia::defer(static fn () => LicenseKeyResource::make(
                 $licenseKey->load(['type', 'product', 'customer', 'activations']),
-            )),
-        ]);
-    }
-
-    public function edit(LicenseKey $licenseKey): Response
-    {
-        abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
-        $teamId = (int) auth()->user()?->current_team_id;
-
-        return Inertia::render('license-keys/Edit', [
-            'licenseKey' => Inertia::defer(static fn () => LicenseKeyResource::make(
-                $licenseKey->load(['type', 'product', 'customer']),
             )),
             'customers' => Inertia::defer(static fn () => CustomerResource::collection(
                 Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
@@ -147,6 +136,6 @@ final class LicenseKeyController
             'metadata' => $request->array('metadata') ?: null,
         ])->save();
 
-        return to_route('license-keys.show', $licenseKey->uuid);
+        return back();
     }
 }

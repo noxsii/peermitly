@@ -2,6 +2,7 @@
 import { Deferred, Form, Link } from "@inertiajs/vue3";
 import { ArrowLeft, Copy, Pencil } from "@lucide/vue";
 import { ref } from "vue";
+import EditLicenseKeyDialog from "@/components/dialogs/EditLicenseKeyDialog.vue";
 import LicenseKeyStatusBadge from "@/components/license-keys/LicenseKeyStatusBadge.vue";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
@@ -17,12 +18,14 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import PageLayout from "@/layout/PageLayout.vue";
-import type { LicenseKey, LicenseValidityUnit } from "@/types";
+import type { CustomerOption, LicenseKey, LicenseValidityUnit } from "@/types";
 
 const extendUnit = ref<LicenseValidityUnit>("months");
+const editOpen = ref(false);
 
 const props = defineProps<{
     licenseKey?: { data: LicenseKey } | null;
+    customers?: { data: CustomerOption[] } | null;
 }>();
 
 const copied = ref(false);
@@ -53,7 +56,7 @@ const formatDate = (value: string | null): string => {
             </Link>
         </template>
 
-        <div class="grid max-w-5xl grid-cols-1 gap-4 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <Card title="Key" class="lg:col-span-2">
                 <Deferred data="licenseKey">
                     <template #fallback>
@@ -245,18 +248,16 @@ const formatDate = (value: string | null): string => {
 
                 <Card title="Actions">
                     <div class="flex flex-col gap-2">
-                        <Link
+                        <Button
                             v-if="licenseKey?.data"
-                            :href="`/license-keys/${licenseKey.data.uuid}/edit`"
+                            variant="ghost"
+                            class="w-full justify-start"
+                            type="button"
+                            @click="editOpen = true"
                         >
-                            <Button
-                                variant="ghost"
-                                class="w-full justify-start"
-                            >
-                                <Pencil class="size-4" />
-                                Edit settings
-                            </Button>
-                        </Link>
+                            <Pencil class="size-4" />
+                            Edit settings
+                        </Button>
                         <Form
                             v-if="
                                 licenseKey?.data &&
@@ -281,5 +282,12 @@ const formatDate = (value: string | null): string => {
                 </Card>
             </div>
         </div>
+
+        <EditLicenseKeyDialog
+            v-if="licenseKey?.data"
+            v-model:open="editOpen"
+            :license-key="licenseKey.data"
+            :customers="customers?.data ?? []"
+        />
     </PageLayout>
 </template>

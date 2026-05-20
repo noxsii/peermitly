@@ -9,6 +9,7 @@ use App\Http\Controllers\LicenseKeys\LicenseKeyRestoreController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyRevokeController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyTypeController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyTypePreviewController;
+use App\Http\Controllers\LicenseKeys\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function (): void {
@@ -19,6 +20,11 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
 
     Route::get('/export', [LicenseKeyExportController::class, 'export'])->name('export');
 
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::patch('/products/{product:uuid}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product:uuid}', [ProductController::class, 'destroy'])->name('products.destroy');
+
     Route::get('/types', [LicenseKeyTypeController::class, 'index'])->name('types.index');
     Route::post('/types', [LicenseKeyTypeController::class, 'store'])->name('types.store');
     Route::post('/types/preview', [LicenseKeyTypePreviewController::class, 'preview'])->name('types.preview');
@@ -26,7 +32,6 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::delete('/types/{licenseKeyType:uuid}', [LicenseKeyTypeController::class, 'destroy'])->name('types.destroy');
 
     Route::get('/{licenseKey:uuid}', [LicenseKeyController::class, 'show'])->name('show');
-    Route::get('/{licenseKey:uuid}/edit', [LicenseKeyController::class, 'edit'])->name('edit');
     Route::patch('/{licenseKey:uuid}', [LicenseKeyController::class, 'update'])->name('update');
 
     Route::post('/{licenseKey:uuid}/revoke', [LicenseKeyRevokeController::class, 'revoke'])->name('revoke');
