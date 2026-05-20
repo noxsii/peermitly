@@ -379,6 +379,54 @@ const submitRevoke = () => {
                     </div>
                 </Card>
             </div>
+
+            <Card
+                v-if="
+                    licenseKey?.data?.requires_hwid_check &&
+                    licenseKey.data.activations?.length
+                "
+                title="Hardware IDs"
+                class="lg:col-span-2"
+            >
+                <ul class="divide-y">
+                    <li
+                        v-for="activation in licenseKey.data.activations"
+                        :key="activation.uuid"
+                        class="flex items-center justify-between gap-3 py-2 text-sm"
+                    >
+                        <div class="min-w-0 space-y-0.5">
+                            <code class="block truncate font-mono text-xs">
+                                {{ activation.machine_id }}
+                            </code>
+                            <p class="text-muted-foreground text-xs">
+                                <span v-if="activation.hostname">
+                                    {{ activation.hostname }}
+                                </span>
+                                <span v-if="activation.ip_address">
+                                    · {{ activation.ip_address }}
+                                </span>
+                            </p>
+                        </div>
+                        <div
+                            class="text-muted-foreground shrink-0 text-right text-xs"
+                        >
+                            <p>First: {{ formatDate(activation.activated_at) }}</p>
+                            <p>Last: {{ formatDate(activation.last_seen_at) }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </Card>
+
+            <Card
+                v-else-if="licenseKey?.data?.requires_hwid_check"
+                title="Hardware IDs"
+                class="lg:col-span-2"
+            >
+                <p class="text-muted-foreground text-sm">
+                    No hardware IDs registered yet. The first successful API
+                    check will register one.
+                </p>
+            </Card>
         </div>
 
         <EditLicenseKeyDialog

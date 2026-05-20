@@ -4,6 +4,7 @@ export type { AuthUser, User, UserRole } from "./user";
 export type {
     CustomerOption,
     LicenseKey,
+    LicenseKeyActivation,
     LicenseKeyGeneratorType,
     LicenseKeySearchResult,
     LicenseKeyStatus,

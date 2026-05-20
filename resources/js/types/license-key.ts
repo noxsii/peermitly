@@ -14,6 +14,15 @@ export type LicenseValidityUnit =
     | "years"
     | "lifetime";
 
+export interface LicenseKeyActivation {
+    uuid: string;
+    machine_id: string;
+    hostname: string | null;
+    ip_address: string | null;
+    activated_at: string | null;
+    last_seen_at: string | null;
+}
+
 export interface LicenseKey {
     uuid: string;
     key: string;
@@ -43,6 +52,7 @@ export interface LicenseKey {
     revoked_at: string | null;
     revoked_reason: string | null;
     created_at: string | null;
+    activations?: LicenseKeyActivation[];
 }
 
 export interface LicenseKeyType {
@@ -62,6 +72,8 @@ export interface ProductOption {
     name: string;
     slug: string;
     is_active: boolean;
+    description?: string | null;
+    license_keys_count?: number;
 }
 
 export interface CustomerOption {
@@ -69,4 +81,13 @@ export interface CustomerOption {
     email: string;
     name: string | null;
     company: string | null;
+}
+
+export interface LicenseKeySearchResult {
+    uuid: string;
+    key: string;
+    status: LicenseKeyStatus;
+    product: string | null;
+    customer: string | null;
+    expires_at: string | null;
 }

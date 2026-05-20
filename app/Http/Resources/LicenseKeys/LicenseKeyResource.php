@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\LicenseKeys;
 
 use App\Models\LicenseKey;
+use App\Models\LicenseKeyActivation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -47,6 +48,14 @@ final class LicenseKeyResource extends JsonResource
             'revoked_at' => $this->revoked_at?->toIso8601String(),
             'revoked_reason' => $this->revoked_reason,
             'created_at' => $this->created_at?->toIso8601String(),
+            'activations' => $this->whenLoaded('activations', fn () => $this->activations->map(static fn (LicenseKeyActivation $a): array => [
+                'uuid' => $a->uuid,
+                'machine_id' => $a->machine_id,
+                'hostname' => $a->hostname,
+                'ip_address' => $a->ip_address,
+                'activated_at' => $a->activated_at?->toIso8601String(),
+                'last_seen_at' => $a->last_seen_at?->toIso8601String(),
+            ])->values()),
         ];
     }
 }
