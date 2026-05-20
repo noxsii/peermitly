@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { usePage } from "@inertiajs/vue3";
 import { Monitor, Moon, Search, Sun } from "@lucide/vue";
-import { computed } from "vue";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -12,18 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAppearance } from "@/composables/useAppearance";
 import Logo from "@/layout/Logo.vue";
-import type { Appearance, PageProps } from "@/types";
-
-const page = usePage<PageProps>();
-const user = computed(() => page.props.auth.user);
-const initials = computed(() => {
-    if (!user.value) return "";
-    return user.value.name
-        .split(/\s+/)
-        .map((part) => part.charAt(0).toUpperCase())
-        .slice(0, 2)
-        .join("");
-});
+import UserMenu from "@/layout/UserMenu.vue";
+import type { Appearance } from "@/types";
 
 const { mode, set: setAppearance } = useAppearance();
 
@@ -87,13 +75,7 @@ const appearanceOptions: Array<{
                 </DropdownMenuContent>
             </DropdownMenu>
 
-            <div
-                v-if="user"
-                class="bg-primary text-primary-foreground ml-1 flex size-8 items-center justify-center rounded-full text-xs font-semibold"
-                :title="user.name"
-            >
-                {{ initials }}
-            </div>
+            <UserMenu />
         </div>
     </header>
 </template>

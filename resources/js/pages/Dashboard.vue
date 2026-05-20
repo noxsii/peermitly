@@ -55,7 +55,9 @@ import PageLayout from "@/layout/PageLayout.vue";
                         class="flex items-center justify-between py-3 text-sm first:pt-0 last:pb-0"
                     >
                         <div>
-                            <p class="font-medium">Permit #PRM-{{ 1000 + item }}</p>
+                            <p class="font-medium">
+                                Permit #PRM-{{ 1000 + item }}
+                            </p>
                             <p class="text-muted-foreground text-xs">
                                 Submitted by user · 2h ago
                             </p>
@@ -88,7 +90,9 @@ import PageLayout from "@/layout/PageLayout.vue";
                             {{ initials }}
                         </div>
                         <div class="min-w-0">
-                            <p class="truncate text-sm font-medium">Member name</p>
+                            <p class="truncate text-sm font-medium">
+                                Member name
+                            </p>
                             <p class="text-muted-foreground truncate text-xs">
                                 Admin
                             </p>

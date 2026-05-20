@@ -29,9 +29,7 @@ const hasHeader = (title?: string) => Boolean(title) || Boolean(slots.actions);
             </div>
         </header>
 
-        <div
-            class="bg-background text-foreground rounded-xl p-4 shadow-sm"
-        >
+        <div class="bg-background text-foreground rounded-xl p-4 shadow-sm">
             <slot />
         </div>
     </section>

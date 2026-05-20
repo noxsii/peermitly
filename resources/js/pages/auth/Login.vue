@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
-defineOptions({ layout: null });
+defineOptions({ layout: "" });
 
 const showPassword = ref(false);
 const remember = ref(false);

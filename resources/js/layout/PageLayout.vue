@@ -10,9 +10,7 @@ defineProps<{
     <Head :title="title" />
 
     <div class="flex h-full flex-col">
-        <header
-            class="flex flex-wrap items-center justify-between gap-3 pb-6"
-        >
+        <header class="flex flex-wrap items-center justify-between gap-3 pb-6">
             <h1 class="text-2xl font-semibold tracking-tight">{{ title }}</h1>
 
             <div class="flex items-center gap-2">
