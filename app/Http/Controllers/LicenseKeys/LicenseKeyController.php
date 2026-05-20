@@ -6,6 +6,7 @@ namespace App\Http\Controllers\LicenseKeys;
 
 use App\Actions\LicenseKeys\BulkCreateLicenseKeysAction;
 use App\Actions\LicenseKeys\CreateLicenseKeyAction;
+use App\Enums\LicenseKeyStatus;
 use App\Enums\LicenseValidityUnit;
 use App\Http\Requests\LicenseKeys\BulkStoreLicenseKeyRequest;
 use App\Http\Requests\LicenseKeys\StoreLicenseKeyRequest;
@@ -19,16 +20,22 @@ use App\Models\LicenseKey;
 use App\Models\LicenseKeyType;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final class LicenseKeyController
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $teamId = (int) auth()->user()?->current_team_id;
+        $statusFilter = $request->string('status')->toString();
+        $activeStatus = LicenseKeyStatus::tryFrom($statusFilter);
 
         return Inertia::render('license-keys/Index', [
+            'filters' => [
+                'status' => $activeStatus?->value,
+            ],
             'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
                 LicenseKeyType::query()
                     ->where('team_id', $teamId)
@@ -46,6 +53,7 @@ final class LicenseKeyController
             'licenseKeys' => Inertia::defer(static fn () => LicenseKeyResource::collection(
                 LicenseKey::query()
                     ->where('team_id', $teamId)
+                    ->when($activeStatus, fn ($q, $s) => $q->where('status', $s->value))
                     ->with(['type', 'product', 'customer'])
                     ->latest()
                     ->paginate(25)

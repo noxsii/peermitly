@@ -34,9 +34,8 @@ const secondary: (NavItem | ExternalNavItem)[] = [
     { label: "Settings", href: "/dashboard", icon: Settings },
 ];
 
-const isExternal = (
-    item: NavItem | ExternalNavItem,
-): item is ExternalNavItem => "external" in item && item.external;
+const isExternal = (item: NavItem | ExternalNavItem): item is ExternalNavItem =>
+    "external" in item && item.external;
 
 const page = usePage();
 const currentUrl = computed(() => page.url);
