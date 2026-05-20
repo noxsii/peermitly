@@ -10,6 +10,22 @@ test('login route responds with 200', function (): void {
     $this->get('/login')->assertOk();
 });
 
+test('authenticated user visiting /login is redirected to dashboard', function (): void {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get('/login')
+        ->assertRedirect(route('dashboard'));
+});
+
+test('authenticated user posting to /login is redirected to dashboard', function (): void {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->post('/login', ['email' => 'a@b.de', 'password' => 'x'])
+        ->assertRedirect(route('dashboard'));
+});
+
 test('login route renders auth/Login inertia component', function (): void {
     $this->get('/login')
         ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page->component('auth/Login'));
