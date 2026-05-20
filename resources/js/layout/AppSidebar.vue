@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link, usePage } from "@inertiajs/vue3";
-import { KeyRound, LayoutDashboard, LifeBuoy, Settings } from "@lucide/vue";
+import {
+    BookOpen,
+    KeyRound,
+    LayoutDashboard,
+    LifeBuoy,
+    Settings,
+} from "@lucide/vue";
 import { computed } from "vue";
 import {
     Tooltip,
@@ -8,17 +14,29 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { NavItem } from "@/types";
+import type { LucideIcon, NavItem } from "@/types";
+
+interface ExternalNavItem {
+    label: string;
+    href: string;
+    icon: LucideIcon;
+    external: true;
+}
 
 const primary: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "License Keys", href: "/license-keys", icon: KeyRound },
 ];
 
-const secondary: NavItem[] = [
+const secondary: (NavItem | ExternalNavItem)[] = [
+    { label: "API Docs", href: "/docs/api", icon: BookOpen, external: true },
     { label: "Help", href: "/dashboard", icon: LifeBuoy },
     { label: "Settings", href: "/dashboard", icon: Settings },
 ];
+
+const isExternal = (
+    item: NavItem | ExternalNavItem,
+): item is ExternalNavItem => "external" in item && item.external;
 
 const page = usePage();
 const currentUrl = computed(() => page.url);
@@ -52,7 +70,18 @@ const currentUrl = computed(() => page.url);
             <div class="flex flex-col items-center gap-1">
                 <Tooltip v-for="item in secondary" :key="item.label">
                     <TooltipTrigger as-child>
+                        <a
+                            v-if="isExternal(item)"
+                            :href="item.href"
+                            :aria-label="item.label"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-foreground/70 hover:bg-muted hover:text-foreground flex size-9 items-center justify-center rounded-lg transition-colors"
+                        >
+                            <component :is="item.icon" class="size-4" />
+                        </a>
                         <Link
+                            v-else
                             :href="item.href"
                             :aria-label="item.label"
                             class="text-foreground/70 hover:bg-muted hover:text-foreground flex size-9 items-center justify-center rounded-lg transition-colors"
