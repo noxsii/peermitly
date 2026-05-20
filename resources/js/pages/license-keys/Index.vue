@@ -3,6 +3,7 @@ import { Deferred, Link } from "@inertiajs/vue3";
 import { Download, KeyRound, Plus, Settings2 } from "@lucide/vue";
 import { ref } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
+import BulkCreateLicenseKeyDialog from "@/components/dialogs/BulkCreateLicenseKeyDialog.vue";
 import CreateLicenseKeyDialog from "@/components/dialogs/CreateLicenseKeyDialog.vue";
 import type { PaginationMeta } from "@/components/table";
 import Card from "@/components/Card.vue";
@@ -24,6 +25,7 @@ defineProps<{
 }>();
 
 const createOpen = ref(false);
+const bulkOpen = ref(false);
 </script>
 
 <template>
@@ -41,12 +43,10 @@ const createOpen = ref(false);
                     Export CSV
                 </Button>
             </Link>
-            <Link href="/license-keys/bulk">
-                <Button variant="ghost" size="sm">
-                    <KeyRound class="size-4" />
-                    Bulk create
-                </Button>
-            </Link>
+            <Button variant="ghost" size="sm" @click="bulkOpen = true">
+                <KeyRound class="size-4" />
+                Bulk create
+            </Button>
             <Button size="sm" @click="createOpen = true">
                 <Plus class="size-4" />
                 New key
@@ -117,6 +117,13 @@ const createOpen = ref(false);
 
         <CreateLicenseKeyDialog
             v-model:open="createOpen"
+            :types="types?.data ?? []"
+            :products="products?.data ?? []"
+            :customers="customers?.data ?? []"
+        />
+
+        <BulkCreateLicenseKeyDialog
+            v-model:open="bulkOpen"
             :types="types?.data ?? []"
             :products="products?.data ?? []"
             :customers="customers?.data ?? []"

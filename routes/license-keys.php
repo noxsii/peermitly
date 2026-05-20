@@ -15,7 +15,6 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/', [LicenseKeyController::class, 'index'])->name('index');
     Route::post('/', [LicenseKeyController::class, 'store'])->name('store');
 
-    Route::get('/bulk', [LicenseKeyController::class, 'bulkCreate'])->name('bulk.create');
     Route::post('/bulk', [LicenseKeyController::class, 'bulkStore'])->name('bulk.store');
 
     Route::get('/export', [LicenseKeyExportController::class, 'export'])->name('export');

@@ -79,23 +79,6 @@ final class LicenseKeyController
         return to_route('license-keys.show', $licenseKey->uuid);
     }
 
-    public function bulkCreate(): Response
-    {
-        $teamId = (int) auth()->user()?->current_team_id;
-
-        return Inertia::render('license-keys/BulkCreate', [
-            'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
-                LicenseKeyType::query()->where('team_id', $teamId)->whereActive()->orderBy('name')->get(),
-            )),
-            'products' => Inertia::defer(static fn () => ProductResource::collection(
-                Product::query()->where('team_id', $teamId)->where('is_active', true)->orderBy('name')->get(),
-            )),
-            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
-                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
-            )),
-        ]);
-    }
-
     public function bulkStore(BulkStoreLicenseKeyRequest $request, BulkCreateLicenseKeysAction $bulk): RedirectResponse
     {
         $teamId = (int) auth()->user()?->current_team_id;
@@ -119,7 +102,7 @@ final class LicenseKeyController
             $request->user(),
         );
 
-        return to_route('license-keys.index')->with('success', 'Bulk license keys created.');
+        return back()->with('success', 'Bulk license keys created.');
     }
 
     public function show(LicenseKey $licenseKey): Response
