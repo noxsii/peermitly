@@ -11,4 +11,8 @@ export type {
     ProductOption,
 } from "./license-key";
 export type { LucideIcon, NavItem } from "./navigation";
+export type {
+    NotificationItem,
+    NotificationsPayload,
+} from "./notification";
 export type { PageProps } from "./inertia";

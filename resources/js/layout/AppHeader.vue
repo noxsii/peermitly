@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAppearance } from "@/composables/useAppearance";
 import Logo from "@/layout/Logo.vue";
+import NotificationBell from "@/layout/NotificationBell.vue";
 import UserMenu from "@/layout/UserMenu.vue";
 import type { Appearance } from "@/types";
 
@@ -74,6 +75,8 @@ const appearanceOptions: Array<{
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <NotificationBell />
 
             <UserMenu />
         </div>
