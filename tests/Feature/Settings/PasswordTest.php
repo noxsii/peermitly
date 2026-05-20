@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
 
-test('password edit page renders for authed user', function (): void {
+test('settings page renders for authed user', function (): void {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->get('/settings/password')
+        ->get('/settings')
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page->component('settings/Password'));
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page->component('Settings'));
 });
 
-test('guest cannot access password edit page', function (): void {
-    $this->get('/settings/password')->assertRedirect('/login');
+test('guest cannot access settings page', function (): void {
+    $this->get('/settings')->assertRedirect('/login');
 });
 
 test('successful password update logs the user out and redirects to login', function (): void {
@@ -26,7 +26,7 @@ test('successful password update logs the user out and redirects to login', func
     ]);
 
     $this->actingAs($user)
-        ->from('/settings/password')
+        ->from('/settings')
         ->put('/settings/password', [
             'current_password' => 'current-password',
             'password' => 'new-strong-password',
@@ -39,27 +39,27 @@ test('successful password update logs the user out and redirects to login', func
     expect(Auth::check())->toBeFalse();
 });
 
-test('update fails when current password is wrong', function (): void {
+test('password update fails when current password is wrong', function (): void {
     $user = User::factory()->create(['password' => 'current-password']);
 
     $this->actingAs($user)
-        ->from('/settings/password')
+        ->from('/settings')
         ->put('/settings/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-strong-password',
             'password_confirmation' => 'new-strong-password',
         ])
-        ->assertRedirect('/settings/password')
+        ->assertRedirect('/settings')
         ->assertSessionHasErrors('current_password');
 
     expect(Hash::check('current-password', $user->fresh()->password))->toBeTrue();
 });
 
-test('update fails when new password confirmation does not match', function (): void {
+test('password update fails when confirmation does not match', function (): void {
     $user = User::factory()->create(['password' => 'current-password']);
 
     $this->actingAs($user)
-        ->from('/settings/password')
+        ->from('/settings')
         ->put('/settings/password', [
             'current_password' => 'current-password',
             'password' => 'new-strong-password',
@@ -68,11 +68,11 @@ test('update fails when new password confirmation does not match', function (): 
         ->assertSessionHasErrors('password');
 });
 
-test('update fails when new password too short', function (): void {
+test('password update fails when new password too short', function (): void {
     $user = User::factory()->create(['password' => 'current-password']);
 
     $this->actingAs($user)
-        ->from('/settings/password')
+        ->from('/settings')
         ->put('/settings/password', [
             'current_password' => 'current-password',
             'password' => 'short',
@@ -82,6 +82,6 @@ test('update fails when new password too short', function (): void {
 });
 
 test('route names resolve correctly', function (): void {
-    expect(route('settings.password.edit', absolute: false))->toBe('/settings/password');
+    expect(route('settings.edit', absolute: false))->toBe('/settings');
     expect(route('settings.password.update', absolute: false))->toBe('/settings/password');
 });

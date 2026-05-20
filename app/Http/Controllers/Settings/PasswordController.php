@@ -8,16 +8,9 @@ use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\UpdatePasswordAction;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Inertia;
-use Inertia\Response;
 
 final class PasswordController
 {
-    public function edit(): Response
-    {
-        return Inertia::render('settings/Password');
-    }
-
     public function update(
         UpdatePasswordRequest $request,
         UpdatePasswordAction $update,
@@ -30,6 +23,6 @@ final class PasswordController
 
         $logout->handle($request);
 
-        return redirect()->route('login')->with('status', 'password-updated');
+        return to_route('login')->with('status', 'password-updated');
     }
 }

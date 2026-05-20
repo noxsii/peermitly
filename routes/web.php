@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Settings\PasswordController;
+use App\Http\Controllers\Settings\SettingsController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('settings')->name('settings.')->group(function (): void {
-        Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
+        Route::get('/', [SettingsController::class, 'edit'])->name('edit');
         Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
     });
 });
