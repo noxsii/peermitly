@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useForm } from "@inertiajs/vue3";
-import { Loader2 } from "@lucide/vue";
+import { Check, Copy, Loader2 } from "@lucide/vue";
+import { ref } from "vue";
 import InputError from "@/components/InputError.vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +33,15 @@ const form = useForm<{
     is_active: props.initial?.is_active ?? true,
 });
 
+const copied = ref(false);
+
+const copyUuid = async () => {
+    if (!props.initial?.uuid) return;
+    await navigator.clipboard.writeText(props.initial.uuid);
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 2000);
+};
+
 const submit = () => {
     const options = {
         onSuccess: () => {
@@ -51,6 +61,33 @@ const submit = () => {
 
 <template>
     <form @submit.prevent="submit" class="space-y-4">
+        <div v-if="initial?.uuid" class="space-y-2">
+            <Label>UUID</Label>
+            <div class="flex items-center gap-2">
+                <code
+                    class="bg-muted/40 flex-1 truncate rounded-md p-2 font-mono text-xs"
+                >
+                    {{ initial.uuid }}
+                </code>
+                <Button
+                    variant="outline"
+                    size="icon-sm"
+                    type="button"
+                    @click="copyUuid"
+                >
+                    <Check
+                        v-if="copied"
+                        class="size-4 text-emerald-500"
+                    />
+                    <Copy v-else class="size-4" />
+                </Button>
+            </div>
+            <p class="text-muted-foreground text-xs">
+                Use this UUID as <code>product_uuid</code> when creating keys
+                via the admin API.
+            </p>
+        </div>
+
         <div class="space-y-2">
             <Label for="name">Name</Label>
             <Input

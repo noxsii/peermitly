@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm, useHttp } from "@inertiajs/vue3";
-import { Loader2, Sparkles } from "@lucide/vue";
+import { Check, Copy, Loader2, Sparkles } from "@lucide/vue";
 import { computed, ref, watch } from "vue";
 import InputError from "@/components/InputError.vue";
 import { Button } from "@/components/ui/button";
@@ -129,6 +129,15 @@ const submit = () => {
 const samples = ref<string[]>([]);
 const previewError = ref<string | null>(null);
 
+const uuidCopied = ref(false);
+
+const copyUuid = async () => {
+    if (!props.initial?.uuid) return;
+    await navigator.clipboard.writeText(props.initial.uuid);
+    uuidCopied.value = true;
+    setTimeout(() => (uuidCopied.value = false), 2000);
+};
+
 const previewForm = useHttp({
     generator_type: "random" as LicenseKeyGeneratorType,
     configuration: {} as Record<string, unknown>,
@@ -152,6 +161,33 @@ const preview = async () => {
 
 <template>
     <form @submit.prevent="submit" class="space-y-5">
+        <div v-if="initial?.uuid" class="space-y-2">
+            <Label>UUID</Label>
+            <div class="flex items-center gap-2">
+                <code
+                    class="bg-muted/40 flex-1 truncate rounded-md p-2 font-mono text-xs"
+                >
+                    {{ initial.uuid }}
+                </code>
+                <Button
+                    variant="outline"
+                    size="icon-sm"
+                    type="button"
+                    @click="copyUuid"
+                >
+                    <Check
+                        v-if="uuidCopied"
+                        class="size-4 text-emerald-500"
+                    />
+                    <Copy v-else class="size-4" />
+                </Button>
+            </div>
+            <p class="text-muted-foreground text-xs">
+                Use this UUID as <code>license_key_type_uuid</code> when
+                creating keys via the admin API.
+            </p>
+        </div>
+
         <div class="space-y-2">
             <Label for="name">Name</Label>
             <Input
