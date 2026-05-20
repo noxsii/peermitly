@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from "@inertiajs/vue3";
-import { LogOut } from "@lucide/vue";
+import { KeyRound, LogOut } from "@lucide/vue";
 import { computed } from "vue";
 import {
     DropdownMenu,
@@ -47,6 +47,15 @@ const initials = computed(() => {
                     {{ user.email }}
                 </span>
             </DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem as-child>
+                <Link href="/settings/password" class="w-full">
+                    <KeyRound class="size-4" />
+                    Change password
+                </Link>
+            </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 

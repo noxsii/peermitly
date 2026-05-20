@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\Settings\PasswordController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,9 @@ Route::middleware('auth')->group(function (): void {
 
 Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('settings')->name('settings.')->group(function (): void {
+        Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
+        Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+    });
 });

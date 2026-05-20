@@ -5,12 +5,12 @@ declare(strict_types=1);
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-test('authenticated user can log out and is redirected to home', function (): void {
+test('authenticated user can log out and is redirected to login', function (): void {
     $user = User::factory()->create();
 
     $this->actingAs($user)
         ->post('/logout')
-        ->assertRedirect('/');
+        ->assertRedirect('/login');
 
     expect(Auth::check())->toBeFalse();
 });
