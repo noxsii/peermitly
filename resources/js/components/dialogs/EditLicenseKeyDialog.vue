@@ -52,12 +52,22 @@ watch(
 );
 
 const submit = () => {
-    form.patch(`/license-keys/${props.licenseKey.uuid}`, {
-        preserveScroll: true,
-        onSuccess: () => {
-            open.value = false;
-        },
-    });
+    form
+        .transform((data) => ({
+            ...data,
+            customer_uuid: data.customer_uuid || null,
+            max_activations:
+                data.max_activations === null ||
+                data.max_activations === ("" as unknown as number)
+                    ? null
+                    : Number(data.max_activations),
+        }))
+        .patch(`/license-keys/${props.licenseKey.uuid}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                open.value = false;
+            },
+        });
 };
 </script>
 

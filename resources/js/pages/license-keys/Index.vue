@@ -59,7 +59,7 @@ const bulkOpen = ref(false);
             </Button>
         </template>
 
-        <div class="grid max-w-7xl grid-cols-1 gap-4 xl:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
             <Card title="License Key Types" class="xl:col-span-1">
                 <template #actions>
                     <Link href="/license-keys/types">
