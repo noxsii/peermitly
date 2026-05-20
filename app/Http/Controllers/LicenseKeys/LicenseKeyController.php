@@ -138,4 +138,13 @@ final class LicenseKeyController
 
         return back();
     }
+
+    public function destroy(LicenseKey $licenseKey): RedirectResponse
+    {
+        abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
+
+        $licenseKey->delete();
+
+        return to_route('license-keys.index')->with('success', 'License key deleted.');
+    }
 }

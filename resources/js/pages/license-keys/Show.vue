@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Deferred, Link, useForm } from "@inertiajs/vue3";
-import { ArrowLeft, Check, Copy, Pencil } from "@lucide/vue";
+import { Deferred, Link, router, useForm } from "@inertiajs/vue3";
+import { ArrowLeft, Check, Copy, Pencil, Trash2 } from "@lucide/vue";
 
 import { computed, ref } from "vue";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import EditLicenseKeyDialog from "@/components/dialogs/EditLicenseKeyDialog.vue";
 import LicenseKeyStatusBadge from "@/components/license-keys/LicenseKeyStatusBadge.vue";
 import Card from "@/components/Card.vue";
@@ -23,8 +24,14 @@ import PageLayout from "@/layout/PageLayout.vue";
 import type { CustomerOption, LicenseKey, LicenseValidityUnit } from "@/types";
 
 const editOpen = ref(false);
+const deleteOpen = ref(false);
 const extendSuccess = ref(false);
 const revokeSuccess = ref(false);
+
+const confirmDelete = () => {
+    if (!props.licenseKey?.data) return;
+    router.delete(`/license-keys/${props.licenseKey.data.uuid}`);
+};
 
 const props = defineProps<{
     licenseKey?: { data: LicenseKey } | null;
@@ -359,6 +366,16 @@ const submitRevoke = () => {
                                 Restore
                             </Button>
                         </form>
+                        <Button
+                            v-if="licenseKey?.data"
+                            variant="ghost"
+                            class="text-destructive hover:text-destructive w-full justify-start"
+                            type="button"
+                            @click="deleteOpen = true"
+                        >
+                            <Trash2 class="size-4" />
+                            Delete key
+                        </Button>
                     </div>
                 </Card>
             </div>
@@ -369,6 +386,16 @@ const submitRevoke = () => {
             v-model:open="editOpen"
             :license-key="licenseKey.data"
             :customers="customers?.data ?? []"
+        />
+
+        <ConfirmDialog
+            v-if="licenseKey?.data"
+            v-model:open="deleteOpen"
+            title="Delete license key?"
+            :description="`This will permanently remove ${licenseKey.data.key}. External software using this key will lose access immediately. This cannot be undone.`"
+            confirm-label="Delete"
+            destructive
+            @confirm="confirmDelete"
         />
     </PageLayout>
 </template>

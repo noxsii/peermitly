@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
 
     Route::get('/{licenseKey:uuid}', [LicenseKeyController::class, 'show'])->name('show');
     Route::patch('/{licenseKey:uuid}', [LicenseKeyController::class, 'update'])->name('update');
+    Route::delete('/{licenseKey:uuid}', [LicenseKeyController::class, 'destroy'])->name('destroy');
 
     Route::post('/{licenseKey:uuid}/revoke', [LicenseKeyRevokeController::class, 'revoke'])->name('revoke');
     Route::post('/{licenseKey:uuid}/restore', [LicenseKeyRestoreController::class, 'restore'])->name('restore');
