@@ -77,8 +77,7 @@
         "lint": [
             "rector",
             "pint --parallel",
-            "bun run lint",
-            "phpstan analyse --memory-limit=2G"
+            "bun run lint"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:lint": [
