@@ -48,7 +48,8 @@ final class LicenseKeyExportController
                             $key->activated_at?->toIso8601String(),
                             $key->expires_at?->toIso8601String(),
                             $key->created_at?->toIso8601String(),
-                        ]);
+                        ],
+                            escape: '\\');
                     }
                 });
 

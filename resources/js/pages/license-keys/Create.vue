@@ -6,11 +6,7 @@ import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
-import type {
-    CustomerOption,
-    LicenseKeyType,
-    ProductOption,
-} from "@/types";
+import type { CustomerOption, LicenseKeyType, ProductOption } from "@/types";
 
 defineProps<{
     types?: { data: LicenseKeyType[] } | null;

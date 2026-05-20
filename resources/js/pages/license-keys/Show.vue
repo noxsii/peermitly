@@ -77,10 +77,7 @@ const formatDate = (value: string | null): string => {
                                 <Copy class="size-4" />
                             </Button>
                         </div>
-                        <p
-                            v-if="copied"
-                            class="text-xs text-emerald-500"
-                        >
+                        <p v-if="copied" class="text-xs text-emerald-500">
                             Copied!
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -94,7 +91,9 @@ const formatDate = (value: string | null): string => {
                                 HWID required
                             </span>
                             <span
-                                v-if="licenseKey.data.validity_unit === 'lifetime'"
+                                v-if="
+                                    licenseKey.data.validity_unit === 'lifetime'
+                                "
                                 class="border-border rounded-md border px-2 py-0.5 text-xs"
                             >
                                 Lifetime
@@ -116,9 +115,7 @@ const formatDate = (value: string | null): string => {
                                     Customer
                                 </dt>
                                 <dd>
-                                    {{
-                                        licenseKey.data.customer?.email ?? "—"
-                                    }}
+                                    {{ licenseKey.data.customer?.email ?? "—" }}
                                 </dd>
                             </div>
                             <div>
@@ -142,9 +139,7 @@ const formatDate = (value: string | null): string => {
                                     Expires
                                 </dt>
                                 <dd>
-                                    {{
-                                        formatDate(licenseKey.data.expires_at)
-                                    }}
+                                    {{ formatDate(licenseKey.data.expires_at) }}
                                 </dd>
                             </div>
                             <div>
@@ -184,7 +179,10 @@ const formatDate = (value: string | null): string => {
                             name="reason"
                             placeholder="Customer cancelled the subscription…"
                         />
-                        <p v-if="errors.reason" class="text-destructive text-sm">
+                        <p
+                            v-if="errors.reason"
+                            class="text-destructive text-sm"
+                        >
                             {{ errors.reason }}
                         </p>
                         <Button
@@ -251,7 +249,10 @@ const formatDate = (value: string | null): string => {
                             v-if="licenseKey?.data"
                             :href="`/license-keys/${licenseKey.data.uuid}/edit`"
                         >
-                            <Button variant="ghost" class="w-full justify-start">
+                            <Button
+                                variant="ghost"
+                                class="w-full justify-start"
+                            >
                                 <Pencil class="size-4" />
                                 Edit settings
                             </Button>

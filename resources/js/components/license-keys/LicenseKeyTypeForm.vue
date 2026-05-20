@@ -274,7 +274,9 @@ const preview = async () => {
             v-if="form.generator_type === 'pattern'"
             class="space-y-3 rounded-md border p-3"
         >
-            <p class="text-muted-foreground text-xs uppercase">Pattern config</p>
+            <p class="text-muted-foreground text-xs uppercase">
+                Pattern config
+            </p>
             <div class="space-y-2">
                 <Label>Pattern</Label>
                 <Input v-model="patternConfig.pattern" />
@@ -284,7 +286,9 @@ const preview = async () => {
                 </p>
             </div>
             <label class="flex items-center gap-2 text-sm">
-                <Checkbox v-model="patternConfig.exclude_ambiguous_characters" />
+                <Checkbox
+                    v-model="patternConfig.exclude_ambiguous_characters"
+                />
                 Exclude ambiguous
             </label>
         </div>

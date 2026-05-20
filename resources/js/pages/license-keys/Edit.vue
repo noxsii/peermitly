@@ -105,14 +105,15 @@ watch(
                         <Switch
                             name="requires_hwid_check"
                             value="1"
-                            :default-value="
-                                licenseKey.data.requires_hwid_check
-                            "
+                            :default-value="licenseKey.data.requires_hwid_check"
                         />
                     </div>
 
                     <Button type="submit" :disabled="processing">
-                        <Loader2 v-if="processing" class="size-4 animate-spin" />
+                        <Loader2
+                            v-if="processing"
+                            class="size-4 animate-spin"
+                        />
                         Save changes
                     </Button>
                     <p

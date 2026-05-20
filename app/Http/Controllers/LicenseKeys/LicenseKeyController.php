@@ -86,7 +86,7 @@ final class LicenseKeyController
             $request->user(),
         );
 
-        return redirect()->route('license-keys.show', $licenseKey->uuid);
+        return to_route('license-keys.show', $licenseKey->uuid);
     }
 
     public function bulkCreate(): Response
@@ -129,7 +129,7 @@ final class LicenseKeyController
             $request->user(),
         );
 
-        return redirect()->route('license-keys.index')->with('success', 'Bulk license keys created.');
+        return to_route('license-keys.index')->with('success', 'Bulk license keys created.');
     }
 
     public function show(LicenseKey $licenseKey): Response
@@ -174,6 +174,6 @@ final class LicenseKeyController
             'metadata' => $request->array('metadata') ?: null,
         ])->save();
 
-        return redirect()->route('license-keys.show', $licenseKey->uuid);
+        return to_route('license-keys.show', $licenseKey->uuid);
     }
 }

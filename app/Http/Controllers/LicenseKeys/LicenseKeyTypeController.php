@@ -73,7 +73,7 @@ final class LicenseKeyTypeController
             'is_active' => $request->boolean('is_active'),
         ])->save();
 
-        return redirect()->route('license-keys.types.index')->with('success', 'License key type updated.');
+        return to_route('license-keys.types.index')->with('success', 'License key type updated.');
     }
 
     public function destroy(LicenseKeyType $licenseKeyType): RedirectResponse
@@ -82,6 +82,6 @@ final class LicenseKeyTypeController
 
         $licenseKeyType->delete();
 
-        return redirect()->route('license-keys.types.index')->with('success', 'License key type deleted.');
+        return to_route('license-keys.types.index')->with('success', 'License key type deleted.');
     }
 }

@@ -11,10 +11,10 @@ use App\Http\Requests\LicenseKeys\PreviewLicenseKeyTypeRequest;
 use App\Services\LicenseKeys\Generators\LicenseKeyGeneratorFactory;
 use Illuminate\Http\JsonResponse;
 
-final class LicenseKeyTypePreviewController
+final readonly class LicenseKeyTypePreviewController
 {
     public function __construct(
-        private readonly LicenseKeyGeneratorFactory $factory,
+        private LicenseKeyGeneratorFactory $factory,
     ) {}
 
     public function preview(PreviewLicenseKeyTypeRequest $request): JsonResponse
