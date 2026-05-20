@@ -76,12 +76,9 @@ const createOpen = ref(false);
                             :key="type.uuid"
                             class="flex items-center justify-between text-sm"
                         >
-                            <Link
-                                :href="`/license-keys/types/${type.uuid}/edit`"
-                                class="hover:text-primary truncate font-medium"
-                            >
+                            <span class="truncate font-medium">
                                 {{ type.name }}
-                            </Link>
+                            </span>
                             <span class="text-muted-foreground text-xs">
                                 {{ type.license_keys_count ?? 0 }} keys
                             </span>

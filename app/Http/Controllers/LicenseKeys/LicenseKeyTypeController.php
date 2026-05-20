@@ -31,11 +31,6 @@ final class LicenseKeyTypeController
         ]);
     }
 
-    public function create(): Response
-    {
-        return Inertia::render('license-keys/types/Create');
-    }
-
     public function store(StoreLicenseKeyTypeRequest $request): RedirectResponse
     {
         $teamId = (int) auth()->user()?->current_team_id;
@@ -52,15 +47,6 @@ final class LicenseKeyTypeController
         return back()->with('success', 'License key type created.');
     }
 
-    public function edit(LicenseKeyType $licenseKeyType): Response
-    {
-        abort_unless($licenseKeyType->team_id === (int) auth()->user()?->current_team_id, 404);
-
-        return Inertia::render('license-keys/types/Edit', [
-            'type' => Inertia::defer(static fn () => LicenseKeyTypeResource::make($licenseKeyType)),
-        ]);
-    }
-
     public function update(UpdateLicenseKeyTypeRequest $request, LicenseKeyType $licenseKeyType): RedirectResponse
     {
         abort_unless($licenseKeyType->team_id === (int) auth()->user()?->current_team_id, 404);
@@ -73,7 +59,7 @@ final class LicenseKeyTypeController
             'is_active' => $request->boolean('is_active'),
         ])->save();
 
-        return to_route('license-keys.types.index')->with('success', 'License key type updated.');
+        return back()->with('success', 'License key type updated.');
     }
 
     public function destroy(LicenseKeyType $licenseKeyType): RedirectResponse
@@ -82,6 +68,6 @@ final class LicenseKeyTypeController
 
         $licenseKeyType->delete();
 
-        return to_route('license-keys.types.index')->with('success', 'License key type deleted.');
+        return back()->with('success', 'License key type deleted.');
     }
 }

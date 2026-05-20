@@ -25,6 +25,10 @@ const props = defineProps<{
     initial?: LicenseKeyType;
 }>();
 
+const emit = defineEmits<{
+    success: [];
+}>();
+
 type RandomConfig = {
     length: number;
     group_length: number;
@@ -110,10 +114,15 @@ watch(currentConfig, (value) => {
 
 const submit = () => {
     form.configuration = currentConfig.value;
+    const options = {
+        onSuccess: () => {
+            emit("success");
+        },
+    };
     if (props.method === "patch") {
-        form.patch(props.action);
+        form.patch(props.action, options);
     } else {
-        form.post(props.action);
+        form.post(props.action, options);
     }
 };
 

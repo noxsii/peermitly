@@ -21,10 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/export', [LicenseKeyExportController::class, 'export'])->name('export');
 
     Route::get('/types', [LicenseKeyTypeController::class, 'index'])->name('types.index');
-    Route::get('/types/create', [LicenseKeyTypeController::class, 'create'])->name('types.create');
     Route::post('/types', [LicenseKeyTypeController::class, 'store'])->name('types.store');
     Route::post('/types/preview', [LicenseKeyTypePreviewController::class, 'preview'])->name('types.preview');
-    Route::get('/types/{licenseKeyType:uuid}/edit', [LicenseKeyTypeController::class, 'edit'])->name('types.edit');
     Route::patch('/types/{licenseKeyType:uuid}', [LicenseKeyTypeController::class, 'update'])->name('types.update');
     Route::delete('/types/{licenseKeyType:uuid}', [LicenseKeyTypeController::class, 'destroy'])->name('types.destroy');
 
