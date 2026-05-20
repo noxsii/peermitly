@@ -35,7 +35,7 @@ const appearanceOptions: Array<{
             <Logo />
         </div>
 
-        <div class="w-full max-w-2xl justify-self-center">
+        <div class="min-w-3xl justify-self-center">
             <HeaderSearch />
         </div>
 
