@@ -4,6 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\LicenseKeys;
 
+use App\Actions\LicenseKeys\BulkCreateLicenseKeysAction;
+use App\Actions\LicenseKeys\CreateLicenseKeyAction;
+use App\Enums\LicenseValidityUnit;
+use App\Http\Requests\LicenseKeys\BulkStoreLicenseKeyRequest;
+use App\Http\Requests\LicenseKeys\StoreLicenseKeyRequest;
+use App\Http\Requests\LicenseKeys\UpdateLicenseKeyRequest;
+use App\Http\Resources\LicenseKeys\CustomerResource;
+use App\Http\Resources\LicenseKeys\LicenseKeyResource;
+use App\Http\Resources\LicenseKeys\LicenseKeyTypeResource;
+use App\Http\Resources\LicenseKeys\ProductResource;
+use App\Models\Customer;
+use App\Models\LicenseKey;
+use App\Models\LicenseKeyType;
+use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -11,6 +26,154 @@ final class LicenseKeyController
 {
     public function index(): Response
     {
-        return Inertia::render('license-keys/Index');
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        return Inertia::render('license-keys/Index', [
+            'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
+                LicenseKeyType::query()
+                    ->where('team_id', $teamId)
+                    ->withCount('licenseKeys')
+                    ->orderBy('name')
+                    ->get(),
+            )),
+            'licenseKeys' => Inertia::defer(static fn () => LicenseKeyResource::collection(
+                LicenseKey::query()
+                    ->where('team_id', $teamId)
+                    ->with(['type', 'product', 'customer'])
+                    ->latest()
+                    ->paginate(25)
+                    ->withQueryString(),
+            )),
+        ]);
+    }
+
+    public function create(): Response
+    {
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        return Inertia::render('license-keys/Create', [
+            'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
+                LicenseKeyType::query()->where('team_id', $teamId)->whereActive()->orderBy('name')->get(),
+            )),
+            'products' => Inertia::defer(static fn () => ProductResource::collection(
+                Product::query()->where('team_id', $teamId)->where('is_active', true)->orderBy('name')->get(),
+            )),
+            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
+                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
+            )),
+        ]);
+    }
+
+    public function store(StoreLicenseKeyRequest $request, CreateLicenseKeyAction $create): RedirectResponse
+    {
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        $type = LicenseKeyType::query()->where('team_id', $teamId)->where('uuid', $request->string('license_key_type_uuid'))->firstOrFail();
+        $product = Product::query()->where('team_id', $teamId)->where('uuid', $request->string('product_uuid'))->firstOrFail();
+        $customer = $request->filled('customer_uuid')
+            ? Customer::query()->where('team_id', $teamId)->where('uuid', $request->string('customer_uuid'))->first()
+            : null;
+
+        $licenseKey = $create->handle(
+            $type,
+            $product,
+            $customer,
+            $request->integer('validity_amount'),
+            LicenseValidityUnit::from($request->string('validity_unit')->toString()),
+            $request->filled('max_activations') ? $request->integer('max_activations') : null,
+            $request->boolean('requires_hwid_check'),
+            $request->array('metadata') ?: null,
+            $request->user(),
+        );
+
+        return redirect()->route('license-keys.show', $licenseKey->uuid);
+    }
+
+    public function bulkCreate(): Response
+    {
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        return Inertia::render('license-keys/BulkCreate', [
+            'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
+                LicenseKeyType::query()->where('team_id', $teamId)->whereActive()->orderBy('name')->get(),
+            )),
+            'products' => Inertia::defer(static fn () => ProductResource::collection(
+                Product::query()->where('team_id', $teamId)->where('is_active', true)->orderBy('name')->get(),
+            )),
+            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
+                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
+            )),
+        ]);
+    }
+
+    public function bulkStore(BulkStoreLicenseKeyRequest $request, BulkCreateLicenseKeysAction $bulk): RedirectResponse
+    {
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        $type = LicenseKeyType::query()->where('team_id', $teamId)->where('uuid', $request->string('license_key_type_uuid'))->firstOrFail();
+        $product = Product::query()->where('team_id', $teamId)->where('uuid', $request->string('product_uuid'))->firstOrFail();
+        $customer = $request->filled('customer_uuid')
+            ? Customer::query()->where('team_id', $teamId)->where('uuid', $request->string('customer_uuid'))->first()
+            : null;
+
+        $bulk->handle(
+            $type,
+            $product,
+            $customer,
+            $request->integer('count'),
+            $request->integer('validity_amount'),
+            LicenseValidityUnit::from($request->string('validity_unit')->toString()),
+            $request->filled('max_activations') ? $request->integer('max_activations') : null,
+            $request->boolean('requires_hwid_check'),
+            null,
+            $request->user(),
+        );
+
+        return redirect()->route('license-keys.index')->with('success', 'Bulk license keys created.');
+    }
+
+    public function show(LicenseKey $licenseKey): Response
+    {
+        abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
+
+        return Inertia::render('license-keys/Show', [
+            'licenseKey' => Inertia::defer(static fn () => LicenseKeyResource::make(
+                $licenseKey->load(['type', 'product', 'customer', 'activations']),
+            )),
+        ]);
+    }
+
+    public function edit(LicenseKey $licenseKey): Response
+    {
+        abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        return Inertia::render('license-keys/Edit', [
+            'licenseKey' => Inertia::defer(static fn () => LicenseKeyResource::make(
+                $licenseKey->load(['type', 'product', 'customer']),
+            )),
+            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
+                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
+            )),
+        ]);
+    }
+
+    public function update(UpdateLicenseKeyRequest $request, LicenseKey $licenseKey): RedirectResponse
+    {
+        abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
+
+        $teamId = (int) auth()->user()?->current_team_id;
+        $customer = $request->filled('customer_uuid')
+            ? Customer::query()->where('team_id', $teamId)->where('uuid', $request->string('customer_uuid'))->first()
+            : null;
+
+        $licenseKey->forceFill([
+            'customer_id' => $customer?->id,
+            'max_activations' => $request->filled('max_activations') ? $request->integer('max_activations') : null,
+            'requires_hwid_check' => $request->boolean('requires_hwid_check'),
+            'metadata' => $request->array('metadata') ?: null,
+        ])->save();
+
+        return redirect()->route('license-keys.show', $licenseKey->uuid);
     }
 }
