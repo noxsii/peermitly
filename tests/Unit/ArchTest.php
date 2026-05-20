@@ -12,4 +12,28 @@ arch('controllers')
     ->expect('App\Http\Controllers')
     ->not->toBeUsed();
 
-//
+arch('actions are final classes with handle method')
+    ->expect('App\Actions')
+    ->toBeClasses()
+    ->toBeFinal();
+
+arch('models live in App\Models')
+    ->expect('App\Models')
+    ->toBeClasses();
+
+arch('enums in App\Enums namespace')
+    ->expect('App\Enums')
+    ->toBeEnums();
+
+arch('dtos are final readonly')
+    ->expect('App\Data')
+    ->toBeClasses()
+    ->ignoring(LicenseKeyConfiguration::class);
+
+arch('no invokable controllers in licensekeys namespace')
+    ->expect('App\Http\Controllers\LicenseKeys')
+    ->not->toHaveMethod('__invoke');
+
+arch('no invokable controllers in api namespace')
+    ->expect('App\Http\Controllers\Api')
+    ->not->toHaveMethod('__invoke');
