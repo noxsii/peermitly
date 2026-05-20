@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from "@inertiajs/vue3";
-import { LayoutDashboard, LifeBuoy, Settings } from "@lucide/vue";
+import { KeyRound, LayoutDashboard, LifeBuoy, Settings } from "@lucide/vue";
 import { computed } from "vue";
 import {
     Tooltip,
@@ -12,6 +12,7 @@ import type { NavItem } from "@/types";
 
 const primary: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { label: "License Keys", href: "/license-keys", icon: KeyRound },
 ];
 
 const secondary: NavItem[] = [

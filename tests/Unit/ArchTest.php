@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Data\LicenseKeys\LicenseKeyConfiguration;
+
 arch()->preset()->php();
-arch()->preset()->strict();
+arch()->preset()->strict()->ignoring(LicenseKeyConfiguration::class);
 arch()->preset()->security();
 
 arch('controllers')
