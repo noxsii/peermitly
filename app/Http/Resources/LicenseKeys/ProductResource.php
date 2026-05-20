@@ -22,7 +22,9 @@ final class ProductResource extends JsonResource
             'uuid' => $this->uuid,
             'name' => $this->name,
             'slug' => $this->slug,
+            'description' => $this->description,
             'is_active' => $this->is_active,
+            'license_keys_count' => $this->whenCounted('licenseKeys'),
         ];
     }
 }
