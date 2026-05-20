@@ -1,18 +1,29 @@
 <script setup lang="ts">
 import { Deferred, Link } from "@inertiajs/vue3";
 import { Download, KeyRound, Plus, Settings2 } from "@lucide/vue";
+import { ref } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
+import CreateLicenseKeyDialog from "@/components/dialogs/CreateLicenseKeyDialog.vue";
 import type { PaginationMeta } from "@/components/table";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
-import type { LicenseKey, LicenseKeyType } from "@/types";
+import type {
+    CustomerOption,
+    LicenseKey,
+    LicenseKeyType,
+    ProductOption,
+} from "@/types";
 
 defineProps<{
     types?: { data: LicenseKeyType[] } | null;
+    products?: { data: ProductOption[] } | null;
+    customers?: { data: CustomerOption[] } | null;
     licenseKeys?: { data: LicenseKey[]; meta: PaginationMeta } | null;
 }>();
+
+const createOpen = ref(false);
 </script>
 
 <template>
@@ -36,12 +47,10 @@ defineProps<{
                     Bulk create
                 </Button>
             </Link>
-            <Link href="/license-keys/create">
-                <Button size="sm">
-                    <Plus class="size-4" />
-                    New key
-                </Button>
-            </Link>
+            <Button size="sm" @click="createOpen = true">
+                <Plus class="size-4" />
+                New key
+            </Button>
         </template>
 
         <div class="grid max-w-7xl grid-cols-1 gap-4 xl:grid-cols-3">
@@ -108,5 +117,12 @@ defineProps<{
                 </Deferred>
             </Card>
         </div>
+
+        <CreateLicenseKeyDialog
+            v-model:open="createOpen"
+            :types="types?.data ?? []"
+            :products="products?.data ?? []"
+            :customers="customers?.data ?? []"
+        />
     </PageLayout>
 </template>

@@ -2,7 +2,7 @@
 import { Link } from "@inertiajs/vue3";
 import { Pencil, Trash2 } from "@lucide/vue";
 import { ref } from "vue";
-import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import { Button } from "@/components/ui/button";
 import type { LicenseKeyType } from "@/types";
 

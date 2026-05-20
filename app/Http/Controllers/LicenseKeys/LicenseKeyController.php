@@ -33,8 +33,15 @@ final class LicenseKeyController
                 LicenseKeyType::query()
                     ->where('team_id', $teamId)
                     ->withCount('licenseKeys')
+                    ->whereActive()
                     ->orderBy('name')
                     ->get(),
+            )),
+            'products' => Inertia::defer(static fn () => ProductResource::collection(
+                Product::query()->where('team_id', $teamId)->where('is_active', true)->orderBy('name')->get(),
+            )),
+            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
+                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
             )),
             'licenseKeys' => Inertia::defer(static fn () => LicenseKeyResource::collection(
                 LicenseKey::query()
@@ -43,23 +50,6 @@ final class LicenseKeyController
                     ->latest()
                     ->paginate(25)
                     ->withQueryString(),
-            )),
-        ]);
-    }
-
-    public function create(): Response
-    {
-        $teamId = (int) auth()->user()?->current_team_id;
-
-        return Inertia::render('license-keys/Create', [
-            'types' => Inertia::defer(static fn () => LicenseKeyTypeResource::collection(
-                LicenseKeyType::query()->where('team_id', $teamId)->whereActive()->orderBy('name')->get(),
-            )),
-            'products' => Inertia::defer(static fn () => ProductResource::collection(
-                Product::query()->where('team_id', $teamId)->where('is_active', true)->orderBy('name')->get(),
-            )),
-            'customers' => Inertia::defer(static fn () => CustomerResource::collection(
-                Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
             )),
         ]);
     }
