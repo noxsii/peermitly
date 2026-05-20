@@ -27,7 +27,7 @@ final class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(...),
             ],
-            'notifications' => fn () => $this->notificationPayload($request->user()),
+            'notifications' => fn (): array => $this->notificationPayload($request->user()),
         ];
     }
 

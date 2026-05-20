@@ -17,11 +17,7 @@ export const createProductColumns = (
         accessorKey: "slug",
         header: "Slug",
         cell: ({ row }) =>
-            h(
-                "code",
-                { class: "font-mono text-xs" },
-                row.original.slug,
-            ),
+            h("code", { class: "font-mono text-xs" }, row.original.slug),
     },
     {
         accessorKey: "license_keys_count",

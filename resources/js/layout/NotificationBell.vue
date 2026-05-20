@@ -137,10 +137,7 @@ const markAllRead = () => {
                             <p class="text-sm font-medium">
                                 {{ titleOf(item.data) }}
                             </p>
-                            <p
-                                v-if="messageOf(item.data)"
-                                class="text-sm"
-                            >
+                            <p v-if="messageOf(item.data)" class="text-sm">
                                 {{ messageOf(item.data) }}
                             </p>
                             <p class="text-muted-foreground text-xs">

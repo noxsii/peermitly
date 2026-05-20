@@ -15,11 +15,7 @@ final class NotificationController
         /** @var User $user */
         $user = $request->user();
 
-        $notification = $user->notifications()->whereKey($notificationId)->first();
-
-        if ($notification !== null) {
-            $notification->markAsRead();
-        }
+        $user->notifications()->whereKey($notificationId)->delete();
 
         return back();
     }
@@ -29,7 +25,7 @@ final class NotificationController
         /** @var User $user */
         $user = $request->user();
 
-        $user->unreadNotifications()->update(['read_at' => now()]);
+        $user->notifications()->delete();
 
         return back();
     }

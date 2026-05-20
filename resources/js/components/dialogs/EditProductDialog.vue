@@ -26,8 +26,8 @@ const onSuccess = () => {
             <DialogHeader>
                 <DialogTitle>Edit Product</DialogTitle>
                 <DialogDescription>
-                    Changing the slug breaks any external software that uses
-                    the old slug. Update both ends in sync.
+                    Changing the slug breaks any external software that uses the
+                    old slug. Update both ends in sync.
                 </DialogDescription>
             </DialogHeader>
 

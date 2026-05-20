@@ -315,10 +315,7 @@ const submitRevoke = () => {
                                 </Select>
                             </div>
                         </div>
-                        <Button
-                            type="submit"
-                            :disabled="extendForm.processing"
-                        >
+                        <Button type="submit" :disabled="extendForm.processing">
                             Extend
                         </Button>
                         <p

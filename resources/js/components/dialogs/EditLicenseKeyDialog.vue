@@ -52,22 +52,20 @@ watch(
 );
 
 const submit = () => {
-    form
-        .transform((data) => ({
-            ...data,
-            customer_uuid: data.customer_uuid || null,
-            max_activations:
-                data.max_activations === null ||
-                data.max_activations === ("" as unknown as number)
-                    ? null
-                    : Number(data.max_activations),
-        }))
-        .patch(`/license-keys/${props.licenseKey.uuid}`, {
-            preserveScroll: true,
-            onSuccess: () => {
-                open.value = false;
-            },
-        });
+    form.transform((data) => ({
+        ...data,
+        customer_uuid: data.customer_uuid || null,
+        max_activations:
+            data.max_activations === null ||
+            data.max_activations === ("" as unknown as number)
+                ? null
+                : Number(data.max_activations),
+    })).patch(`/license-keys/${props.licenseKey.uuid}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+            open.value = false;
+        },
+    });
 };
 </script>
 
@@ -126,8 +124,8 @@ const submit = () => {
                             Require Hardware ID (HWID)
                         </p>
                         <p class="text-muted-foreground text-xs">
-                            External software must send a hardware ID with
-                            each check.
+                            External software must send a hardware ID with each
+                            check.
                         </p>
                     </div>
                     <Switch v-model="form.requires_hwid_check" />
