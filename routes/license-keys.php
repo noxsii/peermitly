@@ -7,6 +7,7 @@ use App\Http\Controllers\LicenseKeys\LicenseKeyExportController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyExtendController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyRestoreController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyRevokeController;
+use App\Http\Controllers\LicenseKeys\LicenseKeySearchController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyTypeController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyTypePreviewController;
 use App\Http\Controllers\LicenseKeys\ProductController;
@@ -19,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/bulk', [LicenseKeyController::class, 'bulkStore'])->name('bulk.store');
 
     Route::get('/export', [LicenseKeyExportController::class, 'export'])->name('export');
+    Route::get('/search', [LicenseKeySearchController::class, 'search'])->name('search');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');

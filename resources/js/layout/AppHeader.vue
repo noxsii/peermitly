@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Monitor, Moon, Search, Sun } from "@lucide/vue";
+import { Monitor, Moon, Sun } from "@lucide/vue";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -7,8 +7,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { useAppearance } from "@/composables/useAppearance";
+import HeaderSearch from "@/layout/HeaderSearch.vue";
 import Logo from "@/layout/Logo.vue";
 import NotificationBell from "@/layout/NotificationBell.vue";
 import UserMenu from "@/layout/UserMenu.vue";
@@ -35,16 +35,8 @@ const appearanceOptions: Array<{
             <Logo />
         </div>
 
-        <div class="relative w-full max-w-xl justify-self-center">
-            <Search
-                class="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
-            />
-            <Input
-                type="search"
-                placeholder="Search…"
-                aria-label="Search"
-                class="bg-muted/60 min-w-2xl h-9 rounded-full border-transparent pl-9 shadow-none"
-            />
+        <div class="w-full max-w-2xl justify-self-center">
+            <HeaderSearch />
         </div>
 
         <div class="flex items-center justify-end gap-2">

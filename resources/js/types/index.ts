@@ -5,6 +5,7 @@ export type {
     CustomerOption,
     LicenseKey,
     LicenseKeyGeneratorType,
+    LicenseKeySearchResult,
     LicenseKeyStatus,
     LicenseKeyType,
     LicenseValidityUnit,
