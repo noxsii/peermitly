@@ -29,7 +29,8 @@ final class LicenseKeyExportController
                 'activated_at',
                 'expires_at',
                 'created_at',
-            ]);
+            ],
+                escape: '\\');
 
             LicenseKey::query()
                 ->where('team_id', $teamId)
