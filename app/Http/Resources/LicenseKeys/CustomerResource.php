@@ -23,6 +23,8 @@ final class CustomerResource extends JsonResource
             'email' => $this->email,
             'name' => $this->name,
             'company' => $this->company,
+            'metadata' => $this->metadata,
+            'license_keys_count' => $this->whenCounted('licenseKeys'),
         ];
     }
 }
