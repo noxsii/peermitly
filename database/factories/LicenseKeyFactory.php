@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 /**
@@ -31,7 +32,7 @@ final class LicenseKeyFactory extends Factory
 
         return [
             'team_id' => Team::factory(),
-            'license_key_type_id' => LicenseKeyType::factory()->state(fn (array $attributes, ?LicenseKey $parent): array => ['team_id' => $parent instanceof LicenseKey ? $parent->team_id : Team::factory()]),
+            'license_key_type_id' => LicenseKeyType::factory()->state(fn (array $attributes, ?Model $parent): array => ['team_id' => $parent instanceof LicenseKey ? $parent->team_id : Team::factory()]),
             'product_id' => Product::factory(),
             'customer_id' => null,
             'created_by' => User::factory(),

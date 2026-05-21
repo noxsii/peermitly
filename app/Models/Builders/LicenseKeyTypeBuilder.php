@@ -9,7 +9,9 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @extends Builder<LicenseKeyType>
+ * @template TModel of LicenseKeyType
+ *
+ * @extends Builder<TModel>
  */
 final class LicenseKeyTypeBuilder extends Builder
 {

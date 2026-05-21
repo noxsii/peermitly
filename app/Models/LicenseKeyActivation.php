@@ -65,7 +65,10 @@ use Illuminate\Support\Carbon;
 )]
 final class LicenseKeyActivation extends Model
 {
-    use HasFactory, HasUuids;
+    /** @use HasFactory<LicenseKeyActivationFactory> */
+    use HasFactory;
+
+    use HasUuids;
 
     /**
      * @return array<int, string>

@@ -11,7 +11,9 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @extends Builder<LicenseKey>
+ * @template TModel of LicenseKey
+ *
+ * @extends Builder<TModel>
  */
 final class LicenseKeyBuilder extends Builder
 {

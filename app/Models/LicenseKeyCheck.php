@@ -67,7 +67,10 @@ use Illuminate\Support\Carbon;
 )]
 final class LicenseKeyCheck extends Model
 {
-    use HasFactory, HasUuids;
+    /** @use HasFactory<LicenseKeyCheckFactory> */
+    use HasFactory;
+
+    use HasUuids;
 
     /**
      * @return array<int, string>
