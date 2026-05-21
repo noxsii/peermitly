@@ -20,6 +20,19 @@ test('activate sets status to active and computes expires_at', function (): void
     expect($activated->expires_at->format('Y-m-d H:i:s'))->toBe(now()->addMonths(12)->format('Y-m-d H:i:s'));
 });
 
+test('hours validity computes expires_at via addHours', function (): void {
+    $key = LicenseKey::factory()->create([
+        'status' => 'pending',
+        'validity_amount' => 6,
+        'validity_unit' => 'hours',
+    ]);
+
+    $activated = new ActivateLicenseKeyAction()->handle($key);
+
+    expect($activated->expires_at->format('Y-m-d H:i:s'))
+        ->toBe(now()->addHours(6)->format('Y-m-d H:i:s'));
+});
+
 test('lifetime key sets expires_at to null on activate', function (): void {
     $key = LicenseKey::factory()->lifetime()->create([
         'status' => 'pending',

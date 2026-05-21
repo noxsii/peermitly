@@ -34,6 +34,22 @@ test('lifetime keys with null expires_at are never expired', function (): void {
     expect($lifetime->fresh()->status->value)->toBe('active');
 });
 
+test('hours-based keys expire when timestamp is past', function (): void {
+    $key = LicenseKey::factory()->create([
+        'status' => 'active',
+        'validity_amount' => 2,
+        'validity_unit' => 'hours',
+        'activated_at' => now()->subHours(3),
+        'expires_at' => now()->subHour(),
+    ]);
+
+    $this->artisan('license-keys:expire')
+        ->expectsOutputToContain('Expired 1 license keys.')
+        ->assertSuccessful();
+
+    expect($key->fresh()->status->value)->toBe('expired');
+});
+
 test('already expired keys are not touched', function (): void {
     $alreadyExpired = LicenseKey::factory()->expired()->create();
     $originalUpdatedAt = $alreadyExpired->updated_at;
