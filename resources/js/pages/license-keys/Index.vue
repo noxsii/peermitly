@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Deferred, Link, router } from "@inertiajs/vue3";
-import { Download, KeyRound, Package, Plus, Settings2 } from "@lucide/vue";
+import { Download, KeyRound, Plus, Settings2 } from "@lucide/vue";
 import { ref, watch } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
 import BulkCreateLicenseKeyDialog from "@/components/dialogs/BulkCreateLicenseKeyDialog.vue";
@@ -62,18 +62,6 @@ watch(statusFilter, (value) => {
 <template>
     <PageLayout title="License Keys">
         <template #actions>
-            <Link href="/license-keys/products">
-                <Button variant="ghost" size="sm">
-                    <Package class="size-4" />
-                    Manage products
-                </Button>
-            </Link>
-            <Link href="/license-keys/types">
-                <Button variant="ghost" size="sm">
-                    <Settings2 class="size-4" />
-                    Manage types
-                </Button>
-            </Link>
             <Link href="/license-keys/export">
                 <Button variant="ghost" size="sm">
                     <Download class="size-4" />
