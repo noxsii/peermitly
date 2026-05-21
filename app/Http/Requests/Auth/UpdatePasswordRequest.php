@@ -16,7 +16,7 @@ final class UpdatePasswordRequest extends FormRequest
     }
 
     /**
-     * @return array<string, array<int, ValidationRule|Password|string>>
+     * @return array<string, array<int, ValidationRule|Password|string|null>>
      */
     public function rules(): array
     {

@@ -30,6 +30,9 @@ final class LogApiRequest
         'key',
     ];
 
+    /**
+     * @param  Closure(Request): Response  $next
+     */
     public function handle(Request $request, Closure $next): Response
     {
         $request->attributes->set('api_log_start', microtime(true));

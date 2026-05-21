@@ -17,6 +17,7 @@ use App\Http\Resources\LicenseKeys\LicenseKeyResource;
 use App\Models\LicenseKey;
 use App\Models\LicenseKeyType;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -59,6 +60,9 @@ final class LicenseKeyController
             $request->filled('customer_email') ? $request->string('customer_email')->toString() : null,
         );
 
+        $user = $request->user();
+        abort_unless($user instanceof User, 401);
+
         $licenseKey = $create->handle(
             $type,
             $product,
@@ -68,7 +72,7 @@ final class LicenseKeyController
             $request->filled('max_activations') ? $request->integer('max_activations') : null,
             $request->boolean('requires_hwid_check'),
             $request->array('metadata') ?: null,
-            $request->user(),
+            $user,
         );
 
         return LicenseKeyResource::make($licenseKey->load(['type', 'product', 'customer']));

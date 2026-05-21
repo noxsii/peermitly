@@ -19,6 +19,7 @@ use App\Models\Customer;
 use App\Models\LicenseKey;
 use App\Models\LicenseKeyType;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -72,6 +73,9 @@ final class LicenseKeyController
             ? Customer::query()->where('team_id', $teamId)->where('uuid', $request->string('customer_uuid'))->first()
             : null;
 
+        $user = $request->user();
+        abort_unless($user instanceof User, 401);
+
         $licenseKey = $create->handle(
             $type,
             $product,
@@ -81,7 +85,7 @@ final class LicenseKeyController
             $request->filled('max_activations') ? $request->integer('max_activations') : null,
             $request->boolean('requires_hwid_check'),
             $request->array('metadata') ?: null,
-            $request->user(),
+            $user,
         );
 
         return to_route('license-keys.show', $licenseKey->uuid);
@@ -97,6 +101,9 @@ final class LicenseKeyController
             ? Customer::query()->where('team_id', $teamId)->where('uuid', $request->string('customer_uuid'))->first()
             : null;
 
+        $user = $request->user();
+        abort_unless($user instanceof User, 401);
+
         $bulk->handle(
             $type,
             $product,
@@ -107,7 +114,7 @@ final class LicenseKeyController
             $request->filled('max_activations') ? $request->integer('max_activations') : null,
             $request->boolean('requires_hwid_check'),
             null,
-            $request->user(),
+            $user,
         );
 
         return back()->with('success', 'Bulk license keys created.');

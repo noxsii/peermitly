@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\LicenseKeys;
 
 use App\Models\LicenseKey;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class LicenseKeyExportController
@@ -16,6 +17,7 @@ final class LicenseKeyExportController
 
         return response()->streamDownload(static function () use ($teamId): void {
             $handle = fopen('php://output', 'w');
+            throw_if($handle === false, RuntimeException::class, 'Unable to open php://output for CSV export.');
 
             fputcsv($handle, [
                 'key',
@@ -39,7 +41,7 @@ final class LicenseKeyExportController
                     foreach ($keys as $key) {
                         fputcsv($handle, [
                             $key->key,
-                            $key->product?->slug,
+                            $key->product->slug,
                             $key->customer?->email,
                             $key->status->value,
                             $key->validity_amount,

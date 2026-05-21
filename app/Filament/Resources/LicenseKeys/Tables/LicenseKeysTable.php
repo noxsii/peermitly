@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\LicenseKeys\Tables;
 
 use App\Enums\LicenseKeyStatus;
+use App\Models\LicenseKey;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -43,9 +44,17 @@ final class LicenseKeysTable
                     ->placeholder('—'),
                 TextColumn::make('validity_amount')
                     ->label('Validity')
-                    ->formatStateUsing(fn ($state, $record): string => $record->validity_unit->isLifetime()
-                        ? 'Lifetime'
-                        : ($state ? $state.' '.$record->validity_unit->value : '—'))
+                    ->formatStateUsing(function (mixed $state, LicenseKey $record): string {
+                        if ($record->validity_unit->isLifetime()) {
+                            return 'Lifetime';
+                        }
+
+                        if (! is_numeric($state)) {
+                            return '—';
+                        }
+
+                        return $state.' '.$record->validity_unit->value;
+                    })
                     ->sortable(),
                 IconColumn::make('requires_hwid_check')
                     ->label('HWID')

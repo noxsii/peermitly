@@ -35,7 +35,7 @@ final readonly class CreateLicenseKeyAction
     ): LicenseKey {
         $context = new LicenseKeyGenerationContext(
             productSlug: $product->slug,
-            customerCode: $customer?->email ?? '',
+            customerCode: $customer instanceof Customer ? $customer->email : '',
         );
 
         $generated = $this->generate->handle($type, $context);

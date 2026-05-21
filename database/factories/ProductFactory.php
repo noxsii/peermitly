@@ -19,7 +19,8 @@ final class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = implode(' ', fake()->unique()->words(2));
+        $words = fake()->unique()->words(2);
+        $name = is_array($words) ? implode(' ', $words) : $words;
 
         return [
             'team_id' => Team::factory(),

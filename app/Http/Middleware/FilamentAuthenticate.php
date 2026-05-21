@@ -21,8 +21,6 @@ final class FilamentAuthenticate extends Authenticate
 
         if (! $guard->check()) {
             $this->unauthenticated($request, $guards);
-
-            return;
         }
 
         $this->auth->shouldUse(Filament::getAuthGuard());

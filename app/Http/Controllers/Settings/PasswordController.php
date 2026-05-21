@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Settings;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\UpdatePasswordAction;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 
 final class PasswordController
@@ -16,8 +17,11 @@ final class PasswordController
         UpdatePasswordAction $update,
         LogoutAction $logout,
     ): RedirectResponse {
+        $user = $request->user();
+        abort_unless($user instanceof User, 401);
+
         $update->handle(
-            $request->user(),
+            $user,
             $request->string('password')->toString(),
         );
 

@@ -47,7 +47,7 @@ final class LicenseKeySearchController
                 'uuid' => $key->uuid,
                 'key' => $key->key,
                 'status' => $key->status->value,
-                'product' => $key->product?->name,
+                'product' => $key->product->name,
                 'customer' => $key->customer?->email,
                 'expires_at' => $key->expires_at?->toIso8601String(),
             ])->all(),
