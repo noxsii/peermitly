@@ -24,9 +24,9 @@ final class LicenseKeyResource extends JsonResource
             'key' => $this->key,
             'status' => $this->status->value,
             'product' => [
-                'uuid' => $this->product?->uuid,
-                'name' => $this->product?->name,
-                'slug' => $this->product?->slug,
+                'uuid' => $this->product->uuid,
+                'name' => $this->product->name,
+                'slug' => $this->product->slug,
             ],
             'customer' => $this->customer === null ? null : [
                 'uuid' => $this->customer->uuid,
@@ -34,8 +34,8 @@ final class LicenseKeyResource extends JsonResource
                 'name' => $this->customer->name,
             ],
             'type' => [
-                'uuid' => $this->type?->uuid,
-                'name' => $this->type?->name,
+                'uuid' => $this->type->uuid,
+                'name' => $this->type->name,
             ],
             'validity_amount' => $this->validity_amount,
             'validity_unit' => $this->validity_unit->value,
@@ -53,7 +53,7 @@ final class LicenseKeyResource extends JsonResource
                 'machine_id' => $a->machine_id,
                 'hostname' => $a->hostname,
                 'ip_address' => $a->ip_address,
-                'activated_at' => $a->activated_at?->toIso8601String(),
+                'activated_at' => $a->activated_at->toIso8601String(),
                 'last_seen_at' => $a->last_seen_at?->toIso8601String(),
             ])->values()),
         ];

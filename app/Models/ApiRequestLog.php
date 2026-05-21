@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ApiRequestLogFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -64,7 +65,9 @@ use Illuminate\Support\Carbon;
 )]
 final class ApiRequestLog extends Model
 {
+    /** @use HasFactory<ApiRequestLogFactory> */
     use HasFactory;
+
     use HasUuids;
 
     public $timestamps = false;

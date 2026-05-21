@@ -15,11 +15,17 @@ use Illuminate\Database\Eloquent\Builder;
  */
 final class LicenseKeyTypeBuilder extends Builder
 {
+    /**
+     * @return self<TModel>
+     */
     public function whereTeam(Team|int $team): self
     {
         return $this->where('team_id', $team instanceof Team ? $team->id : $team);
     }
 
+    /**
+     * @return self<TModel>
+     */
     public function whereActive(): self
     {
         return $this->where('is_active', true);
