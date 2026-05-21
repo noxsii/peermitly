@@ -2,6 +2,7 @@
 import { Deferred, Link, usePage } from "@inertiajs/vue3";
 import { Plus } from "@lucide/vue";
 import { computed } from "vue";
+import RecentApiCalls from "@/components/dashboard/RecentApiCalls.vue";
 import RecentLicenseKeys from "@/components/dashboard/RecentLicenseKeys.vue";
 import StatsOverview from "@/components/dashboard/StatsOverview.vue";
 import TeamMembers from "@/components/dashboard/TeamMembers.vue";
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
 import type {
+    DashboardApiCall,
     DashboardStats,
     DashboardTeamMember,
     LicenseKey,
@@ -20,6 +22,7 @@ defineProps<{
     stats?: DashboardStats | null;
     recentLicenseKeys?: { data: LicenseKey[] } | null;
     teamMembers?: { data: DashboardTeamMember[] } | null;
+    recentApiCalls?: { data: DashboardApiCall[] } | null;
 }>();
 
 const page = usePage<PageProps>();
@@ -68,7 +71,7 @@ const teamName = computed(
                 <StatsOverview v-if="stats" :stats="stats" />
             </Deferred>
 
-            <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+            <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
                 <!-- Recent license keys -->
                 <Card title="Recent license keys" class="lg:col-span-2">
                     <template #actions>
@@ -95,21 +98,40 @@ const teamName = computed(
                     </Deferred>
                 </Card>
 
-                <!-- Team -->
-                <Card title="Team members">
-                    <Deferred data="teamMembers">
-                        <template #fallback>
-                            <div class="space-y-3">
-                                <Skeleton
-                                    v-for="i in 3"
-                                    :key="i"
-                                    class="h-10 w-full"
-                                />
-                            </div>
-                        </template>
-                        <TeamMembers :members="teamMembers?.data ?? []" />
-                    </Deferred>
-                </Card>
+                <!-- Right column: Team members + Recent API calls stacked -->
+                <div class="space-y-4">
+                    <Card title="Team members">
+                        <Deferred data="teamMembers">
+                            <template #fallback>
+                                <div class="space-y-3">
+                                    <Skeleton
+                                        v-for="i in 3"
+                                        :key="i"
+                                        class="h-10 w-full"
+                                    />
+                                </div>
+                            </template>
+                            <TeamMembers :members="teamMembers?.data ?? []" />
+                        </Deferred>
+                    </Card>
+
+                    <Card title="Recent API calls">
+                        <Deferred data="recentApiCalls">
+                            <template #fallback>
+                                <div class="space-y-2">
+                                    <Skeleton
+                                        v-for="i in 4"
+                                        :key="i"
+                                        class="h-8 w-full"
+                                    />
+                                </div>
+                            </template>
+                            <RecentApiCalls
+                                :rows="recentApiCalls?.data ?? []"
+                            />
+                        </Deferred>
+                    </Card>
+                </div>
             </div>
         </div>
     </PageLayout>
