@@ -66,3 +66,19 @@ test('regular user cannot list teams in filament', function (): void {
         ->get('/admin/teams')
         ->assertForbidden();
 });
+
+test('super admin can list license keys in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::SUPER_ADMIN]);
+
+    $this->actingAs($user)
+        ->get('/admin/license-keys')
+        ->assertOk();
+});
+
+test('regular user cannot list license keys in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::USER]);
+
+    $this->actingAs($user)
+        ->get('/admin/license-keys')
+        ->assertForbidden();
+});
