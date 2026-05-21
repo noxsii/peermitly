@@ -8,11 +8,26 @@ export type LicenseKeyStatus =
 export type LicenseKeyGeneratorType = "uuid" | "random" | "pattern";
 
 export type LicenseValidityUnit =
+    | "hours"
     | "days"
     | "weeks"
     | "months"
     | "years"
     | "lifetime";
+
+export interface LicenseValidityUnitOption {
+    value: LicenseValidityUnit;
+    label: string;
+}
+
+export const VALIDITY_UNITS: readonly LicenseValidityUnitOption[] = [
+    { value: "hours", label: "Hours" },
+    { value: "days", label: "Days" },
+    { value: "weeks", label: "Weeks" },
+    { value: "months", label: "Months" },
+    { value: "years", label: "Years" },
+    { value: "lifetime", label: "Lifetime" },
+] as const;
 
 export interface LicenseKeyActivation {
     uuid: string;

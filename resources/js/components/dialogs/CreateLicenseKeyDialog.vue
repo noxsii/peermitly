@@ -23,11 +23,12 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import type {
-    CustomerOption,
-    LicenseKeyType,
-    LicenseValidityUnit,
-    ProductOption,
+import {
+    VALIDITY_UNITS,
+    type CustomerOption,
+    type LicenseKeyType,
+    type LicenseValidityUnit,
+    type ProductOption,
 } from "@/types";
 
 const props = defineProps<{
@@ -37,14 +38,6 @@ const props = defineProps<{
 }>();
 
 const open = defineModel<boolean>("open", { required: true });
-
-const VALIDITY_UNITS: { value: LicenseValidityUnit; label: string }[] = [
-    { value: "days", label: "Days" },
-    { value: "weeks", label: "Weeks" },
-    { value: "months", label: "Months" },
-    { value: "years", label: "Years" },
-    { value: "lifetime", label: "Lifetime" },
-];
 
 const form = useForm<{
     license_key_type_uuid: string;

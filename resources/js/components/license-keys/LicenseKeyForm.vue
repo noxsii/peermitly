@@ -14,11 +14,12 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import type {
-    CustomerOption,
-    LicenseKeyType,
-    LicenseValidityUnit,
-    ProductOption,
+import {
+    VALIDITY_UNITS,
+    type CustomerOption,
+    type LicenseKeyType,
+    type LicenseValidityUnit,
+    type ProductOption,
 } from "@/types";
 
 const props = defineProps<{
@@ -47,14 +48,6 @@ const customerUuid = ref<string>(props.initial?.customer_uuid ?? "");
 const validityUnit = ref<LicenseValidityUnit>(
     (props.initial?.validity_unit as LicenseValidityUnit) ?? "months",
 );
-
-const VALIDITY_UNITS: { value: LicenseValidityUnit; label: string }[] = [
-    { value: "days", label: "Days" },
-    { value: "weeks", label: "Weeks" },
-    { value: "months", label: "Months" },
-    { value: "years", label: "Years" },
-    { value: "lifetime", label: "Lifetime" },
-];
 </script>
 
 <template>

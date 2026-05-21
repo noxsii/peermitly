@@ -21,7 +21,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import PageLayout from "@/layout/PageLayout.vue";
-import type { CustomerOption, LicenseKey, LicenseValidityUnit } from "@/types";
+import {
+    VALIDITY_UNITS,
+    type CustomerOption,
+    type LicenseKey,
+    type LicenseValidityUnit,
+} from "@/types";
 
 const editOpen = ref(false);
 const deleteOpen = ref(false);
@@ -62,20 +67,28 @@ const validityLabel = computed(() => {
     return `${k.validity_amount} ${k.validity_unit}`;
 });
 
-const daysRemaining = computed(() => {
+const millisRemaining = computed(() => {
     const k = props.licenseKey?.data;
     if (!k || k.validity_unit === "lifetime") return null;
     if (!k.expires_at) return null;
-    const diff = new Date(k.expires_at).getTime() - Date.now();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+    return Math.max(0, new Date(k.expires_at).getTime() - Date.now());
+});
+
+const daysRemaining = computed(() => {
+    if (millisRemaining.value === null) return null;
+    return Math.ceil(millisRemaining.value / (1000 * 60 * 60 * 24));
 });
 
 const remainingLabel = computed(() => {
     const k = props.licenseKey?.data;
     if (!k) return "—";
     if (k.validity_unit === "lifetime") return "∞ Lifetime";
-    if (daysRemaining.value === null) return "Not activated yet";
-    if (daysRemaining.value === 0) return "Expired";
+    if (millisRemaining.value === null) return "Not activated yet";
+    if (millisRemaining.value === 0) return "Expired";
+    if (k.validity_unit === "hours") {
+        const hours = Math.ceil(millisRemaining.value / (1000 * 60 * 60));
+        return `${hours} hours remaining`;
+    }
     return `${daysRemaining.value} days remaining`;
 });
 
@@ -375,17 +388,12 @@ const submitRevoke = () => {
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="days">
-                                            Days
-                                        </SelectItem>
-                                        <SelectItem value="months">
-                                            Months
-                                        </SelectItem>
-                                        <SelectItem value="years">
-                                            Years
-                                        </SelectItem>
-                                        <SelectItem value="lifetime">
-                                            Lifetime
+                                        <SelectItem
+                                            v-for="unit in VALIDITY_UNITS"
+                                            :key="unit.value"
+                                            :value="unit.value"
+                                        >
+                                            {{ unit.label }}
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>

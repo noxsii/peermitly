@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 
 enum LicenseValidityUnit: string
 {
+    case HOURS = 'hours';
     case DAYS = 'days';
     case WEEKS = 'weeks';
     case MONTHS = 'months';
@@ -17,6 +18,7 @@ enum LicenseValidityUnit: string
     public function label(): string
     {
         return match ($this) {
+            self::HOURS => 'Hours',
             self::DAYS => 'Days',
             self::WEEKS => 'Weeks',
             self::MONTHS => 'Months',
@@ -28,6 +30,7 @@ enum LicenseValidityUnit: string
     public function applyTo(CarbonInterface $from, int $amount): CarbonInterface
     {
         return match ($this) {
+            self::HOURS => $from->copy()->addHours($amount),
             self::DAYS => $from->copy()->addDays($amount),
             self::WEEKS => $from->copy()->addWeeks($amount),
             self::MONTHS => $from->copy()->addMonths($amount),

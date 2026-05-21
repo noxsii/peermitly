@@ -45,3 +45,15 @@ test('extension to lifetime nullifies expires_at', function (): void {
     expect($extended->expires_at)->toBeNull();
     expect($extended->validity_unit->value)->toBe('lifetime');
 });
+
+test('extension by hours pushes expires_at forward by hours', function (): void {
+    $key = LicenseKey::factory()->active()->create();
+    $originalExpires = $key->expires_at;
+
+    $extended = new ExtendLicenseKeyAction()->handle($key, 5, LicenseValidityUnit::HOURS);
+
+    expect($extended->expires_at->format('Y-m-d H:i:s'))
+        ->toBe($originalExpires->copy()->addHours(5)->format('Y-m-d H:i:s'));
+    expect($extended->validity_unit->value)->toBe('hours');
+    expect($extended->validity_amount)->toBe(5);
+});

@@ -10,8 +10,10 @@ export type {
     LicenseKeyStatus,
     LicenseKeyType,
     LicenseValidityUnit,
+    LicenseValidityUnitOption,
     ProductOption,
 } from "./license-key";
+export { VALIDITY_UNITS } from "./license-key";
 export type { LucideIcon, NavItem } from "./navigation";
 export type { NotificationItem, NotificationsPayload } from "./notification";
 export type { PageProps } from "./inertia";
