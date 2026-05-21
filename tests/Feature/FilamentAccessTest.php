@@ -50,3 +50,19 @@ test('regular user cannot list users in filament', function (): void {
         ->get('/admin/users')
         ->assertForbidden();
 });
+
+test('super admin can list teams in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::SUPER_ADMIN]);
+
+    $this->actingAs($user)
+        ->get('/admin/teams')
+        ->assertOk();
+});
+
+test('regular user cannot list teams in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::USER]);
+
+    $this->actingAs($user)
+        ->get('/admin/teams')
+        ->assertForbidden();
+});
