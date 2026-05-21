@@ -6,15 +6,20 @@ namespace App\Filament\Widgets;
 
 use App\Models\ApiRequestLog;
 use DateTimeInterface;
-use Filament\Widgets\BarChartWidget;
+use Filament\Widgets\ChartWidget;
 
-final class ApiCallsChart extends BarChartWidget
+final class ApiCallsChart extends ChartWidget
 {
     protected ?string $heading = 'API calls (last 24 hours)';
 
     protected static ?int $sort = 5;
 
     protected int|string|array $columnSpan = 2;
+
+    protected function getType(): string
+    {
+        return 'bar';
+    }
 
     /**
      * @return array<string, mixed>

@@ -6,15 +6,20 @@ namespace App\Filament\Widgets;
 
 use App\Enums\LicenseKeyStatus;
 use App\Models\LicenseKey;
-use Filament\Widgets\DoughnutChartWidget;
+use Filament\Widgets\ChartWidget;
 
-final class LicenseKeysByStatusChart extends DoughnutChartWidget
+final class LicenseKeysByStatusChart extends ChartWidget
 {
     protected ?string $heading = 'License keys by status';
 
     protected static ?int $sort = 2;
 
     protected int|string|array $columnSpan = 1;
+
+    protected function getType(): string
+    {
+        return 'doughnut';
+    }
 
     /**
      * @return array<string, mixed>

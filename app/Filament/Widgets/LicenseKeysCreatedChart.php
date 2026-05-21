@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\LicenseKey;
-use Carbon\CarbonInterface;
-use Filament\Widgets\LineChartWidget;
-use Illuminate\Support\Carbon;
+use Filament\Widgets\ChartWidget;
 
-final class LicenseKeysCreatedChart extends LineChartWidget
+final class LicenseKeysCreatedChart extends ChartWidget
 {
     protected ?string $heading = 'License keys created (last 30 days)';
 
     protected static ?int $sort = 3;
 
     protected int|string|array $columnSpan = 2;
+
+    protected function getType(): string
+    {
+        return 'line';
+    }
 
     /**
      * @return array<string, mixed>
@@ -55,10 +58,5 @@ final class LicenseKeysCreatedChart extends LineChartWidget
             ],
             'labels' => $labels,
         ];
-    }
-
-    protected function getStartDate(): CarbonInterface
-    {
-        return now()->subDays(29)->startOfDay();
     }
 }

@@ -42,7 +42,7 @@ final class PlatformStatsOverview extends StatsOverviewWidget
                 ->description(number_format($totalKeys).' total · '.number_format($pending).' pending')
                 ->descriptionIcon('heroicon-o-key')
                 ->color('success')
-                ->chart(array_map('intval', $createdLast14Days)),
+                ->chart(array_map(intval(...), $createdLast14Days)),
 
             Stat::make('Pending activations', number_format($pending))
                 ->description('Waiting for first API check')
