@@ -106,17 +106,7 @@ final class LicenseKeyController
 
         $count = $request->integer('count');
 
-        BulkCreateLicenseKeysJob::dispatch(
-            typeId: $type->id,
-            productId: $product->id,
-            customerId: $customer?->id,
-            count: $count,
-            validityUnit: $request->string('validity_unit')->toString(),
-            validityAmount: $request->integer('validity_amount'),
-            maxActivations: $request->filled('max_activations') ? $request->integer('max_activations') : null,
-            requiresHwidCheck: $request->boolean('requires_hwid_check'),
-            createdById: $user->id,
-        );
+        dispatch(new BulkCreateLicenseKeysJob(typeId: $type->id, productId: $product->id, customerId: $customer?->id, count: $count, validityUnit: $request->string('validity_unit')->toString(), validityAmount: $request->integer('validity_amount'), maxActivations: $request->filled('max_activations') ? $request->integer('max_activations') : null, requiresHwidCheck: $request->boolean('requires_hwid_check'), createdById: $user->id));
 
         return back()->with(
             'success',

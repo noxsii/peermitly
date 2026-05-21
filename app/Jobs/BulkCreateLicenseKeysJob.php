@@ -14,12 +14,12 @@ use App\Models\User;
 use App\Notifications\LicenseKeysBulkCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\Attributes\Timeout;
 
+#[Timeout(600)]
 final class BulkCreateLicenseKeysJob implements ShouldQueue
 {
     use Queueable;
-
-    public int $timeout = 600;
 
     public function __construct(
         public readonly int $typeId,

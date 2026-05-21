@@ -74,8 +74,7 @@ void props;
                 <DialogTitle>Export License Keys</DialogTitle>
                 <DialogDescription>
                     Filter the keys you want to export and pick the CSV
-                    delimiter. The download starts as soon as you click
-                    Export.
+                    delimiter. The download starts as soon as you click Export.
                 </DialogDescription>
             </DialogHeader>
 
