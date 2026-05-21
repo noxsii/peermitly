@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\LicenseCheckStatus;
+use Database\Factories\LicenseKeyCheckFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -31,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @property-read LicenseKey|null $licenseKey
  * @property-read Product|null $product
  *
+ * @method static LicenseKeyCheckFactory factory($count = null, $state = [])
  * @method static Builder<static>|LicenseKeyCheck newModelQuery()
  * @method static Builder<static>|LicenseKeyCheck newQuery()
  * @method static Builder<static>|LicenseKeyCheck query()

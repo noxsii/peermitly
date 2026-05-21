@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Data\LicenseKeys\LicenseKeyConfiguration;
 use App\Enums\LicenseKeyGeneratorType;
 use App\Models\Builders\LicenseKeyTypeBuilder;
+use Database\Factories\LicenseKeyTypeFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -31,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $license_keys_count
  * @property-read Team $team
  *
+ * @method static LicenseKeyTypeFactory factory($count = null, $state = [])
  * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType newModelQuery()
  * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType newQuery()
  * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType query()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\LicenseKeyActivationFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read LicenseKey $licenseKey
  *
+ * @method static LicenseKeyActivationFactory factory($count = null, $state = [])
  * @method static Builder<static>|LicenseKeyActivation newModelQuery()
  * @method static Builder<static>|LicenseKeyActivation newQuery()
  * @method static Builder<static>|LicenseKeyActivation query()

@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\LicenseKeyStatus;
 use App\Enums\LicenseValidityUnit;
 use App\Models\Builders\LicenseKeyBuilder;
+use Database\Factories\LicenseKeyFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -51,6 +52,7 @@ use Laravel\Scout\Searchable;
  * @property-read Team $team
  * @property-read LicenseKeyType $type
  *
+ * @method static LicenseKeyFactory factory($count = null, $state = [])
  * @method static LicenseKeyBuilder<static>|LicenseKey newModelQuery()
  * @method static LicenseKeyBuilder<static>|LicenseKey newQuery()
  * @method static LicenseKeyBuilder<static>|LicenseKey query()
