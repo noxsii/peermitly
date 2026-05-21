@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\LicenseKeys;
 
-use App\Actions\LicenseKeys\BulkCreateLicenseKeysAction;
 use App\Actions\LicenseKeys\CreateLicenseKeyAction;
 use App\Enums\LicenseKeyStatus;
 use App\Enums\LicenseValidityUnit;
@@ -15,6 +14,7 @@ use App\Http\Resources\LicenseKeys\CustomerResource;
 use App\Http\Resources\LicenseKeys\LicenseKeyResource;
 use App\Http\Resources\LicenseKeys\LicenseKeyTypeResource;
 use App\Http\Resources\LicenseKeys\ProductResource;
+use App\Jobs\BulkCreateLicenseKeysJob;
 use App\Models\Customer;
 use App\Models\LicenseKey;
 use App\Models\LicenseKeyType;
@@ -91,7 +91,7 @@ final class LicenseKeyController
         return to_route('license-keys.show', $licenseKey->uuid);
     }
 
-    public function bulkStore(BulkStoreLicenseKeyRequest $request, BulkCreateLicenseKeysAction $bulk): RedirectResponse
+    public function bulkStore(BulkStoreLicenseKeyRequest $request): RedirectResponse
     {
         $teamId = (int) auth()->user()?->current_team_id;
 
@@ -104,20 +104,24 @@ final class LicenseKeyController
         $user = $request->user();
         abort_unless($user instanceof User, 401);
 
-        $bulk->handle(
-            $type,
-            $product,
-            $customer,
-            $request->integer('count'),
-            $request->integer('validity_amount'),
-            LicenseValidityUnit::from($request->string('validity_unit')->toString()),
-            $request->filled('max_activations') ? $request->integer('max_activations') : null,
-            $request->boolean('requires_hwid_check'),
-            null,
-            $user,
+        $count = $request->integer('count');
+
+        BulkCreateLicenseKeysJob::dispatch(
+            typeId: $type->id,
+            productId: $product->id,
+            customerId: $customer?->id,
+            count: $count,
+            validityUnit: $request->string('validity_unit')->toString(),
+            validityAmount: $request->integer('validity_amount'),
+            maxActivations: $request->filled('max_activations') ? $request->integer('max_activations') : null,
+            requiresHwidCheck: $request->boolean('requires_hwid_check'),
+            createdById: $user->id,
         );
 
-        return back()->with('success', 'Bulk license keys created.');
+        return back()->with(
+            'success',
+            sprintf('Generating %d license keys in the background — you will be notified when it is done.', $count),
+        );
     }
 
     public function show(LicenseKey $licenseKey): Response

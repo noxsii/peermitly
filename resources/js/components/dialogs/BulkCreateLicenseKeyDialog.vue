@@ -82,6 +82,14 @@ const submit = () => {
                 </DialogDescription>
             </DialogHeader>
 
+            <div
+                class="border-primary/30 bg-primary/5 text-foreground rounded-md border px-3 py-2 text-xs"
+            >
+                Bulk creation runs in the background. The dialog closes
+                immediately and you'll receive a notification on the dashboard
+                once all keys are ready.
+            </div>
+
             <form @submit.prevent="submit" class="space-y-4">
                 <div class="space-y-2">
                     <Label>License key type</Label>
