@@ -6,6 +6,7 @@ import {
     Layers,
     LayoutDashboard,
     LifeBuoy,
+    Newspaper,
     Package,
     Settings,
     Users,
@@ -35,6 +36,7 @@ const primary: NavItem[] = [
 ];
 
 const secondary: (NavItem | ExternalNavItem)[] = [
+    { label: "Changelog", href: "/changelog", icon: Newspaper },
     { label: "API Docs", href: "/docs/api", icon: BookOpen, external: true },
     { label: "Help", href: "/dashboard", icon: LifeBuoy },
     { label: "Settings", href: "/dashboard", icon: Settings },

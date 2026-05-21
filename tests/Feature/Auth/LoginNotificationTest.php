@@ -19,9 +19,7 @@ test('successful web login dispatches NewLoginNotification mail to the user', fu
         'password' => 'correct-password',
     ])->assertRedirect();
 
-    Mail::assertQueued(NewLoginNotification::class, function (NewLoginNotification $mail): bool {
-        return $mail->hasTo('ada@example.com');
-    });
+    Mail::assertQueued(NewLoginNotification::class, fn (NewLoginNotification $mail): bool => $mail->hasTo('ada@example.com'));
 });
 
 test('failed login does not dispatch the notification', function (): void {

@@ -64,7 +64,11 @@ const parseMetadata = (): boolean => {
     }
     try {
         const parsed = JSON.parse(raw);
-        if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        if (
+            typeof parsed !== "object" ||
+            parsed === null ||
+            Array.isArray(parsed)
+        ) {
             metadataError.value = "Metadata must be a JSON object.";
             return false;
         }
