@@ -12,6 +12,29 @@ use Illuminate\Http\JsonResponse;
 
 final class LicenseKeyCheckController
 {
+    /**
+     * Validate a license key.
+     *
+     * Call this endpoint from your application or installer to validate a
+     * license key against a product. The first successful check on a
+     * `pending` key activates it and starts its validity period.
+     *
+     * When `requires_hwid_check` is enabled on the key, the `hwid` field
+     * is required. On the first check it is bound to the key; subsequent
+     * checks must present the same HWID.
+     *
+     * The response always returns HTTP `200` (except `422` for
+     * `hwid_required`). The actual outcome is in the `status` field:
+     *
+     * - `active` — key is valid and usable
+     * - `expired` — key's validity period has ended
+     * - `revoked` / `blocked` — key has been disabled
+     * - `invalid` — unknown key, wrong product, or unknown product
+     * - `hwid_required` / `hwid_mismatch` — HWID problem
+     *
+     * Requires token ability: `license-keys:check`. Rate-limited to
+     * 60 requests per minute per (user, IP) pair.
+     */
     public function check(CheckLicenseKeyRequest $request, CheckLicenseKeyAction $check): JsonResponse
     {
         $user = $request->user();

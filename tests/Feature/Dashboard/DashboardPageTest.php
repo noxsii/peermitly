@@ -72,7 +72,7 @@ test('GetDashboardStatsAction scopes counts to the given team', function (): voi
     Customer::factory()->forTeam($team)->count(4)->create();
     Customer::factory()->forTeam($otherTeam)->count(7)->create();
 
-    $stats = app(GetDashboardStatsAction::class)->handle($team->id);
+    $stats = resolve(GetDashboardStatsAction::class)->handle($team->id);
 
     expect($stats->activeLicenseKeys)->toBe(3)
         ->and($stats->pendingLicenseKeys)->toBe(2)

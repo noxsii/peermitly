@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { Boxes, KeyRound, Layers, Package, Signal, Timer, Users } from "@lucide/vue";
+import {
+    Boxes,
+    KeyRound,
+    Layers,
+    Package,
+    Signal,
+    Timer,
+    Users,
+} from "@lucide/vue";
 import { computed } from "vue";
 import StatCard from "@/components/dashboard/StatCard.vue";
 import type { DashboardStats } from "@/types";

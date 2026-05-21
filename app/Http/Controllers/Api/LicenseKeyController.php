@@ -23,6 +23,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 final class LicenseKeyController
 {
+    /**
+     * List license keys.
+     *
+     * Returns a paginated, team-scoped collection of license keys. Each
+     * key embeds its product, type, and (if assigned) customer.
+     *
+     * Requires token ability: `license-keys:read`.
+     */
     public function index(): AnonymousResourceCollection
     {
         $teamId = (int) auth()->user()?->current_team_id;
@@ -37,6 +45,14 @@ final class LicenseKeyController
         );
     }
 
+    /**
+     * Show a single license key.
+     *
+     * Returns the full details of one license key, including its
+     * activation history. Cross-team access returns `404`.
+     *
+     * Requires token ability: `license-keys:read`.
+     */
     public function show(LicenseKey $licenseKey): JsonResource
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
@@ -44,6 +60,19 @@ final class LicenseKeyController
         return LicenseKeyResource::make($licenseKey->load(['type', 'product', 'customer', 'activations']));
     }
 
+    /**
+     * Create a new license key.
+     *
+     * Generates a license key for the given product and key type. The key
+     * is created in status `pending` — its validity starts on the first
+     * successful `POST /api/license-keys/check`.
+     *
+     * If `customer_uuid` is provided, the key is attached to that
+     * customer. Alternatively, pass `customer_email` to attach by email
+     * (creates the customer record if it does not exist yet).
+     *
+     * Requires token ability: `license-keys:manage`.
+     */
     public function store(
         StoreLicenseKeyRequest $request,
         CreateLicenseKeyAction $create,
@@ -78,6 +107,14 @@ final class LicenseKeyController
         return LicenseKeyResource::make($licenseKey->load(['type', 'product', 'customer']));
     }
 
+    /**
+     * Delete a license key.
+     *
+     * Permanently removes the key. Prefer `revoke` when you want to
+     * keep a record of disabled keys.
+     *
+     * Requires token ability: `license-keys:manage`.
+     */
     public function destroy(LicenseKey $licenseKey): JsonResource
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
@@ -87,6 +124,15 @@ final class LicenseKeyController
         return LicenseKeyResource::make($licenseKey);
     }
 
+    /**
+     * Revoke a license key.
+     *
+     * Marks the key as `revoked` and records the optional `reason`.
+     * The key stops passing checks immediately but is preserved for
+     * audit purposes. Use `restore` to bring it back.
+     *
+     * Requires token ability: `license-keys:manage`.
+     */
     public function revoke(RevokeLicenseKeyRequest $request, LicenseKey $licenseKey, RevokeLicenseKeyAction $revoke): JsonResource
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
@@ -96,6 +142,15 @@ final class LicenseKeyController
         return LicenseKeyResource::make($licenseKey->fresh());
     }
 
+    /**
+     * Restore a revoked license key.
+     *
+     * Lifts a previous revocation. If the original `expires_at` is still
+     * in the future, the key goes back to `active`; otherwise it lands
+     * in `expired`.
+     *
+     * Requires token ability: `license-keys:manage`.
+     */
     public function restore(LicenseKey $licenseKey, RestoreLicenseKeyAction $restore): JsonResource
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);
@@ -105,6 +160,15 @@ final class LicenseKeyController
         return LicenseKeyResource::make($licenseKey->fresh());
     }
 
+    /**
+     * Extend the validity of a license key.
+     *
+     * Pushes `expires_at` forward by `amount` units of `unit`
+     * (`hours` | `days` | `weeks` | `months` | `years`). Use this to
+     * renew subscriptions without issuing a new key.
+     *
+     * Requires token ability: `license-keys:manage`.
+     */
     public function extend(ExtendLicenseKeyRequest $request, LicenseKey $licenseKey, ExtendLicenseKeyAction $extend): JsonResource
     {
         abort_unless($licenseKey->team_id === (int) auth()->user()?->current_team_id, 404);

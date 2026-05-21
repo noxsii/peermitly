@@ -9,12 +9,13 @@ const props = defineProps<{
 const list = computed(() =>
     props.members.map((m) => ({
         ...m,
-        initials: m.name
-            .split(/\s+/)
-            .filter(Boolean)
-            .slice(0, 2)
-            .map((part) => part.charAt(0).toUpperCase())
-            .join("") || m.email.charAt(0).toUpperCase(),
+        initials:
+            m.name
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((part) => part.charAt(0).toUpperCase())
+                .join("") || m.email.charAt(0).toUpperCase(),
     })),
 );
 </script>

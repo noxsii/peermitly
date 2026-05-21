@@ -26,12 +26,81 @@ return [
         /*
          * API version.
          */
-        'version' => env('API_VERSION', '0.0.1'),
+        'version' => env('API_VERSION', '1.0.0'),
 
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).
          */
-        'description' => '',
+        'description' => <<<'MD'
+# Permitlyy API
+
+Welcome to the **Permitlyy** API — the licensing layer for your products.
+
+Use this API to issue license keys, validate them from your application or
+installer, bind keys to hardware, and manage products, key types, and
+customers programmatically.
+
+## Authentication
+
+All endpoints require a Sanctum **Bearer token**.
+
+```http
+Authorization: Bearer <your-token>
+```
+
+Generate a token in the Permitlyy dashboard under **Settings → API tokens**.
+Each token belongs to a team and is scoped to specific abilities:
+
+| Ability                       | Grants access to                                         |
+|-------------------------------|----------------------------------------------------------|
+| `license-keys:check`          | `POST /api/license-keys/check`                           |
+| `license-keys:read`           | `GET  /api/license-keys`, `GET /api/license-keys/{uuid}` |
+| `license-keys:manage`         | Create, revoke, restore, extend, delete license keys     |
+| `license-key-types:manage`    | Full CRUD on key types                                   |
+
+Tokens scope every request to the issuing team. There is no global access —
+even admin tokens only see data of the team they were issued under.
+
+## Conventions
+
+- **IDs in URLs are UUIDs** (not numeric primary keys).
+- **Timestamps** are ISO-8601 strings in UTC (`2026-05-21T08:30:00+00:00`).
+- **Pagination** follows Laravel defaults — request `?page=2`, response
+  contains `data`, `meta`, and `links` keys. Page size is 25.
+- **Errors** follow Laravel's validation convention: HTTP `422` with a
+  `message` and an `errors` map keyed by field name.
+
+## Rate limits
+
+- `POST /api/license-keys/check` is limited to **60 requests per minute**
+  per authenticated user + IP combination. Excess requests get HTTP `429`.
+- Other endpoints inherit the default API throttle of **60 requests per
+  minute** per token.
+
+## The activation model
+
+License keys are **activation-based**, not creation-based. A key in status
+`pending` does not count down its validity until the first successful
+check via `POST /api/license-keys/check`. Once activated, the key enters
+status `active` and `expires_at` is set based on the key type's validity.
+
+## HWID binding
+
+A key created with `requires_hwid_check = true` must be checked with a
+non-empty `hwid` field. The first check binds that HWID to the key
+(stored as a hashed activation). Subsequent checks must present the
+same HWID or the key returns status `hwid_mismatch`.
+
+## Status reference
+
+| Status      | Meaning                                                          |
+|-------------|------------------------------------------------------------------|
+| `pending`   | Created but not yet activated. Validity has not started.         |
+| `active`    | Activated and within its validity period.                        |
+| `expired`   | Validity period has ended (or `expires_at` is in the past).      |
+| `revoked`   | Manually revoked by an admin. Will not pass checks.              |
+| `blocked`   | Soft-blocked by the system (e.g. too many failed HWID attempts). |
+MD,
     ],
 
     /*
