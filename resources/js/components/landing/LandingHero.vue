@@ -37,9 +37,7 @@ import { Button } from "@/components/ui/button";
             >
                 Ship software.<br />Control access.
             </h1>
-            <p
-                class="text-muted-foreground mt-6 max-w-2xl text-lg md:text-xl"
-            >
+            <p class="text-muted-foreground mt-6 max-w-2xl text-lg md:text-xl">
                 License keys, HWID binding, and an activation API for your own
                 products — in one calm dashboard.
             </p>
@@ -67,16 +65,13 @@ import { Button } from "@/components/ui/button";
                         class="relative inline-flex size-2.5 rounded-full bg-emerald-500"
                     ></span>
                 </span>
-                <span
-                    class="text-foreground font-mono text-sm tracking-wide"
+                <span class="text-foreground font-mono text-sm tracking-wide"
                     >PRMT-9F2A-4E11-XR07</span
                 >
-                <span
-                    class="text-muted-foreground hidden text-xs sm:inline"
+                <span class="text-muted-foreground hidden text-xs sm:inline"
                     >·</span
                 >
-                <span
-                    class="text-muted-foreground hidden text-xs sm:inline"
+                <span class="text-muted-foreground hidden text-xs sm:inline"
                     >active · HWID locked</span
                 >
             </div>
