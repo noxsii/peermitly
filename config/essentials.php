@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\Essentials\Configurables\Unguard;
-
 return [
-    Unguard::class => true,
+    // nunomaduro/essentials package is not installed. Add entries here once
+    // the package is added to composer.json.
 ];

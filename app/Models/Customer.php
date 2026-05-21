@@ -48,7 +48,10 @@ use Illuminate\Support\Carbon;
 #[Fillable('team_id', 'email', 'name', 'company', 'metadata')]
 final class Customer extends Model
 {
-    use HasFactory, HasUuids;
+    /** @use HasFactory<CustomerFactory> */
+    use HasFactory;
+
+    use HasUuids;
 
     /**
      * @return array<int, string>

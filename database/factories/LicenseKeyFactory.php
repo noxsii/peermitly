@@ -31,7 +31,9 @@ final class LicenseKeyFactory extends Factory
 
         return [
             'team_id' => Team::factory(),
-            'license_key_type_id' => LicenseKeyType::factory()->state(fn (array $attributes, $licenseKey): array => ['team_id' => $licenseKey?->team_id ?? Team::factory()]),
+            'license_key_type_id' => LicenseKeyType::factory()->state(function (array $attributes, ?LicenseKey $parent): array {
+                return ['team_id' => $parent !== null ? $parent->team_id : Team::factory()];
+            }),
             'product_id' => Product::factory(),
             'customer_id' => null,
             'created_by' => User::factory(),

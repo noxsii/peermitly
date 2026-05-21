@@ -23,13 +23,11 @@ final class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Scramble::configure()
-            ->routes(fn (Route $route) => Str::startsWith($route->uri, 'api/'))
-            ->withDocumentTransformers(function (OpenApi $openApi): void {
-                $openApi->secure(
-                    SecurityScheme::http('bearer')
-                );
-            });
+        $scramble = Scramble::configure();
+        $scramble->routes(fn (Route $route) => Str::startsWith($route->uri, 'api/'));
+        $scramble->withDocumentTransformers(function (OpenApi $openApi): void {
+            $openApi->secure(SecurityScheme::http('bearer'));
+        });
 
         RateLimiter::for('license-key-check', static fn (Request $request) => Limit::perMinute(60)->by(
             $request->user()?->id !== null

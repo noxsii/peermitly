@@ -33,28 +33,31 @@ use Illuminate\Support\Carbon;
  * @property-read Team $team
  *
  * @method static LicenseKeyTypeFactory factory($count = null, $state = [])
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType newModelQuery()
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType newQuery()
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType query()
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereActive()
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereConfiguration($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereCreatedAt($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereDescription($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereGeneratorType($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereId($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereIsActive($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereName($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereTeam((Team|int) $team)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereTeamId($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereUpdatedAt($value)
- * @method static LicenseKeyTypeBuilder<static>|LicenseKeyType whereUuid($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType newModelQuery()
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType newQuery()
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType query()
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereActive()
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereConfiguration($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereCreatedAt($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereDescription($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereGeneratorType($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereId($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereIsActive($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereName($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereTeam((Team|int) $team)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereTeamId($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereUpdatedAt($value)
+ * @method static LicenseKeyTypeBuilder|LicenseKeyType whereUuid($value)
  *
  * @mixin Model
  */
 #[Fillable('team_id', 'name', 'description', 'generator_type', 'configuration', 'is_active')]
 final class LicenseKeyType extends Model
 {
-    use HasFactory, HasUuids;
+    /** @use HasFactory<LicenseKeyTypeFactory> */
+    use HasFactory;
+
+    use HasUuids;
 
     /**
      * @return array<int, string>

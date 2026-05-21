@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Changelogs\Tables;
 
+use App\Models\Changelog;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -30,7 +31,7 @@ final class ChangelogsTable
                 IconColumn::make('published_at')
                     ->label('Published')
                     ->boolean()
-                    ->getStateUsing(fn ($record): bool => $record->published_at !== null),
+                    ->getStateUsing(fn (Changelog $record): bool => $record->published_at !== null),
                 TextColumn::make('published_at')
                     ->label('Published at')
                     ->dateTime('M j, Y H:i')

@@ -40,7 +40,10 @@ use Illuminate\Support\Carbon;
 #[Fillable('title', 'version', 'content', 'published_at')]
 final class Changelog extends Model
 {
-    use HasFactory, HasUuids;
+    /** @use HasFactory<ChangelogFactory> */
+    use HasFactory;
+
+    use HasUuids;
 
     /**
      * @return array<int, string>

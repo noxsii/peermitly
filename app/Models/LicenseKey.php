@@ -53,38 +53,38 @@ use Laravel\Scout\Searchable;
  * @property-read LicenseKeyType $type
  *
  * @method static LicenseKeyFactory factory($count = null, $state = [])
- * @method static LicenseKeyBuilder<static>|LicenseKey newModelQuery()
- * @method static LicenseKeyBuilder<static>|LicenseKey newQuery()
- * @method static LicenseKeyBuilder<static>|LicenseKey query()
- * @method static LicenseKeyBuilder<static>|LicenseKey whereActivatedAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereActive()
- * @method static LicenseKeyBuilder<static>|LicenseKey whereCheckCount($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereCreatedAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereCreatedBy($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereCustomerId($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereExpired()
- * @method static LicenseKeyBuilder<static>|LicenseKey whereExpiresAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereForProduct((Product|int) $product)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereId($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereKey($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereLastCheckedAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereLicenseKeyTypeId($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereMaxActivations($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereMetadata($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereNormalizedKey($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey wherePending()
- * @method static LicenseKeyBuilder<static>|LicenseKey whereProductId($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereRequiresHwidCheck($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereRevoked()
- * @method static LicenseKeyBuilder<static>|LicenseKey whereRevokedAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereRevokedReason($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereStatus($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereTeam((Team|int) $team)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereTeamId($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereUpdatedAt($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereUuid($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereValidityAmount($value)
- * @method static LicenseKeyBuilder<static>|LicenseKey whereValidityUnit($value)
+ * @method static LicenseKeyBuilder|LicenseKey newModelQuery()
+ * @method static LicenseKeyBuilder|LicenseKey newQuery()
+ * @method static LicenseKeyBuilder|LicenseKey query()
+ * @method static LicenseKeyBuilder|LicenseKey whereActivatedAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereActive()
+ * @method static LicenseKeyBuilder|LicenseKey whereCheckCount($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereCreatedAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereCreatedBy($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereCustomerId($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereExpired()
+ * @method static LicenseKeyBuilder|LicenseKey whereExpiresAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereForProduct((Product|int) $product)
+ * @method static LicenseKeyBuilder|LicenseKey whereId($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereKey($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereLastCheckedAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereLicenseKeyTypeId($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereMaxActivations($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereMetadata($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereNormalizedKey($value)
+ * @method static LicenseKeyBuilder|LicenseKey wherePending()
+ * @method static LicenseKeyBuilder|LicenseKey whereProductId($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereRequiresHwidCheck($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereRevoked()
+ * @method static LicenseKeyBuilder|LicenseKey whereRevokedAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereRevokedReason($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereStatus($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereTeam((Team|int) $team)
+ * @method static LicenseKeyBuilder|LicenseKey whereTeamId($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereUpdatedAt($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereUuid($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereValidityAmount($value)
+ * @method static LicenseKeyBuilder|LicenseKey whereValidityUnit($value)
  *
  * @mixin Model
  */
@@ -111,7 +111,11 @@ use Laravel\Scout\Searchable;
 )]
 final class LicenseKey extends Model
 {
-    use HasFactory, HasUuids, Searchable;
+    /** @use HasFactory<LicenseKeyFactory> */
+    use HasFactory;
+
+    use HasUuids;
+    use Searchable;
 
     /**
      * @return array<string, mixed>
