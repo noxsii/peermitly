@@ -90,7 +90,7 @@ watch(statusFilter, (value) => {
             </Button>
         </template>
 
-        <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 xl:grid-cols-3 xl:items-start">
             <Card title="License Key Types" class="xl:col-span-1">
                 <template #actions>
                     <Link href="/license-keys/types">
