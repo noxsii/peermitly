@@ -7,6 +7,7 @@ namespace App\Filament\Resources\LicenseKeys;
 use App\Filament\Resources\LicenseKeys\Pages\CreateLicenseKey;
 use App\Filament\Resources\LicenseKeys\Pages\EditLicenseKey;
 use App\Filament\Resources\LicenseKeys\Pages\ListLicenseKeys;
+use App\Filament\Resources\LicenseKeys\RelationManagers\ActivitiesRelationManager;
 use App\Filament\Resources\LicenseKeys\Schemas\LicenseKeyForm;
 use App\Filament\Resources\LicenseKeys\Tables\LicenseKeysTable;
 use App\Models\LicenseKey;
@@ -56,7 +57,9 @@ final class LicenseKeyResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            ActivitiesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

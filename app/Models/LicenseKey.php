@@ -16,8 +16,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 /**
  * @property int $id
@@ -117,7 +121,37 @@ final class LicenseKey extends Model
     use HasFactory;
 
     use HasUuids;
+    use LogsActivity;
     use Searchable;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'status',
+                'customer_id',
+                'max_activations',
+                'requires_hwid_check',
+                'validity_amount',
+                'validity_unit',
+                'activated_at',
+                'expires_at',
+                'revoked_at',
+                'revoked_reason',
+                'metadata',
+            ])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->useLogName('license_key');
+    }
+
+    /**
+     * @return MorphMany<Activity, $this>
+     */
+    public function activities(): MorphMany
+    {
+        return $this->activitiesAsSubject();
+    }
 
     /**
      * @return array<string, mixed>
