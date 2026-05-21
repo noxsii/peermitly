@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Data\LicenseKeys\LicenseKeyConfiguration;
 use App\Enums\LicenseKeyGeneratorType;
 use App\Models\Builders\LicenseKeyTypeBuilder;
 use Database\Factories\LicenseKeyTypeFactory;
@@ -91,14 +90,6 @@ final class LicenseKeyType extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-    }
-
-    public function configurationDto(): LicenseKeyConfiguration
-    {
-        /** @var array<string, mixed> $configuration */
-        $configuration = $this->getAttribute('configuration') ?? [];
-
-        return LicenseKeyConfiguration::from($this->generator_type, $configuration);
     }
 
     /**

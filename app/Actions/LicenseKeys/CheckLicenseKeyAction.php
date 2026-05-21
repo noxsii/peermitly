@@ -19,6 +19,7 @@ final readonly class CheckLicenseKeyAction
     public function __construct(
         private NormalizeLicenseKeyAction $normalize,
         private ActivateLicenseKeyAction $activate,
+        private BuildLicenseKeyConfigurationAction $buildConfiguration,
     ) {}
 
     public function handle(LicenseKeyCheckRequest $request): LicenseKeyCheckResult
@@ -133,7 +134,7 @@ final readonly class CheckLicenseKeyAction
         $variants = [];
 
         foreach ($types as $type) {
-            $variants[] = $this->normalize->handle($request->rawKey, $type->configurationDto()->caseSensitive);
+            $variants[] = $this->normalize->handle($request->rawKey, $this->buildConfiguration->handle($type)->caseSensitive);
         }
 
         $variants[] = $this->normalize->handle($request->rawKey, false);

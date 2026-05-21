@@ -18,11 +18,12 @@ final readonly class GenerateLicenseKeyAction
     public function __construct(
         private LicenseKeyGeneratorFactory $factory,
         private NormalizeLicenseKeyAction $normalize,
+        private BuildLicenseKeyConfigurationAction $buildConfiguration,
     ) {}
 
     public function handle(LicenseKeyType $type, LicenseKeyGenerationContext $context = new LicenseKeyGenerationContext()): LicenseKeyGenerationResult
     {
-        $configuration = $type->configurationDto();
+        $configuration = $this->buildConfiguration->handle($type);
 
         for ($attempt = 0; $attempt < self::MAX_ATTEMPTS; $attempt++) {
             $key = $this->factory->generate($configuration, $context);
