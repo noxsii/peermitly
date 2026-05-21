@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\LicenseKeys\CustomerController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyExportController;
 use App\Http\Controllers\LicenseKeys\LicenseKeyExtendController;
@@ -32,6 +33,11 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/types/preview', [LicenseKeyTypePreviewController::class, 'preview'])->name('types.preview');
     Route::patch('/types/{licenseKeyType:uuid}', [LicenseKeyTypeController::class, 'update'])->name('types.update');
     Route::delete('/types/{licenseKeyType:uuid}', [LicenseKeyTypeController::class, 'destroy'])->name('types.destroy');
+
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::patch('/customers/{customer:uuid}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{customer:uuid}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
     Route::get('/{licenseKey:uuid}', [LicenseKeyController::class, 'show'])->name('show');
     Route::patch('/{licenseKey:uuid}', [LicenseKeyController::class, 'update'])->name('update');

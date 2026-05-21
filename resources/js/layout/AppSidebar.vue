@@ -8,6 +8,7 @@ import {
     LifeBuoy,
     Package,
     Settings,
+    Users,
 } from "@lucide/vue";
 import { computed } from "vue";
 import {
@@ -28,6 +29,7 @@ interface ExternalNavItem {
 const primary: NavItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "License Keys", href: "/license-keys", icon: KeyRound },
+    { label: "Customers", href: "/license-keys/customers", icon: Users },
     { label: "Products", href: "/license-keys/products", icon: Package },
     { label: "Key Types", href: "/license-keys/types", icon: Layers },
 ];

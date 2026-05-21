@@ -96,6 +96,8 @@ export interface CustomerOption {
     email: string;
     name: string | null;
     company: string | null;
+    metadata?: Record<string, unknown> | null;
+    license_keys_count?: number;
 }
 
 export interface LicenseKeySearchResult {
