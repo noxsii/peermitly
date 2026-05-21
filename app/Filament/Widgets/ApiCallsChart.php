@@ -14,7 +14,7 @@ final class ApiCallsChart extends ChartWidget
 
     protected static ?int $sort = 5;
 
-    protected int|string|array $columnSpan = 2;
+    protected int|string|array $columnSpan = 1;
 
     protected function getType(): string
     {
