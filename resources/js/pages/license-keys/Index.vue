@@ -5,6 +5,7 @@ import { ref, watch } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
 import BulkCreateLicenseKeyDialog from "@/components/dialogs/BulkCreateLicenseKeyDialog.vue";
 import CreateLicenseKeyDialog from "@/components/dialogs/CreateLicenseKeyDialog.vue";
+import ExportLicenseKeysDialog from "@/components/dialogs/ExportLicenseKeysDialog.vue";
 import type { PaginationMeta } from "@/components/table";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ const props = defineProps<{
 
 const createOpen = ref(false);
 const bulkOpen = ref(false);
+const exportOpen = ref(false);
 
 const STATUS_OPTIONS: { value: LicenseKeyStatus | "all"; label: string }[] = [
     { value: "all", label: "All statuses" },
@@ -62,12 +64,10 @@ watch(statusFilter, (value) => {
 <template>
     <PageLayout title="License Keys">
         <template #actions>
-            <Link href="/license-keys/export">
-                <Button variant="ghost" size="sm">
-                    <Download class="size-4" />
-                    Export CSV
-                </Button>
-            </Link>
+            <Button variant="ghost" size="sm" @click="exportOpen = true">
+                <Download class="size-4" />
+                Export CSV
+            </Button>
             <Button variant="ghost" size="sm" @click="bulkOpen = true">
                 <KeyRound class="size-4" />
                 Bulk create
@@ -173,6 +173,11 @@ watch(statusFilter, (value) => {
             :types="types?.data ?? []"
             :products="products?.data ?? []"
             :customers="customers?.data ?? []"
+        />
+
+        <ExportLicenseKeysDialog
+            v-model:open="exportOpen"
+            :products="products?.data ?? []"
         />
     </PageLayout>
 </template>

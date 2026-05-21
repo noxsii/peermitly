@@ -4,18 +4,37 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\LicenseKeys;
 
+use App\Enums\LicenseKeyStatus;
 use App\Models\LicenseKey;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class LicenseKeyExportController
 {
-    public function export(): StreamedResponse
+    public function export(Request $request): StreamedResponse
     {
         $teamId = (int) auth()->user()?->current_team_id;
         $filename = 'license-keys-'.now()->format('Y-m-d-His').'.csv';
 
-        return response()->streamDownload(static function () use ($teamId): void {
+        $status = LicenseKeyStatus::tryFrom($request->string('status')->toString());
+
+        $productId = null;
+        $productUuid = $request->string('product_uuid')->toString();
+        if ($productUuid !== '') {
+            $product = Product::query()->where('team_id', $teamId)->where('uuid', $productUuid)->first();
+            $productId = $product?->id ?? -1;
+        }
+
+        $delimiterInput = $request->string('delimiter')->toString();
+        $delimiter = match ($delimiterInput) {
+            ';' => ';',
+            "\t", 'tab' => "\t",
+            default => ',',
+        };
+
+        return response()->streamDownload(static function () use ($teamId, $status, $productId, $delimiter): void {
             $handle = fopen('php://output', 'w');
             throw_if($handle === false, RuntimeException::class, 'Unable to open php://output for CSV export.');
 
@@ -31,13 +50,14 @@ final class LicenseKeyExportController
                 'activated_at',
                 'expires_at',
                 'created_at',
-            ],
-                escape: '\\');
+            ], separator: $delimiter, escape: '\\');
 
             LicenseKey::query()
                 ->where('team_id', $teamId)
+                ->when($status !== null, fn ($q) => $q->where('status', $status->value))
+                ->when($productId !== null, fn ($q) => $q->where('product_id', $productId))
                 ->with(['product', 'customer'])
-                ->chunkById(500, static function ($keys) use ($handle): void {
+                ->chunkById(500, static function ($keys) use ($handle, $delimiter): void {
                     foreach ($keys as $key) {
                         fputcsv($handle, [
                             $key->key,
@@ -51,8 +71,7 @@ final class LicenseKeyExportController
                             $key->activated_at?->toIso8601String(),
                             $key->expires_at?->toIso8601String(),
                             $key->created_at?->toIso8601String(),
-                        ],
-                            escape: '\\');
+                        ], separator: $delimiter, escape: '\\');
                     }
                 });
 
