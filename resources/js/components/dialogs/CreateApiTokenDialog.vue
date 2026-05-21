@@ -60,7 +60,7 @@ const submit = async () => {
             <DialogHeader>
                 <DialogTitle>New API Token</DialogTitle>
                 <DialogDescription>
-                    Tokens authenticate external software against the permitly
+                    Tokens authenticate external software against the permitlyy
                     API. Grant only the abilities you need.
                 </DialogDescription>
             </DialogHeader>
