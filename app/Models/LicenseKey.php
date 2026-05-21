@@ -9,6 +9,7 @@ use App\Enums\LicenseValidityUnit;
 use App\Models\Builders\LicenseKeyBuilder;
 use Database\Factories\LicenseKeyFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -109,6 +110,7 @@ use Laravel\Scout\Searchable;
     'revoked_reason',
     'metadata',
 )]
+#[UseEloquentBuilder(LicenseKeyBuilder::class)]
 final class LicenseKey extends Model
 {
     /** @use HasFactory<LicenseKeyFactory> */
@@ -171,11 +173,6 @@ final class LicenseKey extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-    }
-
-    public function newEloquentBuilder($query): LicenseKeyBuilder
-    {
-        return new LicenseKeyBuilder($query);
     }
 
     /**

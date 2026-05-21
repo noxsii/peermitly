@@ -9,6 +9,7 @@ use App\Enums\LicenseKeyGeneratorType;
 use App\Models\Builders\LicenseKeyTypeBuilder;
 use Database\Factories\LicenseKeyTypeFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,6 +53,7 @@ use Illuminate\Support\Carbon;
  * @mixin Model
  */
 #[Fillable('team_id', 'name', 'description', 'generator_type', 'configuration', 'is_active')]
+#[UseEloquentBuilder(LicenseKeyTypeBuilder::class)]
 final class LicenseKeyType extends Model
 {
     /** @use HasFactory<LicenseKeyTypeFactory> */
@@ -89,11 +91,6 @@ final class LicenseKeyType extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-    }
-
-    public function newEloquentBuilder($query): LicenseKeyTypeBuilder
-    {
-        return new LicenseKeyTypeBuilder($query);
     }
 
     public function configurationDto(): LicenseKeyConfiguration
