@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { Deferred, Link } from "@inertiajs/vue3";
-import { ArrowLeft } from "@lucide/vue";
+import { Deferred } from "@inertiajs/vue3";
 import ProductForm from "@/components/license-keys/ProductForm.vue";
 import ProductTable from "@/components/license-keys/ProductTable.vue";
 import type { PaginationMeta } from "@/components/table";
 import Card from "@/components/Card.vue";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
 import type { ProductOption } from "@/types";
@@ -17,15 +15,6 @@ defineProps<{
 
 <template>
     <PageLayout title="Products">
-        <template #actions>
-            <Link href="/license-keys">
-                <Button variant="ghost" size="sm">
-                    <ArrowLeft class="size-4" />
-                    Back to keys
-                </Button>
-            </Link>
-        </template>
-
         <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 xl:items-start">
             <Card title="Products">
                 <Deferred data="products">

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { Deferred, Link } from "@inertiajs/vue3";
-import { ArrowLeft } from "@lucide/vue";
+import { Deferred } from "@inertiajs/vue3";
 import CustomerForm from "@/components/license-keys/CustomerForm.vue";
 import CustomerTable from "@/components/license-keys/CustomerTable.vue";
 import Card from "@/components/Card.vue";
 import type { PaginationMeta } from "@/components/table";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
 import type { CustomerOption } from "@/types";
@@ -17,15 +15,6 @@ defineProps<{
 
 <template>
     <PageLayout title="Customers">
-        <template #actions>
-            <Link href="/license-keys">
-                <Button variant="ghost" size="sm">
-                    <ArrowLeft class="size-4" />
-                    Back to keys
-                </Button>
-            </Link>
-        </template>
-
         <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 xl:items-start">
             <Card title="Customers">
                 <Deferred data="customers">
