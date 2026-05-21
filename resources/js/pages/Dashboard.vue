@@ -1,105 +1,116 @@
 <script setup lang="ts">
-import { MoreHorizontal, Plus } from "@lucide/vue";
+import { Deferred, Link, usePage } from "@inertiajs/vue3";
+import { Plus } from "@lucide/vue";
+import { computed } from "vue";
+import RecentLicenseKeys from "@/components/dashboard/RecentLicenseKeys.vue";
+import StatsOverview from "@/components/dashboard/StatsOverview.vue";
+import TeamMembers from "@/components/dashboard/TeamMembers.vue";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import PageLayout from "@/layout/PageLayout.vue";
+import type {
+    DashboardStats,
+    DashboardTeamMember,
+    LicenseKey,
+    PageProps,
+} from "@/types";
+
+defineProps<{
+    stats?: DashboardStats | null;
+    recentLicenseKeys?: { data: LicenseKey[] } | null;
+    teamMembers?: { data: DashboardTeamMember[] } | null;
+}>();
+
+const page = usePage<PageProps>();
+
+const greeting = computed(() => {
+    const name = page.props.auth?.user?.name ?? "";
+    const first = name.split(/\s+/)[0] ?? "";
+    return first ? `Welcome back, ${first}` : "Welcome back";
+});
+
+const teamName = computed(
+    () => page.props.auth?.user?.current_team?.name ?? null,
+);
 </script>
 
 <template>
-    <PageLayout title="Dashboard">
+    <PageLayout :title="greeting">
         <template #actions>
-            <Button size="sm" variant="ghost" class="rounded-full">
-                Last 30 days
-            </Button>
-            <Button size="sm" class="rounded-full">
-                <Plus class="size-4" />
-                New permit
-            </Button>
+            <Link href="/license-keys">
+                <Button size="sm">
+                    <Plus class="size-4" />
+                    New license key
+                </Button>
+            </Link>
         </template>
 
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <Card title="Open permits">
-                <div class="flex items-end justify-between">
-                    <span class="text-3xl font-semibold">128</span>
-                    <span class="text-success text-xs font-medium">+12%</span>
-                </div>
-            </Card>
+        <div class="space-y-4">
+            <p v-if="teamName" class="text-muted-foreground -mt-2 text-sm">
+                Team:
+                <span class="text-foreground font-medium">{{ teamName }}</span>
+            </p>
 
-            <Card title="Pending review">
-                <div class="flex items-end justify-between">
-                    <span class="text-3xl font-semibold">24</span>
-                    <span class="text-muted-foreground text-xs">3 overdue</span>
-                </div>
-            </Card>
-
-            <Card title="Approved this week">
-                <div class="flex items-end justify-between">
-                    <span class="text-3xl font-semibold">47</span>
-                    <span class="text-success text-xs font-medium">+5%</span>
-                </div>
-            </Card>
-        </div>
-
-        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <Card title="Recent activity" class="lg:col-span-2">
-                <template #actions>
-                    <Button size="icon-xs" variant="ghost">
-                        <MoreHorizontal class="size-4" />
-                    </Button>
-                </template>
-
-                <ul class="divide-border divide-y">
-                    <li
-                        v-for="item in 4"
-                        :key="item"
-                        class="flex items-center justify-between py-3 text-sm first:pt-0 last:pb-0"
-                    >
-                        <div>
-                            <p class="font-medium">
-                                Permit #PRM-{{ 1000 + item }}
-                            </p>
-                            <p class="text-muted-foreground text-xs">
-                                Submitted by user · 2h ago
-                            </p>
-                        </div>
-                        <span
-                            class="bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-xs font-medium"
-                        >
-                            Pending
-                        </span>
-                    </li>
-                </ul>
-            </Card>
-
-            <Card title="Team">
-                <template #actions>
-                    <Button size="icon-xs" variant="ghost">
-                        <Plus class="size-4" />
-                    </Button>
-                </template>
-
-                <div class="space-y-3">
+            <!-- Stats -->
+            <Deferred data="stats">
+                <template #fallback>
                     <div
-                        v-for="initials in ['AD', 'JS', 'MK']"
-                        :key="initials"
-                        class="flex items-center gap-3"
+                        class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
                     >
-                        <div
-                            class="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full text-xs font-semibold"
-                        >
-                            {{ initials }}
-                        </div>
-                        <div class="min-w-0">
-                            <p class="truncate text-sm font-medium">
-                                Member name
-                            </p>
-                            <p class="text-muted-foreground truncate text-xs">
-                                Admin
-                            </p>
-                        </div>
+                        <Skeleton
+                            v-for="i in 4"
+                            :key="i"
+                            class="h-28 w-full rounded-2xl"
+                        />
                     </div>
-                </div>
-            </Card>
+                </template>
+                <StatsOverview v-if="stats" :stats="stats" />
+            </Deferred>
+
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <!-- Recent license keys -->
+                <Card title="Recent license keys" class="lg:col-span-2">
+                    <template #actions>
+                        <Link
+                            href="/license-keys"
+                            class="text-muted-foreground hover:text-foreground text-xs font-medium transition-colors"
+                        >
+                            View all
+                        </Link>
+                    </template>
+                    <Deferred data="recentLicenseKeys">
+                        <template #fallback>
+                            <div class="space-y-2">
+                                <Skeleton
+                                    v-for="i in 4"
+                                    :key="i"
+                                    class="h-12 w-full"
+                                />
+                            </div>
+                        </template>
+                        <RecentLicenseKeys
+                            :rows="recentLicenseKeys?.data ?? []"
+                        />
+                    </Deferred>
+                </Card>
+
+                <!-- Team -->
+                <Card title="Team members">
+                    <Deferred data="teamMembers">
+                        <template #fallback>
+                            <div class="space-y-3">
+                                <Skeleton
+                                    v-for="i in 3"
+                                    :key="i"
+                                    class="h-10 w-full"
+                                />
+                            </div>
+                        </template>
+                        <TeamMembers :members="teamMembers?.data ?? []" />
+                    </Deferred>
+                </Card>
+            </div>
         </div>
     </PageLayout>
 </template>

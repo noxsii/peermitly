@@ -4,13 +4,52 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Dashboard\GetDashboardStatsAction;
+use App\Http\Resources\ApiRequestLogResource;
+use App\Http\Resources\LicenseKeys\LicenseKeyResource;
+use App\Http\Resources\UserResource;
+use App\Models\ApiRequestLog;
+use App\Models\LicenseKey;
+use App\Models\Team;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final class DashboardController
 {
-    public function index(): Response
+    public function index(GetDashboardStatsAction $getStats): Response
     {
-        return Inertia::render('Dashboard');
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        return Inertia::render('Dashboard', [
+            'stats' => Inertia::defer(static fn (): array => $getStats->handle($teamId)->toArray()),
+
+            'recentLicenseKeys' => Inertia::defer(static fn () => LicenseKeyResource::collection(
+                LicenseKey::query()
+                    ->where('team_id', $teamId)
+                    ->with(['type', 'product', 'customer'])
+                    ->latest()
+                    ->limit(8)
+                    ->get(),
+            )),
+
+            'teamMembers' => Inertia::defer(static function () use ($teamId) {
+                $team = Team::query()->find($teamId);
+                if ($team === null) {
+                    return UserResource::collection(collect());
+                }
+
+                return UserResource::collection(
+                    $team->users()->orderBy('name')->limit(8)->get(),
+                );
+            }),
+
+            'recentApiCalls' => Inertia::defer(static fn () => ApiRequestLogResource::collection(
+                ApiRequestLog::query()
+                    ->whereIn('license_key_id', LicenseKey::query()->where('team_id', $teamId)->select('id'))
+                    ->latest()
+                    ->limit(8)
+                    ->get(),
+            )),
+        ]);
     }
 }
