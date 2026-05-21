@@ -124,136 +124,205 @@ const submitRevoke = () => {
             </Link>
         </template>
 
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <Card title="Key" class="lg:col-span-2">
-                <Deferred data="licenseKey">
-                    <template #fallback>
-                        <div class="space-y-3">
-                            <Skeleton class="h-10 w-full" />
-                            <Skeleton class="h-6 w-1/3" />
-                        </div>
-                    </template>
-                    <div v-if="licenseKey?.data" class="space-y-4">
-                        <div class="flex items-center gap-2">
-                            <code
-                                class="bg-muted/40 flex-1 truncate rounded-md p-2 font-mono text-sm"
-                            >
-                                {{ licenseKey.data.key }}
-                            </code>
-                            <Button
-                                variant="outline"
-                                size="icon-sm"
-                                type="button"
-                                @click="copy"
-                            >
-                                <Check
-                                    v-if="copied"
-                                    class="size-4 text-emerald-500"
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start">
+            <div class="space-y-4 lg:col-span-2">
+                <Card title="Key">
+                    <Deferred data="licenseKey">
+                        <template #fallback>
+                            <div class="space-y-3">
+                                <Skeleton class="h-10 w-full" />
+                                <Skeleton class="h-6 w-1/3" />
+                            </div>
+                        </template>
+                        <div v-if="licenseKey?.data" class="space-y-4">
+                            <div class="flex items-center gap-2">
+                                <code
+                                    class="bg-muted/40 flex-1 truncate rounded-md p-2 font-mono text-sm"
+                                >
+                                    {{ licenseKey.data.key }}
+                                </code>
+                                <Button
+                                    variant="outline"
+                                    size="icon-sm"
+                                    type="button"
+                                    @click="copy"
+                                >
+                                    <Check
+                                        v-if="copied"
+                                        class="size-4 text-emerald-500"
+                                    />
+                                    <Copy v-else class="size-4" />
+                                </Button>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2">
+                                <LicenseKeyStatusBadge
+                                    :status="licenseKey.data.status"
                                 />
-                                <Copy v-else class="size-4" />
-                            </Button>
-                        </div>
+                                <span
+                                    v-if="licenseKey.data.requires_hwid_check"
+                                    class="border-border rounded-md border px-2 py-0.5 text-xs"
+                                >
+                                    HWID required
+                                </span>
+                                <span
+                                    v-if="
+                                        licenseKey.data.validity_unit ===
+                                        'lifetime'
+                                    "
+                                    class="border-border rounded-md border px-2 py-0.5 text-xs"
+                                >
+                                    Lifetime
+                                </span>
+                                <span
+                                    class="ml-auto text-sm font-medium"
+                                    :class="
+                                        daysRemaining !== null &&
+                                        daysRemaining < 30
+                                            ? 'text-destructive'
+                                            : 'text-foreground'
+                                    "
+                                >
+                                    {{ remainingLabel }}
+                                </span>
+                            </div>
 
-                        <div class="flex flex-wrap items-center gap-2">
-                            <LicenseKeyStatusBadge
-                                :status="licenseKey.data.status"
-                            />
-                            <span
-                                v-if="licenseKey.data.requires_hwid_check"
-                                class="border-border rounded-md border px-2 py-0.5 text-xs"
+                            <dl
+                                class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm md:grid-cols-3"
                             >
-                                HWID required
-                            </span>
-                            <span
-                                v-if="
-                                    licenseKey.data.validity_unit === 'lifetime'
-                                "
-                                class="border-border rounded-md border px-2 py-0.5 text-xs"
-                            >
-                                Lifetime
-                            </span>
-                            <span
-                                class="ml-auto text-sm font-medium"
-                                :class="
-                                    daysRemaining !== null && daysRemaining < 30
-                                        ? 'text-destructive'
-                                        : 'text-foreground'
-                                "
-                            >
-                                {{ remainingLabel }}
-                            </span>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Validity
+                                    </dt>
+                                    <dd>{{ validityLabel }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Product
+                                    </dt>
+                                    <dd>
+                                        {{
+                                            licenseKey.data.product.name ?? "—"
+                                        }}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Customer
+                                    </dt>
+                                    <dd>
+                                        {{
+                                            licenseKey.data.customer?.email ??
+                                            "—"
+                                        }}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Type
+                                    </dt>
+                                    <dd>
+                                        {{ licenseKey.data.type.name ?? "—" }}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Activated
+                                    </dt>
+                                    <dd>
+                                        {{
+                                            formatDate(
+                                                licenseKey.data.activated_at,
+                                            )
+                                        }}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Expires
+                                    </dt>
+                                    <dd>
+                                        {{
+                                            formatDate(
+                                                licenseKey.data.expires_at,
+                                            )
+                                        }}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Checks
+                                    </dt>
+                                    <dd>{{ licenseKey.data.check_count }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-muted-foreground text-xs">
+                                        Max activations
+                                    </dt>
+                                    <dd>
+                                        {{
+                                            licenseKey.data.max_activations ??
+                                            "Unlimited"
+                                        }}
+                                    </dd>
+                                </div>
+                            </dl>
                         </div>
+                    </Deferred>
+                </Card>
 
-                        <dl
-                            class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm md:grid-cols-3"
+                <Card
+                    v-if="
+                        licenseKey?.data?.requires_hwid_check &&
+                        licenseKey.data.activations?.length
+                    "
+                    title="Hardware IDs"
+                >
+                    <ul class="divide-y">
+                        <li
+                            v-for="activation in licenseKey.data.activations"
+                            :key="activation.uuid"
+                            class="flex items-center justify-between gap-3 py-2 text-sm"
                         >
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Validity
-                                </dt>
-                                <dd>{{ validityLabel }}</dd>
+                            <div class="min-w-0 space-y-0.5">
+                                <code class="block truncate font-mono text-xs">
+                                    {{ activation.machine_id }}
+                                </code>
+                                <p class="text-muted-foreground text-xs">
+                                    <span v-if="activation.hostname">
+                                        {{ activation.hostname }}
+                                    </span>
+                                    <span v-if="activation.ip_address">
+                                        · {{ activation.ip_address }}
+                                    </span>
+                                </p>
                             </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Product
-                                </dt>
-                                <dd>
-                                    {{ licenseKey.data.product.name ?? "—" }}
-                                </dd>
+                            <div
+                                class="text-muted-foreground shrink-0 text-right text-xs"
+                            >
+                                <p>
+                                    First:
+                                    {{ formatDate(activation.activated_at) }}
+                                </p>
+                                <p>
+                                    Last:
+                                    {{ formatDate(activation.last_seen_at) }}
+                                </p>
                             </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Customer
-                                </dt>
-                                <dd>
-                                    {{ licenseKey.data.customer?.email ?? "—" }}
-                                </dd>
-                            </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Type
-                                </dt>
-                                <dd>{{ licenseKey.data.type.name ?? "—" }}</dd>
-                            </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Activated
-                                </dt>
-                                <dd>
-                                    {{
-                                        formatDate(licenseKey.data.activated_at)
-                                    }}
-                                </dd>
-                            </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Expires
-                                </dt>
-                                <dd>
-                                    {{ formatDate(licenseKey.data.expires_at) }}
-                                </dd>
-                            </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Checks
-                                </dt>
-                                <dd>{{ licenseKey.data.check_count }}</dd>
-                            </div>
-                            <div>
-                                <dt class="text-muted-foreground text-xs">
-                                    Max activations
-                                </dt>
-                                <dd>
-                                    {{
-                                        licenseKey.data.max_activations ??
-                                        "Unlimited"
-                                    }}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </Deferred>
-            </Card>
+                        </li>
+                    </ul>
+                </Card>
+
+                <Card
+                    v-else-if="licenseKey?.data?.requires_hwid_check"
+                    title="Hardware IDs"
+                >
+                    <p class="text-muted-foreground text-sm">
+                        No hardware IDs registered yet. The first successful API
+                        check will register one.
+                    </p>
+                </Card>
+            </div>
 
             <div class="space-y-4">
                 <Card title="Revoke">
@@ -379,54 +448,6 @@ const submitRevoke = () => {
                     </div>
                 </Card>
             </div>
-
-            <Card
-                v-if="
-                    licenseKey?.data?.requires_hwid_check &&
-                    licenseKey.data.activations?.length
-                "
-                title="Hardware IDs"
-                class="lg:col-span-2"
-            >
-                <ul class="divide-y">
-                    <li
-                        v-for="activation in licenseKey.data.activations"
-                        :key="activation.uuid"
-                        class="flex items-center justify-between gap-3 py-2 text-sm"
-                    >
-                        <div class="min-w-0 space-y-0.5">
-                            <code class="block truncate font-mono text-xs">
-                                {{ activation.machine_id }}
-                            </code>
-                            <p class="text-muted-foreground text-xs">
-                                <span v-if="activation.hostname">
-                                    {{ activation.hostname }}
-                                </span>
-                                <span v-if="activation.ip_address">
-                                    · {{ activation.ip_address }}
-                                </span>
-                            </p>
-                        </div>
-                        <div
-                            class="text-muted-foreground shrink-0 text-right text-xs"
-                        >
-                            <p>First: {{ formatDate(activation.activated_at) }}</p>
-                            <p>Last: {{ formatDate(activation.last_seen_at) }}</p>
-                        </div>
-                    </li>
-                </ul>
-            </Card>
-
-            <Card
-                v-else-if="licenseKey?.data?.requires_hwid_check"
-                title="Hardware IDs"
-                class="lg:col-span-2"
-            >
-                <p class="text-muted-foreground text-sm">
-                    No hardware IDs registered yet. The first successful API
-                    check will register one.
-                </p>
-            </Card>
         </div>
 
         <EditLicenseKeyDialog

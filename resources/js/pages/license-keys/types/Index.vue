@@ -26,7 +26,7 @@ defineProps<{
             </Link>
         </template>
 
-        <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 xl:items-start">
             <Card title="Types">
                 <Deferred data="types">
                     <template #fallback>
