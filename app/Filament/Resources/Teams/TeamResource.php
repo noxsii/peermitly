@@ -7,6 +7,10 @@ namespace App\Filament\Resources\Teams;
 use App\Filament\Resources\Teams\Pages\CreateTeam;
 use App\Filament\Resources\Teams\Pages\EditTeam;
 use App\Filament\Resources\Teams\Pages\ListTeams;
+use App\Filament\Resources\Teams\RelationManagers\CustomersRelationManager;
+use App\Filament\Resources\Teams\RelationManagers\LicenseKeysRelationManager;
+use App\Filament\Resources\Teams\RelationManagers\LicenseKeyTypesRelationManager;
+use App\Filament\Resources\Teams\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\Teams\RelationManagers\UsersRelationManager;
 use App\Filament\Resources\Teams\Schemas\TeamForm;
 use App\Filament\Resources\Teams\Tables\TeamsTable;
@@ -54,6 +58,10 @@ final class TeamResource extends Resource
     {
         return [
             UsersRelationManager::class,
+            CustomersRelationManager::class,
+            ProductsRelationManager::class,
+            LicenseKeyTypesRelationManager::class,
+            LicenseKeysRelationManager::class,
         ];
     }
 

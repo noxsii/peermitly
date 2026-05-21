@@ -103,4 +103,36 @@ final class Team extends Model
     {
         return $this->hasMany(User::class, 'current_team_id');
     }
+
+    /**
+     * @return HasMany<LicenseKey, $this>
+     */
+    public function licenseKeys(): HasMany
+    {
+        return $this->hasMany(LicenseKey::class);
+    }
+
+    /**
+     * @return HasMany<LicenseKeyType, $this>
+     */
+    public function licenseKeyTypes(): HasMany
+    {
+        return $this->hasMany(LicenseKeyType::class);
+    }
+
+    /**
+     * @return HasMany<Product, $this>
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    /**
+     * @return HasMany<Customer, $this>
+     */
+    public function customers(): HasMany
+    {
+        return $this->hasMany(Customer::class);
+    }
 }
