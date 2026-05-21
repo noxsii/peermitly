@@ -126,9 +126,9 @@ final class LicenseKeyController
         $teamId = (int) auth()->user()?->current_team_id;
 
         return Inertia::render('license-keys/Show', [
-            'licenseKey' => Inertia::defer(static fn () => LicenseKeyResource::make(
+            'licenseKey' => LicenseKeyResource::make(
                 $licenseKey->load(['type', 'product', 'customer', 'activations']),
-            )),
+            ),
             'customers' => Inertia::defer(static fn () => CustomerResource::collection(
                 Customer::query()->where('team_id', $teamId)->orderBy('email')->get(),
             )),

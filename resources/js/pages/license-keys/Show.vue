@@ -28,6 +28,11 @@ import {
     type LicenseValidityUnit,
 } from "@/types";
 
+const props = defineProps<{
+    licenseKey?: { data: LicenseKey } | null;
+    customers?: { data: CustomerOption[] } | null;
+}>();
+
 const editOpen = ref(false);
 const deleteOpen = ref(false);
 const extendSuccess = ref(false);
@@ -37,11 +42,6 @@ const confirmDelete = () => {
     if (!props.licenseKey?.data) return;
     router.delete(`/license-keys/${props.licenseKey.data.uuid}`);
 };
-
-const props = defineProps<{
-    licenseKey?: { data: LicenseKey } | null;
-    customers?: { data: CustomerOption[] } | null;
-}>();
 
 const copied = ref(false);
 
