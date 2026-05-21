@@ -34,3 +34,19 @@ test('super admin can access filament panel', function (): void {
         ->get('/admin')
         ->assertOk();
 });
+
+test('super admin can list users in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::SUPER_ADMIN]);
+
+    $this->actingAs($user)
+        ->get('/admin/users')
+        ->assertOk();
+});
+
+test('regular user cannot list users in filament', function (): void {
+    $user = User::factory()->create(['role' => UserRole::USER]);
+
+    $this->actingAs($user)
+        ->get('/admin/users')
+        ->assertForbidden();
+});
