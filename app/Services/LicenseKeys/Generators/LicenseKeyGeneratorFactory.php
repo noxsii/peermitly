@@ -21,8 +21,8 @@ final readonly class LicenseKeyGeneratorFactory
     public function generate(LicenseKeyConfiguration $configuration, LicenseKeyGenerationContext $context): string
     {
         return match (true) {
-            $configuration instanceof UuidConfiguration => $this->uuid->generate($configuration, $context),
-            $configuration instanceof RandomCharacterConfiguration => $this->random->generate($configuration, $context),
+            $configuration instanceof UuidConfiguration => $this->uuid->generate($configuration),
+            $configuration instanceof RandomCharacterConfiguration => $this->random->generate($configuration),
             $configuration instanceof PatternConfiguration => $this->pattern->generate($configuration, $context),
         };
     }

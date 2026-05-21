@@ -21,9 +21,9 @@ const runSearch = useDebounceFn(async (q: string) => {
     }
     searchHttp.q = q;
     try {
-        const response = (await searchHttp.get(
-            "/license-keys/search",
-        )) as { results: LicenseKeySearchResult[] };
+        const response = (await searchHttp.get("/license-keys/search")) as {
+            results: LicenseKeySearchResult[];
+        };
         results.value = response.results;
         open.value = true;
     } catch {

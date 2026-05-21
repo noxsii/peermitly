@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use App\Data\LicenseKeys\LicenseKeyConfiguration;
+use App\Http\Middleware\FilamentAuthenticate;
 
 arch()->preset()->php();
-arch()->preset()->strict()->ignoring(LicenseKeyConfiguration::class);
+arch()->preset()->strict()->ignoring([LicenseKeyConfiguration::class, FilamentAuthenticate::class]);
 arch()->preset()->security();
 
 arch('controllers')

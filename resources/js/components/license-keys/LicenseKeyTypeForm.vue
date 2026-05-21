@@ -175,10 +175,7 @@ const preview = async () => {
                     type="button"
                     @click="copyUuid"
                 >
-                    <Check
-                        v-if="uuidCopied"
-                        class="size-4 text-emerald-500"
-                    />
+                    <Check v-if="uuidCopied" class="size-4 text-emerald-500" />
                     <Copy v-else class="size-4" />
                 </Button>
             </div>

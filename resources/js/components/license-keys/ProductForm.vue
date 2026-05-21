@@ -75,10 +75,7 @@ const submit = () => {
                     type="button"
                     @click="copyUuid"
                 >
-                    <Check
-                        v-if="copied"
-                        class="size-4 text-emerald-500"
-                    />
+                    <Check v-if="copied" class="size-4 text-emerald-500" />
                     <Copy v-else class="size-4" />
                 </Button>
             </div>
