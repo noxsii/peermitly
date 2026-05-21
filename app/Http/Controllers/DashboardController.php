@@ -43,13 +43,28 @@ final class DashboardController
                 );
             }),
 
-            'recentApiCalls' => Inertia::defer(static fn () => ApiRequestLogResource::collection(
-                ApiRequestLog::query()
-                    ->whereIn('license_key_id', LicenseKey::query()->where('team_id', $teamId)->select('id'))
-                    ->latest()
-                    ->limit(8)
-                    ->get(),
-            )),
+            'recentApiCalls' => Inertia::defer(static function () use ($teamId) {
+                $team = Team::query()->find($teamId);
+                $userIds = $team !== null
+                    ? $team->users()->pluck('users.id')->all()
+                    : [];
+
+                $teamKeyIds = LicenseKey::query()
+                    ->where('team_id', $teamId)
+                    ->pluck('id')
+                    ->all();
+
+                return ApiRequestLogResource::collection(
+                    ApiRequestLog::query()
+                        ->where(function ($q) use ($userIds, $teamKeyIds): void {
+                            $q->whereIn('user_id', $userIds === [] ? [0] : $userIds)
+                                ->orWhereIn('license_key_id', $teamKeyIds === [] ? [0] : $teamKeyIds);
+                        })
+                        ->latest()
+                        ->limit(8)
+                        ->get(),
+                );
+            }),
         ]);
     }
 }
