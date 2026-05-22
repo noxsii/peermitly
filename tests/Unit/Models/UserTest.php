@@ -17,5 +17,6 @@ test('to array', function (): void {
             'created_at',
             'updated_at',
             'current_team_id',
+            'is_active',
         ]);
 });

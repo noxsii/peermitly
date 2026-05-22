@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\EnsureUserActive;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LogApiRequest;
 use Illuminate\Foundation\Application;
@@ -18,9 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
+            EnsureUserActive::class,
             HandleInertiaRequests::class,
         ]);
         $middleware->api(append: [
+            EnsureUserActive::class,
             LogApiRequest::class,
         ]);
         $middleware->alias([
