@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 use App\Data\LicenseKeys\LicenseKeyConfiguration;
 use App\Http\Middleware\FilamentAuthenticate;
+use App\Providers\HorizonServiceProvider;
 
 arch()->preset()->php();
-arch()->preset()->strict()->ignoring([LicenseKeyConfiguration::class, FilamentAuthenticate::class, 'App\Filament']);
+arch()->preset()->strict()->ignoring([LicenseKeyConfiguration::class, FilamentAuthenticate::class, HorizonServiceProvider::class, 'App\Filament']);
 arch()->preset()->security();
 
 arch('controllers')
