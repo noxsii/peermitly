@@ -8,6 +8,7 @@ use App\Enums\UserRole;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,6 +35,10 @@ final class UserForm
                     ->options(UserRole::class)
                     ->default(UserRole::USER->value)
                     ->required(),
+                Toggle::make('is_active')
+                    ->label('Active')
+                    ->helperText('Inactive users are blocked from every authenticated request.')
+                    ->default(true),
                 TextInput::make('password')
                     ->label('Password')
                     ->password()
