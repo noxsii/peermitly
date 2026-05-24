@@ -72,7 +72,7 @@ const submit = async () => {
                         id="name"
                         v-model="form.name"
                         :aria-invalid="!!form.errors.name"
-                        placeholder="OfficeEfficient (production)"
+                        placeholder="YOUR PRODUCT (production)"
                     />
                     <InputError :message="form.errors.name" />
                 </div>
