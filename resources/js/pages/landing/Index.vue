@@ -10,7 +10,7 @@ defineOptions({ layout: "" });
 </script>
 
 <template>
-    <Head title="Permitlyy — License management" />
+    <Head title="Peermitly — License management" />
 
     <div class="bg-background text-foreground min-h-screen">
         <LandingNav />

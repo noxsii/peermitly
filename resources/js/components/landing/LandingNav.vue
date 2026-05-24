@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
                     aria-hidden="true"
                     >P</span
                 >
-                Permitlyy
+                Peermitly
             </Link>
 
             <Button as-child size="sm" variant="default">

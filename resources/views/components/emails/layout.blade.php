@@ -6,7 +6,7 @@
     <meta name="x-apple-disable-message-reformatting" />
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light only" />
-    <title>{{ $title ?? 'Permitlyy' }}</title>
+    <title>{{ $title ?? 'Peermitly' }}</title>
     <!--[if mso]>
     <style type="text/css">
         table, td, div, h1, h2, h3, p { font-family: Arial, Helvetica, sans-serif !important; }
@@ -24,7 +24,7 @@
 <body style="margin:0; padding:0; background-color:#f8fafc; color:#0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
 <!-- preheader -->
 <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#f8fafc;">
-    {{ $preheader ?? 'Permitlyy' }}
+    {{ $preheader ?? 'Peermitly' }}
 </div>
 
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f8fafc" style="background-color:#f8fafc;">
@@ -38,7 +38,7 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td bgcolor="#0f172a" style="background-color:#0f172a; width:36px; height:36px; border-radius:8px; color:#ffffff; font-family: Arial, Helvetica, sans-serif; font-weight:700; font-size:14px; text-align:center; vertical-align:middle;" align="center" valign="middle">P</td>
-                                <td style="padding-left:12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:16px; font-weight:600; color:#0f172a; vertical-align:middle;" valign="middle">Permitlyy</td>
+                                <td style="padding-left:12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:16px; font-weight:600; color:#0f172a; vertical-align:middle;" valign="middle">Peermitly</td>
                             </tr>
                         </table>
                     </td>
@@ -54,7 +54,7 @@
                 <!-- footer -->
                 <tr>
                     <td align="center" style="padding:24px 8px 0 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:12px; line-height:18px; color:#64748b;">
-                        © {{ date('Y') }} Permitlyy. This is an automated security notification.
+                        © {{ date('Y') }} Peermitly. This is an automated security notification.
                     </td>
                 </tr>
 

@@ -58,7 +58,7 @@ final class ChangelogFactory extends Factory
             ->map(fn (): string => '<li>'.fake()->sentence().'</li>')
             ->implode('');
 
-        $code = '<pre><code>curl -X POST permitlyy.test/api/license-keys/check \\
+        $code = '<pre><code>curl -X POST peermitly.test/api/license-keys/check \\
     -H "Authorization: Bearer $TOKEN" \\
     -d \'{"key":"PRMT-9F2A-4E11-XR07"}\'</code></pre>';
 

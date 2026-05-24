@@ -10,7 +10,7 @@ Changelog, Sidebar, Filament-Admin, Inhalte
 
 ## Kurzbeschreibung
 
-Permitlyy hat jetzt einen öffentlich (nach Login) sichtbaren Changelog-Bereich.
+Peermitly hat jetzt einen öffentlich (nach Login) sichtbaren Changelog-Bereich.
 Einträge werden im Filament-Admin per WYSIWYG-Editor gepflegt und sind
 auf `/changelog` aufgelistet — sortiert nach Veröffentlichungsdatum.
 
@@ -77,7 +77,7 @@ Admins zentral und ohne Deploy neue Versionen ankündigen.
 
 ## Beispiel
 
-> Permitlyy bringt Version 1.4 raus. Admin öffnet `/admin/changelogs`,
+> Peermitly bringt Version 1.4 raus. Admin öffnet `/admin/changelogs`,
 > klickt **New Changelog Entry**, trägt Titel „API tokens & Customer CRUD",
 > Version „v1.4.0", Inhalt als formatierte Liste mit den neuen Features
 > und setzt **Published at** auf den aktuellen Tag. Speichern.

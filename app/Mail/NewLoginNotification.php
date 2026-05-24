@@ -29,7 +29,7 @@ final class NewLoginNotification extends Mailable implements ShouldQueue
     {
         return new Envelope(
             to: [new Address($this->user->email, $this->user->name ?? '')],
-            subject: 'New sign-in to your Permitlyy account',
+            subject: 'New sign-in to your Peermitly account',
         );
     }
 

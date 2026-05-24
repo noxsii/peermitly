@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Database\Factories\ApiRequestLogFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,14 +64,13 @@ use Illuminate\Support\Carbon;
     'request_payload',
     'created_at',
 )]
+#[WithoutTimestamps]
 final class ApiRequestLog extends Model
 {
     /** @use HasFactory<ApiRequestLogFactory> */
     use HasFactory;
 
     use HasUuids;
-
-    public $timestamps = false;
 
     /**
      * @return array<string, string>

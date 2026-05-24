@@ -58,5 +58,5 @@ test('the rendered email contains the user email, ip address, and a sign-in head
     expect($rendered)->toContain('ada@example.com')
         ->and($rendered)->toContain('203.0.113.42')
         ->and($rendered)->toContain('TestRunner/1.0')
-        ->and($rendered)->toContain('New sign-in to your Permitlyy account');
+        ->and($rendered)->toContain('New sign-in to your Peermitly account');
 });

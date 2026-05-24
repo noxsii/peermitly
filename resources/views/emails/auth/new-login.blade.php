@@ -9,14 +9,14 @@
     $loginUrl = url('/login');
 @endphp
 
-<x-emails.layout title="New sign-in to your Permitlyy account" preheader="A new sign-in was detected on your Permitlyy account.">
+<x-emails.layout title="New sign-in to your Peermitly account" preheader="A new sign-in was detected on your Permitlyy account.">
 
     <h1 class="h1" style="margin:0 0 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:28px; line-height:34px; font-weight:600; color:#0f172a; letter-spacing:-0.01em;">
-        New sign-in to your Permitlyy account
+        New sign-in to your Peermitly account
     </h1>
 
     <p style="margin:0 0 24px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:16px; line-height:24px; color:#334155;">
-        Hi{{ $userName ? ' ' . e($userName) : '' }}, we noticed a new sign-in to your Permitlyy account. If this was you, you can safely ignore this email.
+        Hi{{ $userName ? ' ' . e($userName) : '' }}, we noticed a new sign-in to your Peermitly account. If this was you, you can safely ignore this email.
     </p>
 
     {{-- Detail table --}}

@@ -34,7 +34,7 @@ können.
 ## Warum wurde das geändert?
 
 Das alte Dashboard lieferte hartkodierte Permit-Beispieldaten („Permit #PRM-1001"
-etc.), die nichts mit dem Permitlyy-Produkt zu tun hatten. Eingeloggte Nutzer
+etc.), die nichts mit dem Peermitly-Produkt zu tun hatten. Eingeloggte Nutzer
 sollen ihre realen Lizenzdaten sehen und Routine-Aufgaben direkt vom Dashboard
 aus starten können.
 

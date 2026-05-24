@@ -10,14 +10,14 @@ Login, Sicherheit, E-Mail, Templates
 
 ## Kurzbeschreibung
 
-Nach jeder erfolgreichen Anmeldung über `/login` schickt Permitlyy automatisch
+Nach jeder erfolgreichen Anmeldung über `/login` schickt Peermitly automatisch
 eine E-Mail an die Adresse des Benutzers. Die Mail informiert über die
 Anmeldung und listet Zeit, IP-Adresse und Gerät auf, sodass auffällige
 Logins sofort erkennbar sind.
 
 ## Was ist neu?
 
-- Neue E-Mail-Vorlage **New sign-in to your Permitlyy account**.
+- Neue E-Mail-Vorlage **New sign-in to your Peermitly account**.
 - Wird direkt im `LoginController::store` ausgelöst, sobald die Anmeldung
   erfolgreich war.
 - Outlook- und Mobile-tauglich: tabellenbasiertes Layout, Inline-Styles,
@@ -70,8 +70,8 @@ unabhängig vom Login-Quellsystem hilfreich (z.B. Audit-Trail im Postfach).
 ## Beispiel
 
 > Eine Nutzerin meldet sich um 09:42 Uhr von Berlin (IP 203.0.113.42) am
-> Permitlyy-Frontend an. Sekunden später liegt in ihrem Postfach eine Mail
-> mit dem Betreff „New sign-in to your Permitlyy account". Darin: ihre
+> Peermitly-Frontend an. Sekunden später liegt in ihrem Postfach eine Mail
+> mit dem Betreff „New sign-in to your Peermitly account". Darin: ihre
 > Account-Adresse, die genaue Zeit, die IP und der User-Agent. Sie erkennt
 > ihren eigenen Login und ignoriert die Mail. Tauchte stattdessen eine
 > unbekannte IP auf, könnte sie sofort das Passwort ändern.

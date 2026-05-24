@@ -68,7 +68,7 @@ const META: Record<number, ErrorMeta> = {
         emoji: "🛠️",
         title: "We'll be right back",
         description:
-            "Permitlyy is currently down for maintenance. Hang tight, we're working on it.",
+            "Peermitly is currently down for maintenance. Hang tight, we're working on it.",
         tone: "info",
     },
 };

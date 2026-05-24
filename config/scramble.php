@@ -32,9 +32,9 @@ return [
          * Description rendered on the home page of the API documentation (`/docs/api`).
          */
         'description' => <<<'MD'
-# Permitlyy API
+# Peermitly API
 
-Welcome to the **Permitlyy** API — the licensing layer for your products.
+Welcome to the **Peermitly** API — the licensing layer for your products.
 
 Use this API to issue license keys, validate them from your application or
 installer, bind keys to hardware, and manage products, key types, and
@@ -48,7 +48,7 @@ All endpoints require a Sanctum **Bearer token**.
 Authorization: Bearer <your-token>
 ```
 
-Generate a token in the Permitlyy dashboard under **Settings → API tokens**.
+Generate a token in the Peermitly dashboard under **Settings → API tokens**.
 Each token belongs to a team and is scoped to specific abilities:
 
 | Ability                       | Grants access to                                         |
