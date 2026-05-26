@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -66,6 +67,16 @@ use Spatie\Activitylog\Support\LogOptions;
  *
  * @mixin Model
  */
+#[Fillable(
+    'name',
+    'email',
+    'email_verified_at',
+    'password',
+    'role',
+    'is_active',
+    'remember_token',
+    'current_team_id',
+)]
 #[Hidden([
     'password',
     'remember_token',
