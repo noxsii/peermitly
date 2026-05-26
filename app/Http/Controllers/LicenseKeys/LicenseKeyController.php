@@ -7,6 +7,7 @@ namespace App\Http\Controllers\LicenseKeys;
 use App\Actions\LicenseKeys\CreateLicenseKeyAction;
 use App\Enums\LicenseKeyStatus;
 use App\Enums\LicenseValidityUnit;
+use App\Http\Requests\LicenseKeys\BulkExtendLicenseKeysRequest;
 use App\Http\Requests\LicenseKeys\BulkStoreLicenseKeyRequest;
 use App\Http\Requests\LicenseKeys\StoreLicenseKeyRequest;
 use App\Http\Requests\LicenseKeys\UpdateLicenseKeyRequest;
@@ -15,6 +16,7 @@ use App\Http\Resources\LicenseKeys\LicenseKeyResource;
 use App\Http\Resources\LicenseKeys\LicenseKeyTypeResource;
 use App\Http\Resources\LicenseKeys\ProductResource;
 use App\Jobs\BulkCreateLicenseKeysJob;
+use App\Jobs\BulkExtendLicenseKeysJob;
 use App\Models\Customer;
 use App\Models\LicenseKey;
 use App\Models\LicenseKeyType;
@@ -111,6 +113,32 @@ final class LicenseKeyController
         return back()->with(
             'success',
             sprintf('Generating %d license keys in the background — you will be notified when it is done.', $count),
+        );
+    }
+
+    public function bulkExtend(BulkExtendLicenseKeysRequest $request): RedirectResponse
+    {
+        $teamId = (int) auth()->user()?->current_team_id;
+
+        $user = $request->user();
+        abort_unless($user instanceof User, 401);
+
+        $from = $request->date('from_expires_at');
+        abort_if($from === null, 422, 'Invalid date.');
+
+        $amount = $request->integer('amount');
+        $unit = $request->string('unit')->toString();
+
+        dispatch(new BulkExtendLicenseKeysJob(teamId: $teamId, fromExpiresAtIso: $from->toIso8601String(), amount: $amount, unit: $unit, createdById: $user->id));
+
+        return back()->with(
+            'success',
+            sprintf(
+                'Extending license keys expiring after %s by %d %s in the background — you will be notified when it is done.',
+                $from->format('Y-m-d H:i'),
+                $amount,
+                $unit,
+            ),
         );
     }
 

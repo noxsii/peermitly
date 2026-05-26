@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { Deferred, Link, router } from "@inertiajs/vue3";
-import { Download, KeyRound, Plus, Settings2 } from "@lucide/vue";
+import {
+    CalendarClock,
+    Download,
+    KeyRound,
+    Plus,
+    Settings2,
+} from "@lucide/vue";
 import { ref, watch } from "vue";
 import LicenseKeyTable from "@/components/license-keys/LicenseKeyTable.vue";
 import BulkCreateLicenseKeyDialog from "@/components/dialogs/BulkCreateLicenseKeyDialog.vue";
 import CreateLicenseKeyDialog from "@/components/dialogs/CreateLicenseKeyDialog.vue";
 import ExportLicenseKeysDialog from "@/components/dialogs/ExportLicenseKeysDialog.vue";
+import ExtendLicenseKeysDialog from "@/components/dialogs/ExtendLicenseKeysDialog.vue";
 import type { PaginationMeta } from "@/components/table";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
@@ -38,6 +45,7 @@ const props = defineProps<{
 const createOpen = ref(false);
 const bulkOpen = ref(false);
 const exportOpen = ref(false);
+const extendOpen = ref(false);
 
 const STATUS_OPTIONS: { value: LicenseKeyStatus | "all"; label: string }[] = [
     { value: "all", label: "All statuses" },
@@ -81,6 +89,15 @@ watch(statusFilter, (value) => {
             >
                 <KeyRound class="size-4" />
                 <span class="hidden sm:inline">Bulk create</span>
+            </Button>
+            <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Extend licences"
+                @click="extendOpen = true"
+            >
+                <CalendarClock class="size-4" />
+                <span class="hidden sm:inline">Extend licences</span>
             </Button>
             <Button size="sm" aria-label="New key" @click="createOpen = true">
                 <Plus class="size-4" />
@@ -191,5 +208,7 @@ watch(statusFilter, (value) => {
             v-model:open="exportOpen"
             :products="products?.data ?? []"
         />
+
+        <ExtendLicenseKeysDialog v-model:open="extendOpen" />
     </PageLayout>
 </template>

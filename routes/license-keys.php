@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/', [LicenseKeyController::class, 'store'])->name('store');
 
     Route::post('/bulk', [LicenseKeyController::class, 'bulkStore'])->name('bulk.store');
+    Route::post('/bulk-extend', [LicenseKeyController::class, 'bulkExtend'])->name('bulk.extend');
 
     Route::get('/export', [LicenseKeyExportController::class, 'export'])->name('export');
     Route::get('/search', [LicenseKeySearchController::class, 'search'])->name('search');
