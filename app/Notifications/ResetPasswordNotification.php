@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 final class ResetPasswordNotification extends Notification implements ShouldQueue
 {
@@ -39,7 +39,7 @@ final class ResetPasswordNotification extends Notification implements ShouldQueu
                 'userName' => $notifiable->name,
                 'resetUrl' => $resetUrl,
                 'expiresInMinutes' => $expiresInMinutes,
-                'requestedAt' => Carbon::now(),
+                'requestedAt' => Date::now(),
             ]);
     }
 }

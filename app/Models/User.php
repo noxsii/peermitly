@@ -71,11 +71,6 @@ final class User extends Authenticatable implements MustVerifyEmail
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function sendPasswordResetNotification($token): void
-    {
-        $this->notify(new \App\Notifications\ResetPasswordNotification($token));
-    }
-
     /**
      * @return array<string, string>
      */

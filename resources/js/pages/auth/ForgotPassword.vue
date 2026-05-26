@@ -82,19 +82,12 @@ const status = computed(() => page.props.flash?.status ?? null);
                             required
                             :aria-invalid="!!errors.email"
                         />
-                        <p
-                            v-if="errors.email"
-                            class="text-destructive text-sm"
-                        >
+                        <p v-if="errors.email" class="text-destructive text-sm">
                             {{ errors.email }}
                         </p>
                     </div>
 
-                    <Button
-                        type="submit"
-                        class="w-full"
-                        :disabled="processing"
-                    >
+                    <Button type="submit" class="w-full" :disabled="processing">
                         <Loader2
                             v-if="processing"
                             class="size-4 animate-spin"
