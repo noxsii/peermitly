@@ -28,7 +28,7 @@ const formatDate = (iso: string | null): string => {
 
 <template>
     <PageLayout title="Changelog">
-        <div class="space-y-4">
+        <div class="mx-auto w-full max-w-3xl space-y-4">
             <Deferred data="entries">
                 <template #fallback>
                     <div class="space-y-3">
