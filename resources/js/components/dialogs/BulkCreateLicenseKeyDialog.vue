@@ -167,6 +167,9 @@ const submit = () => {
                         v-model="form.count"
                         :aria-invalid="!!form.errors.count"
                     />
+                    <p class="text-muted-foreground text-xs">
+                        Maximum 1000 keys per request.
+                    </p>
                     <InputError :message="form.errors.count" />
                 </div>
 
