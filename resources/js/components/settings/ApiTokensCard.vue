@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { Deferred, router } from "@inertiajs/vue3";
-import { Plus, Trash2 } from "@lucide/vue";
+import { Plus, ShieldAlert, Trash2 } from "@lucide/vue";
 import { ref } from "vue";
 import Card from "@/components/Card.vue";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import CreateApiTokenDialog from "@/components/dialogs/CreateApiTokenDialog.vue";
 import ShowApiTokenDialog from "@/components/dialogs/ShowApiTokenDialog.vue";
+import { useRole } from "@/composables/useRole";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ApiToken, ApiTokenAbility, IssuedApiToken } from "@/types";
+
+const { hasRole } = useRole();
+const canManageTokens = hasRole(["admin", "super_admin"]);
 
 defineProps<{
     tokens?: { data: ApiToken[] } | null;
@@ -51,11 +55,22 @@ const confirmDelete = () => {
 
 <template>
     <Card title="API Tokens">
-        <template #actions>
+        <template v-if="canManageTokens" #actions>
             <Button variant="ghost" size="icon-sm" @click="createOpen = true">
                 <Plus class="size-4" />
             </Button>
         </template>
+
+        <div
+            v-if="!canManageTokens"
+            class="mb-3 flex items-start gap-2 rounded-md border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-700 dark:text-amber-200"
+        >
+            <ShieldAlert class="size-4 shrink-0" aria-hidden="true" />
+            <span>
+                Only admins can create or revoke API tokens. Ask a team admin if
+                you need one.
+            </span>
+        </div>
 
         <Deferred data="tokens">
             <template #fallback>
@@ -69,7 +84,10 @@ const confirmDelete = () => {
                 v-if="!tokens?.data?.length"
                 class="text-muted-foreground text-sm"
             >
-                No API tokens yet. Create one to authenticate external software.
+                No API tokens yet.
+                <template v-if="canManageTokens">
+                    Create one to authenticate external software.
+                </template>
             </p>
 
             <ul v-else class="divide-y">
@@ -95,6 +113,7 @@ const confirmDelete = () => {
                         </p>
                     </div>
                     <Button
+                        v-if="canManageTokens"
                         variant="ghost"
                         size="icon-sm"
                         type="button"
@@ -107,6 +126,7 @@ const confirmDelete = () => {
         </Deferred>
 
         <CreateApiTokenDialog
+            v-if="canManageTokens"
             v-model:open="createOpen"
             :abilities="tokenAbilities"
             @created="onTokenCreated"

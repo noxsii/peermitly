@@ -11,6 +11,10 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/', [SettingsController::class, 'edit'])->name('edit');
     Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
-    Route::delete('/api-tokens/{apiToken}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
+    Route::post('/api-tokens', [ApiTokenController::class, 'store'])
+        ->middleware('role:admin,super_admin')
+        ->name('api-tokens.store');
+    Route::delete('/api-tokens/{apiToken}', [ApiTokenController::class, 'destroy'])
+        ->middleware('role:admin,super_admin')
+        ->name('api-tokens.destroy');
 });
