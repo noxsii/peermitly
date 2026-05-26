@@ -64,17 +64,27 @@ watch(statusFilter, (value) => {
 <template>
     <PageLayout title="License Keys">
         <template #actions>
-            <Button variant="ghost" size="sm" @click="exportOpen = true">
+            <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Export CSV"
+                @click="exportOpen = true"
+            >
                 <Download class="size-4" />
-                Export CSV
+                <span class="hidden sm:inline">Export CSV</span>
             </Button>
-            <Button variant="ghost" size="sm" @click="bulkOpen = true">
+            <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Bulk create"
+                @click="bulkOpen = true"
+            >
                 <KeyRound class="size-4" />
-                Bulk create
+                <span class="hidden sm:inline">Bulk create</span>
             </Button>
-            <Button size="sm" @click="createOpen = true">
+            <Button size="sm" aria-label="New key" @click="createOpen = true">
                 <Plus class="size-4" />
-                New key
+                <span class="hidden sm:inline">New key</span>
             </Button>
         </template>
 
@@ -124,12 +134,14 @@ watch(statusFilter, (value) => {
 
             <Card title="License Keys" class="xl:col-span-2">
                 <template #actions>
-                    <div class="flex items-center gap-2">
-                        <Label class="text-muted-foreground text-xs">
+                    <div class="flex w-full items-center gap-2 sm:w-auto">
+                        <Label
+                            class="text-muted-foreground hidden text-xs sm:inline"
+                        >
                             Status
                         </Label>
                         <Select v-model="statusFilter">
-                            <SelectTrigger class="h-8 w-36">
+                            <SelectTrigger class="h-8 w-full sm:w-36">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>

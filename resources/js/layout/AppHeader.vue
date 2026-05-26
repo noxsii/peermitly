@@ -29,17 +29,17 @@ const appearanceOptions: Array<{
 
 <template>
     <header
-        class="bg-background grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-4"
+        class="bg-background flex h-14 shrink-0 items-center gap-2 px-3 sm:gap-3 sm:px-4"
     >
-        <div class="flex items-center">
+        <div class="flex shrink-0 items-center">
             <Logo />
         </div>
 
-        <div class="min-w-3xl justify-self-center">
+        <div class="min-w-0 flex-1 sm:mx-auto sm:max-w-2xl">
             <HeaderSearch />
         </div>
 
-        <div class="flex items-center justify-end gap-2">
+        <div class="flex shrink-0 items-center gap-1 sm:gap-2">
             <DropdownMenu>
                 <DropdownMenuTrigger as-child>
                     <Button

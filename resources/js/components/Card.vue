@@ -15,7 +15,7 @@ const hasHeader = (title?: string) => Boolean(title) || Boolean(slots.actions);
     >
         <header
             v-if="hasHeader(title)"
-            class="flex items-center justify-between gap-3 px-1 pt-1"
+            class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-1 pt-1"
         >
             <h2
                 v-if="title"
@@ -24,7 +24,10 @@ const hasHeader = (title?: string) => Boolean(title) || Boolean(slots.actions);
                 {{ title }}
             </h2>
 
-            <div v-if="$slots.actions" class="flex items-center gap-1">
+            <div
+                v-if="$slots.actions"
+                class="flex flex-wrap items-center gap-1"
+            >
                 <slot name="actions" />
             </div>
         </header>
