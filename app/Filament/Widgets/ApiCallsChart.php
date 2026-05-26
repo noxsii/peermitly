@@ -38,11 +38,20 @@ final class ApiCallsChart extends ChartWidget
         $totals = [];
         $errors = [];
         foreach ($rows as $row) {
-            $key = $row->getAttribute('bucket') instanceof DateTimeInterface
-                ? $row->getAttribute('bucket')->format('Y-m-d H:00:00')
-                : (string) $row->getAttribute('bucket');
-            $totals[$key] = (int) $row->getAttribute('total');
-            $errors[$key] = (int) $row->getAttribute('errors');
+            $bucket = $row->getAttribute('bucket');
+            if ($bucket instanceof DateTimeInterface) {
+                $key = $bucket->format('Y-m-d H:00:00');
+            } elseif (is_scalar($bucket)) {
+                $key = (string) $bucket;
+            } else {
+                continue;
+            }
+
+            $total = $row->getAttribute('total');
+            $errorCount = $row->getAttribute('errors');
+
+            $totals[$key] = is_numeric($total) ? (int) $total : 0;
+            $errors[$key] = is_numeric($errorCount) ? (int) $errorCount : 0;
         }
 
         $labels = [];

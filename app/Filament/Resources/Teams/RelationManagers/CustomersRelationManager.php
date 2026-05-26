@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 final class CustomersRelationManager extends RelationManager
 {
@@ -24,7 +25,7 @@ final class CustomersRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('email')
-            ->modifyQueryUsing(fn ($query) => $query->withCount('licenseKeys'))
+            ->modifyQueryUsing(static fn (Builder $query): Builder => $query->withCount('licenseKeys'))
             ->columns([
                 TextColumn::make('email')
                     ->label('Email')

@@ -46,7 +46,7 @@ final class ActivitiesRelationManager extends RelationManager
                 TextColumn::make('properties')
                     ->label('Changes')
                     ->formatStateUsing(function (Activity $record): string {
-                        $changes = $record->properties->toArray();
+                        $changes = $record->properties?->toArray() ?? [];
                         if ($changes === []) {
                             return '—';
                         }
@@ -74,7 +74,7 @@ final class ActivitiesRelationManager extends RelationManager
                     ->wrap()
                     ->limit(140)
                     ->tooltip(function (Activity $record): ?string {
-                        $changes = $record->properties->toArray();
+                        $changes = $record->properties?->toArray() ?? [];
                         if ($changes === []) {
                             return null;
                         }
@@ -97,7 +97,10 @@ final class ActivitiesRelationManager extends RelationManager
         if (is_array($value)) {
             return json_encode($value) ?: '[]';
         }
+        if (is_scalar($value)) {
+            return (string) $value;
+        }
 
-        return (string) $value;
+        return '—';
     }
 }

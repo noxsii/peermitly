@@ -9,6 +9,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 final class ProductsRelationManager extends RelationManager
 {
@@ -25,7 +26,7 @@ final class ProductsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('name')
-            ->modifyQueryUsing(fn ($query) => $query->withCount('licenseKeys'))
+            ->modifyQueryUsing(static fn (Builder $query): Builder => $query->withCount('licenseKeys'))
             ->columns([
                 TextColumn::make('name')
                     ->label('Name')
