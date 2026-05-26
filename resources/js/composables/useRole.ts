@@ -23,9 +23,7 @@ export function useRole() {
     const isRole = (expected: UserRole): ComputedRef<boolean> =>
         computed(() => role.value === expected);
 
-    const hasRole = (
-        expected: UserRole | UserRole[],
-    ): ComputedRef<boolean> => {
+    const hasRole = (expected: UserRole | UserRole[]): ComputedRef<boolean> => {
         const list = Array.isArray(expected) ? expected : [expected];
         return computed(() =>
             role.value !== null ? list.includes(role.value) : false,

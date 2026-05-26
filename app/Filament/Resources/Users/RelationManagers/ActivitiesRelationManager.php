@@ -64,8 +64,8 @@ final class ActivitiesRelationManager extends RelationManager
                             $parts[] = sprintf(
                                 '%s: %s → %s',
                                 (string) $key,
-                                self::format($previous),
-                                self::format($newValue),
+                                $this->format($previous),
+                                $this->format($newValue),
                             );
                         }
 
@@ -86,7 +86,7 @@ final class ActivitiesRelationManager extends RelationManager
             ->paginated([10, 25, 50]);
     }
 
-    private static function format(mixed $value): string
+    private function format(mixed $value): string
     {
         if ($value === null) {
             return '∅';
