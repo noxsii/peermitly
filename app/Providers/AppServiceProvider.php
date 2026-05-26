@@ -34,9 +34,7 @@ final class AppServiceProvider extends ServiceProvider
             }
         });
 
-        Gate::define('viewApiDocs', static function (User $user) {
-            return $user->is_active && ($user->role === 'admin' || $user->role === 'super_admin');
-        });
+        Gate::define('viewApiDocs', static fn (User $user): bool => $user->is_active && ($user->role === 'admin' || $user->role === 'super_admin'));
 
         RateLimiter::for('license-key-check', static fn (Request $request) => Limit::perMinute(60)->by(
             $request->user()?->id !== null

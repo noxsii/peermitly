@@ -27,6 +27,8 @@ use Laravel\Sanctum\PersonalAccessToken;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
+use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 
 /**
  * @property int $id
@@ -81,10 +83,10 @@ use Spatie\Activitylog\Support\LogOptions;
     'password',
     'remember_token',
 ])]
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable implements HasPasskeys, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasFactory, LogsActivity, Notifiable;
+    use HasApiTokens, HasFactory, InteractsWithPasskeys, LogsActivity, Notifiable;
 
     public function getActivitylogOptions(): LogOptions
     {

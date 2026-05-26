@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Form, Head, Link } from "@inertiajs/vue3";
-import { Eye, EyeOff, Loader2 } from "@lucide/vue";
+import { Eye, EyeOff, Fingerprint, Loader2 } from "@lucide/vue";
 import { ref } from "vue";
+import { usePasskeyAuth } from "@/composables/usePasskeyAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,13 @@ defineOptions({ layout: "" });
 
 const showPassword = ref(false);
 const remember = ref(false);
+
+const {
+    passkeysSupported,
+    processing: passkeyProcessing,
+    error: passkeyError,
+    loginWithPasskey,
+} = usePasskeyAuth();
 </script>
 
 <template>
@@ -108,6 +116,36 @@ const remember = ref(false);
                     Sign in
                 </Button>
             </Form>
+
+            <div v-if="passkeysSupported" class="mt-6 space-y-3">
+                <div
+                    class="text-muted-foreground flex items-center gap-3 text-xs"
+                >
+                    <span class="border-border flex-1 border-t" />
+                    <span>or</span>
+                    <span class="border-border flex-1 border-t" />
+                </div>
+                <Button
+                    type="button"
+                    variant="outline"
+                    class="w-full"
+                    :disabled="passkeyProcessing"
+                    @click="loginWithPasskey"
+                >
+                    <Loader2
+                        v-if="passkeyProcessing"
+                        class="size-4 animate-spin"
+                    />
+                    <Fingerprint v-else class="size-4" />
+                    Sign in with passkey
+                </Button>
+                <p
+                    v-if="passkeyError"
+                    class="text-destructive text-center text-xs"
+                >
+                    {{ passkeyError }}
+                </p>
+            </div>
         </div>
     </main>
 </template>

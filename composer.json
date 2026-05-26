@@ -17,6 +17,7 @@
         "laravel/tinker": "^3.0.2",
         "plesk/ext-laravel-integration": ">=7",
         "spatie/laravel-activitylog": "^5.0",
+        "spatie/laravel-passkeys": "^1.8",
         "tightenco/ziggy": "^2.6.2"
     },
     "require-dev": {

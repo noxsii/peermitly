@@ -10,6 +10,7 @@ use App\Support\TokenAbility;
 use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Sanctum\PersonalAccessToken;
+use Spatie\LaravelPasskeys\Models\Passkey;
 
 final class SettingsController
 {
@@ -29,6 +30,17 @@ final class SettingsController
                 static fn (string $ability): array => ['value' => $ability, 'label' => $ability],
                 TokenAbility::all(),
             ),
+            'passkeys' => Inertia::defer(static fn (): array => Passkey::query()
+                ->where('authenticatable_id', $userId)
+                ->latest()
+                ->get()
+                ->map(static fn (Passkey $passkey): array => [
+                    'id' => (int) $passkey->getAttribute('id'),
+                    'name' => (string) $passkey->getAttribute('name'),
+                    'created_at' => $passkey->created_at?->toIso8601String(),
+                    'last_used_at' => $passkey->last_used_at?->toIso8601String(),
+                ])
+                ->all()),
         ]);
     }
 }
