@@ -91,7 +91,7 @@ const submit = () => {
                 id="name"
                 v-model="form.name"
                 :aria-invalid="!!form.errors.name"
-                placeholder="OfficeEfficient"
+                placeholder="YourProduct"
             />
             <InputError :message="form.errors.name" />
         </div>
@@ -102,7 +102,7 @@ const submit = () => {
                 id="slug"
                 v-model="form.slug"
                 :aria-invalid="!!form.errors.slug"
-                placeholder="office-efficient"
+                placeholder="your-product"
             />
             <p class="text-muted-foreground text-xs">
                 Used in API requests. Lowercase letters, numbers and dashes
