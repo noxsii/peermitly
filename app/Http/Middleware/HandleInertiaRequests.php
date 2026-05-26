@@ -28,6 +28,11 @@ final class HandleInertiaRequests extends Middleware
                 'user' => fn () => $request->user()?->load('currentTeam'),
             ],
             'notifications' => fn (): array => $this->notificationPayload($request->user()),
+            'flash' => fn (): array => [
+                'status' => $request->session()->get('status'),
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+            ],
         ];
     }
 

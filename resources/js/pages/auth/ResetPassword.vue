@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import { Form, Head, Link } from "@inertiajs/vue3";
-import { Eye, EyeOff, Loader2 } from "@lucide/vue";
+import { ArrowLeft, Eye, EyeOff, Loader2 } from "@lucide/vue";
 import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+
+const props = defineProps<{
+    token: string;
+    email: string;
+}>();
 
 defineOptions({ layout: "" });
 
 const showPassword = ref(false);
-const remember = ref(false);
 </script>
 
 <template>
-    <Head title="Sign in" />
+    <Head title="Reset password" />
 
     <main
         class="bg-muted/40 flex min-h-screen items-center justify-center px-4"
@@ -24,19 +27,21 @@ const remember = ref(false);
         >
             <div class="mb-6 space-y-1">
                 <h1 class="text-2xl font-semibold tracking-tight">
-                    Sign in 👋
+                    Choose a new password 🔒
                 </h1>
                 <p class="text-muted-foreground text-sm">
-                    Enter your email and password to continue.
+                    Set a strong password for your Peermitly account.
                 </p>
             </div>
 
             <Form
-                action="/login"
+                action="/reset-password"
                 method="post"
                 class="space-y-5"
                 #default="{ errors, processing }"
             >
+                <input type="hidden" name="token" :value="props.token" />
+
                 <div class="space-y-2">
                     <Label for="email">Email</Label>
                     <Input
@@ -45,6 +50,7 @@ const remember = ref(false);
                         type="email"
                         autocomplete="email"
                         required
+                        :default-value="props.email"
                         :aria-invalid="!!errors.email"
                     />
                     <p v-if="errors.email" class="text-destructive text-sm">
@@ -53,13 +59,13 @@ const remember = ref(false);
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="password">Password</Label>
+                    <Label for="password">New password</Label>
                     <div class="relative">
                         <Input
                             id="password"
                             name="password"
                             :type="showPassword ? 'text' : 'password'"
-                            autocomplete="current-password"
+                            autocomplete="new-password"
                             required
                             class="pr-10"
                             :aria-invalid="!!errors.password"
@@ -82,32 +88,30 @@ const remember = ref(false);
                     </p>
                 </div>
 
-                <div class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                        <Switch
-                            id="remember"
-                            v-model:checked="remember"
-                            name="remember"
-                            value="1"
-                        />
-                        <Label for="remember" class="cursor-pointer">
-                            Remember me
-                        </Label>
-                    </div>
-
-                    <Link
-                        href="/forgot-password"
-                        class="text-primary text-xs font-medium hover:underline"
-                    >
-                        Forgot password?
-                    </Link>
+                <div class="space-y-2">
+                    <Label for="password_confirmation">Confirm password</Label>
+                    <Input
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        :type="showPassword ? 'text' : 'password'"
+                        autocomplete="new-password"
+                        required
+                    />
                 </div>
 
                 <Button type="submit" class="w-full" :disabled="processing">
                     <Loader2 v-if="processing" class="size-4 animate-spin" />
-                    Sign in
+                    Reset password
                 </Button>
             </Form>
+
+            <Link
+                href="/login"
+                class="text-muted-foreground hover:text-foreground mt-6 inline-flex items-center gap-1 text-xs font-medium transition-colors"
+            >
+                <ArrowLeft class="size-3" />
+                Back to sign in
+            </Link>
         </div>
     </main>
 </template>
