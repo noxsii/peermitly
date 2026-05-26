@@ -20,6 +20,8 @@ final readonly class AuthenticateWithPasskeyAction
 
     /**
      * @param  array<string, mixed>  $assertion
+     *
+     * @throws Throwable
      */
     public function handle(array $assertion): Passkey
     {
