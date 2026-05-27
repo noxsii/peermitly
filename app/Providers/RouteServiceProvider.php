@@ -23,5 +23,10 @@ final class RouteServiceProvider extends ServiceProvider
             ->prefix('license-keys')
             ->name('license-keys.')
             ->group(base_path('routes/license-keys.php'));
+
+        Route::middleware('web')
+            ->prefix('team')
+            ->name('team.')
+            ->group(base_path('routes/team.php'));
     }
 }
