@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from "@inertiajs/vue3";
+
 const year = new Date().getFullYear();
 </script>
 
@@ -23,9 +25,12 @@ const year = new Date().getFullYear();
                     rel="noopener noreferrer"
                     >Status</a
                 >
-                <a class="hover:text-foreground transition-colors" href="#"
-                    >Privacy</a
+                <Link
+                    class="hover:text-foreground transition-colors"
+                    :href="route('privacy')"
                 >
+                    Privacy
+                </Link>
             </nav>
         </div>
     </footer>
