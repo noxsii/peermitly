@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 <template>
     <section
-        class="relative isolate overflow-hidden bg-gradient-to-b from-white to-slate-50"
+        class="from-background to-muted/40 relative isolate overflow-hidden bg-gradient-to-b"
     >
         <div
             aria-hidden="true"
