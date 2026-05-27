@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
             <nav class="flex items-center gap-5">
                 <a
                     class="hover:text-foreground transition-colors"
-                    href="https://peermitly.de/api/docs"
+                    href="https://peermitly.de/docs/api"
                     target="_blank"
                     rel="noopener noreferrer"
                     >Documentation</a

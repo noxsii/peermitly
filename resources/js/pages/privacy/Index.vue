@@ -5,11 +5,11 @@ import LandingNav from "@/components/landing/LandingNav.vue";
 
 defineOptions({ layout: "" });
 
-const lastUpdated = "27. Mai 2026";
+const lastUpdated = "May 27, 2026";
 </script>
 
 <template>
-    <Head title="Datenschutz — Peermitly" />
+    <Head title="Privacy — Peermitly" />
 
     <div class="bg-background text-foreground min-h-screen">
         <LandingNav />
@@ -19,225 +19,210 @@ const lastUpdated = "27. Mai 2026";
                 <p
                     class="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase"
                 >
-                    Rechtliches
+                    Legal
                 </p>
                 <h1
                     class="text-foreground text-4xl font-semibold tracking-tight md:text-5xl"
                 >
-                    Datenschutzerklärung
+                    Privacy Policy
                 </h1>
                 <p class="text-muted-foreground text-sm">
-                    Stand: {{ lastUpdated }}
+                    Last updated: {{ lastUpdated }}
                 </p>
             </header>
 
             <article
                 class="prose prose-sm dark:prose-invert text-foreground/90 max-w-none [&_a]:text-primary [&_a]:underline [&_h2]:text-foreground [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-semibold [&_h3]:text-foreground [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-base [&_h3]:font-semibold [&_li]:my-1 [&_p]:my-3 [&_p]:leading-7 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5"
             >
-                <h2>1. Verantwortlicher</h2>
+                <h2>1. Controller</h2>
                 <p>
-                    Verantwortlich für die Datenverarbeitung auf dieser
-                    Plattform ist der Betreiber von Peermitly. Anfragen zum
-                    Datenschutz richten Sie bitte per E-Mail an
-                    <a href="mailto:datenschutz@peermitly.de"
-                        >datenschutz@peermitly.de</a
-                    >.
+                    The operator of Peermitly is responsible for the data
+                    processing on this platform. For any privacy-related
+                    questions, contact us at
+                    <a href="mailto:hello@peermitly.de">hello@peermitly.de</a>.
                 </p>
 
-                <h2>2. Überblick</h2>
+                <h2>2. Overview</h2>
                 <p>
-                    Peermitly ist ein Dienst zur Verwaltung von Lizenzschlüsseln
-                    und Aktivierungen. Wir verarbeiten nur die Daten, die für
-                    den Betrieb des Dienstes notwendig sind: Account-Daten,
-                    technische Logdaten und die von Ihnen selbst eingegebenen
-                    Inhalte (Lizenzschlüssel, Produkte, Kunden, Teams).
+                    Peermitly is a service for managing license keys and
+                    activations. We only process the data required to operate
+                    the service: account data, technical log data, and the
+                    content you enter yourself (license keys, products,
+                    customers, teams).
                 </p>
 
-                <h2>3. Welche Daten verarbeiten wir?</h2>
+                <h2>3. Data we process</h2>
 
-                <h3>3.1 Account &amp; Authentifizierung</h3>
+                <h3>3.1 Account &amp; authentication</h3>
                 <ul>
-                    <li>Name, E-Mail-Adresse, Rolle</li>
-                    <li>Gehashtes Passwort (bcrypt)</li>
+                    <li>Name, email address, role</li>
+                    <li>Hashed password (bcrypt)</li>
                     <li>
-                        Optional registrierte Passkeys (WebAuthn-Credentials)
+                        Optionally registered passkeys (WebAuthn credentials)
                     </li>
-                    <li>Session-Cookies und Remember-Me-Token zur Anmeldung</li>
+                    <li>Session cookies and remember-me tokens for sign-in</li>
                 </ul>
-                <p>
-                    Rechtsgrundlage: Vertragserfüllung (Art. 6 Abs. 1 lit. b
-                    DSGVO).
-                </p>
+                <p>Legal basis: performance of contract (Art. 6(1)(b) GDPR).</p>
 
-                <h3>3.2 Anwendungsdaten</h3>
+                <h3>3.2 Application data</h3>
                 <ul>
-                    <li>Teams, Produkte, Kunden, Lizenzschlüssel</li>
+                    <li>Teams, products, customers, license keys</li>
                     <li>
-                        Aktivierungen inkl. optionaler Hardware-ID (HWID), falls
-                        vom Kunden bei der Lizenzaktivierung übermittelt
+                        Activations including optional hardware ID (HWID), if
+                        sent by the client during license activation
                     </li>
-                    <li>Persönliche API-Tokens (Hashes)</li>
+                    <li>Personal API tokens (hashes)</li>
                 </ul>
-                <p>
-                    Rechtsgrundlage: Vertragserfüllung (Art. 6 Abs. 1 lit. b
-                    DSGVO).
-                </p>
+                <p>Legal basis: performance of contract (Art. 6(1)(b) GDPR).</p>
 
-                <h3>3.3 Technische Logdaten</h3>
+                <h3>3.3 Technical log data</h3>
                 <ul>
                     <li>
-                        IP-Adresse, User-Agent und Zeitstempel bei Aufrufen des
-                        API-Endpunkts <code>/api</code>
+                        IP address, user agent, and timestamp on calls to the
+                        <code>/api</code> endpoint
                     </li>
                     <li>
-                        Login-Benachrichtigungen per E-Mail mit IP und
-                        User-Agent zur Erkennung verdächtiger Anmeldungen
+                        Sign-in notifications via email containing IP and user
+                        agent to help detect suspicious sign-ins
                     </li>
                     <li>
-                        Aktivitätslogs für Lizenzschlüssel- und
-                        Benutzer-Änderungen (wer hat was geändert)
+                        Activity logs for license key and user changes (who
+                        changed what)
                     </li>
                 </ul>
                 <p>
-                    Rechtsgrundlage: berechtigtes Interesse an Sicherheit,
-                    Missbrauchserkennung und Nachvollziehbarkeit (Art. 6 Abs. 1
-                    lit. f DSGVO).
+                    Legal basis: legitimate interest in security, abuse
+                    detection, and traceability (Art. 6(1)(f) GDPR).
                 </p>
 
-                <h2>4. Eingesetzte Technologien</h2>
+                <h2>4. Technologies in use</h2>
                 <ul>
                     <li>
-                        <strong>Laravel</strong> (PHP 8.4) als
-                        Backend-Framework.
+                        <strong>Laravel</strong> (PHP 8.4) as the backend
+                        framework.
                     </li>
                     <li>
-                        <strong>PostgreSQL</strong> als Datenbank für alle
-                        anwendungsrelevanten Daten.
+                        <strong>PostgreSQL</strong> as the database for all
+                        application data.
                     </li>
                     <li>
-                        <strong>Redis</strong> für Sessions, Cache und die
-                        Job-Queue (Laravel Horizon).
+                        <strong>Redis</strong> for sessions, cache, and the job
+                        queue (Laravel Horizon).
                     </li>
                     <li>
-                        <strong>Inertia.js + Vue 3</strong> für das Frontend,
-                        ohne externe Tracking-Skripte.
+                        <strong>Inertia.js + Vue 3</strong> for the frontend,
+                        without any external tracking scripts.
                     </li>
                     <li>
-                        <strong>Spatie Passkeys</strong> für passwortlose
-                        Anmeldung per WebAuthn.
+                        <strong>Spatie Passkeys</strong> for passwordless
+                        sign-in via WebAuthn.
                     </li>
                     <li>
-                        <strong>Laravel Sanctum</strong> für die Ausstellung
-                        persönlicher API-Tokens.
+                        <strong>Laravel Sanctum</strong> for issuing personal
+                        API tokens.
                     </li>
                 </ul>
 
-                <h2>5. Cookies &amp; lokale Speicherung</h2>
-                <p>
-                    Es werden ausschließlich technisch notwendige Cookies
-                    gesetzt:
-                </p>
+                <h2>5. Cookies &amp; local storage</h2>
+                <p>Only strictly necessary cookies are set:</p>
                 <ul>
                     <li>
-                        <code>peermitly_session</code> — Session-Cookie zur
-                        Aufrechterhaltung der Anmeldung
+                        <code>peermitly_session</code> — session cookie that
+                        keeps you signed in
                     </li>
                     <li>
-                        <code>XSRF-TOKEN</code> — Schutz vor
-                        Cross-Site-Request-Forgery
+                        <code>XSRF-TOKEN</code> — protection against cross-site
+                        request forgery
                     </li>
                     <li>
-                        <code>remember_web_*</code> — optional, wenn „Angemeldet
-                        bleiben" gewählt wurde
+                        <code>remember_web_*</code> — optional, set when
+                        "Remember me" is enabled
                     </li>
                 </ul>
                 <p>
-                    Es kommen keine Analyse-, Marketing- oder Drittanbieter-
-                    Cookies zum Einsatz.
+                    No analytics, marketing, or third-party tracking cookies are
+                    used.
                 </p>
 
-                <h2>6. Drittdienste</h2>
+                <h2>6. Third-party services</h2>
 
-                <h3>6.1 Schriften (Bunny Fonts)</h3>
+                <h3>6.1 Fonts (Bunny Fonts)</h3>
                 <p>
-                    Schriftarten werden über
+                    Fonts are loaded via
                     <a
                         href="https://fonts.bunny.net"
                         target="_blank"
                         rel="noopener noreferrer"
                         >fonts.bunny.net</a
-                    >
-                    geladen, einem datenschutzfreundlichen Alternativdienst zu
-                    Google Fonts. IP-Adressen werden dort nicht protokolliert.
+                    >, a privacy-friendly alternative to Google Fonts. IP
+                    addresses are not logged there.
                 </p>
 
-                <h3>6.2 Statusseite (Better Stack)</h3>
+                <h3>6.2 Status page (Better Stack)</h3>
                 <p>
-                    Unsere Statusseite
+                    Our status page
                     <a
                         href="https://peermitly.betteruptime.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                         >peermitly.betteruptime.com</a
                     >
-                    wird von Better Stack betrieben. Beim Aufruf werden Daten
-                    von Better Stack verarbeitet.
+                    is operated by Better Stack. When you visit it, Better Stack
+                    processes data on its own infrastructure.
                 </p>
 
-                <h3>6.3 E-Mail-Versand</h3>
+                <h3>6.3 Email delivery</h3>
                 <p>
-                    Transaktionale E-Mails (Login-Hinweise, Passwort-Reset)
-                    werden über unseren Mail-Provider versendet. Empfängername
-                    und E-Mail-Adresse werden dabei verarbeitet.
+                    Transactional emails (sign-in alerts, password resets) are
+                    sent via our mail provider. Recipient name and email address
+                    are processed in the course of delivery.
                 </p>
 
-                <h2>7. Speicherdauer</h2>
+                <h2>7. Retention periods</h2>
                 <ul>
-                    <li>Account-Daten: bis zur Löschung des Accounts.</li>
+                    <li>Account data: until the account is deleted.</li>
                     <li>
-                        API-Request-Logs: 30 Tage, anschließend automatische
-                        Löschung.
+                        API request logs: 30 days, then automatically deleted.
                     </li>
                     <li>
-                        Aktivitätslogs: 12 Monate, anschließend automatische
-                        Löschung.
+                        Activity logs: 12 months, then automatically deleted.
                     </li>
                     <li>
-                        Lizenz- und Aktivierungsdaten: für die Laufzeit der
-                        Nutzung des Dienstes.
+                        License and activation data: for as long as you use the
+                        service.
                     </li>
                 </ul>
 
-                <h2>8. Ihre Rechte</h2>
-                <p>Sie haben jederzeit das Recht auf:</p>
+                <h2>8. Your rights</h2>
+                <p>You have the right to:</p>
                 <ul>
-                    <li>Auskunft (Art. 15 DSGVO)</li>
-                    <li>Berichtigung (Art. 16 DSGVO)</li>
-                    <li>Löschung (Art. 17 DSGVO)</li>
-                    <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-                    <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+                    <li>Access (Art. 15 GDPR)</li>
+                    <li>Rectification (Art. 16 GDPR)</li>
+                    <li>Erasure (Art. 17 GDPR)</li>
+                    <li>Restriction of processing (Art. 18 GDPR)</li>
+                    <li>Data portability (Art. 20 GDPR)</li>
                     <li>
-                        Widerspruch gegen Verarbeitung auf Basis berechtigter
-                        Interessen (Art. 21 DSGVO)
+                        Object to processing based on legitimate interests (Art.
+                        21 GDPR)
                     </li>
                     <li>
-                        Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)
+                        Lodge a complaint with a supervisory authority (Art. 77
+                        GDPR)
                     </li>
                 </ul>
 
-                <h2>9. Sicherheit</h2>
+                <h2>9. Security</h2>
                 <p>
-                    Übertragung erfolgt ausschließlich verschlüsselt per HTTPS.
-                    Passwörter werden mit bcrypt gehasht. Passkeys werden als
-                    WebAuthn-Credentials gespeichert; private Schlüssel
-                    verlassen Ihr Gerät niemals.
+                    All traffic is encrypted via HTTPS. Passwords are hashed
+                    with bcrypt. Passkeys are stored as WebAuthn credentials;
+                    your private keys never leave your device.
                 </p>
 
-                <h2>10. Änderungen</h2>
+                <h2>10. Changes</h2>
                 <p>
-                    Diese Erklärung kann angepasst werden, wenn sich technische
-                    oder rechtliche Rahmenbedingungen ändern. Die aktuelle
-                    Fassung ist immer auf dieser Seite einsehbar.
+                    This policy may be updated when technical or legal
+                    conditions change. The current version is always available
+                    on this page.
                 </p>
             </article>
         </main>
