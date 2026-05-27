@@ -39,3 +39,7 @@ arch('no invokable controllers in licensekeys namespace')
 arch('no invokable controllers in api namespace')
     ->expect('App\Http\Controllers\Api')
     ->not->toHaveMethod('__invoke');
+
+arch('no invokable controllers in team namespace')
+    ->expect('App\Http\Controllers\Team')
+    ->not->toHaveMethod('__invoke');
