@@ -1,19 +1,44 @@
 <script setup lang="ts">
 import { Deferred } from "@inertiajs/vue3";
-import type { Team } from "@/types";
+import TeamCard from "@/components/team/TeamCard.vue";
+import PageLayout from "@/layout/PageLayout.vue";
+import type { OwnedTeam } from "@/types";
 
 defineProps<{
-    teams?: Team[] | null;
+    teams?: OwnedTeam[] | null;
 }>();
 </script>
 
 <template>
-    <div>
+    <PageLayout title="Team">
         <Deferred data="teams">
             <template #fallback>
-                <div></div>
+                <div
+                    class="grid grid-cols-1 items-start gap-4 lg:grid-cols-2"
+                    aria-busy="true"
+                >
+                    <div
+                        v-for="i in 2"
+                        :key="i"
+                        class="bg-muted/60 h-40 animate-pulse rounded-2xl"
+                    />
+                </div>
             </template>
-            <div></div>
+
+            <div
+                v-if="teams && teams.length > 0"
+                class="grid grid-cols-1 items-start gap-4 lg:grid-cols-2"
+            >
+                <TeamCard
+                    v-for="team in teams"
+                    :key="team.uuid"
+                    :team="team"
+                />
+            </div>
+
+            <p v-else class="text-muted-foreground text-sm">
+                You don't own any teams yet.
+            </p>
         </Deferred>
-    </div>
+    </PageLayout>
 </template>

@@ -7,7 +7,7 @@ export type {
     DashboardTeamMember,
 } from "./dashboard";
 export type { HelpArticle } from "./help";
-export type { Team } from "./team";
+export type { OwnedTeam, Team } from "./team";
 export type { AuthUser, User, UserRole } from "./user";
 export type {
     CustomerOption,
