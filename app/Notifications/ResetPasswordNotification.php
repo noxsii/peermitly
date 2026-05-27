@@ -9,8 +9,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\Attributes\Queue;
 use Illuminate\Support\Facades\Date;
 
+#[Queue('mail')]
 final class ResetPasswordNotification extends Notification implements ShouldQueue
 {
     use Queueable;

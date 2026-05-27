@@ -6,9 +6,12 @@ namespace App\Notifications;
 
 use App\Models\Product;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\Attributes\Queue;
 
-final class LicenseKeysBulkCreated extends Notification
+#[Queue('notifications')]
+final class LicenseKeysBulkCreated extends Notification implements ShouldQueue
 {
     use Queueable;
 

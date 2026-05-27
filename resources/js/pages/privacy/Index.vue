@@ -59,10 +59,10 @@ const lastUpdated = "27. Mai 2026";
                 <ul>
                     <li>Name, E-Mail-Adresse, Rolle</li>
                     <li>Gehashtes Passwort (bcrypt)</li>
-                    <li>Optional registrierte Passkeys (WebAuthn-Credentials)</li>
                     <li>
-                        Session-Cookies und Remember-Me-Token zur Anmeldung
+                        Optional registrierte Passkeys (WebAuthn-Credentials)
                     </li>
+                    <li>Session-Cookies und Remember-Me-Token zur Anmeldung</li>
                 </ul>
                 <p>
                     Rechtsgrundlage: Vertragserfüllung (Art. 6 Abs. 1 lit. b
@@ -73,8 +73,8 @@ const lastUpdated = "27. Mai 2026";
                 <ul>
                     <li>Teams, Produkte, Kunden, Lizenzschlüssel</li>
                     <li>
-                        Aktivierungen inkl. optionaler Hardware-ID (HWID),
-                        falls vom Kunden bei der Lizenzaktivierung übermittelt
+                        Aktivierungen inkl. optionaler Hardware-ID (HWID), falls
+                        vom Kunden bei der Lizenzaktivierung übermittelt
                     </li>
                     <li>Persönliche API-Tokens (Hashes)</li>
                 </ul>
@@ -86,8 +86,8 @@ const lastUpdated = "27. Mai 2026";
                 <h3>3.3 Technische Logdaten</h3>
                 <ul>
                     <li>
-                        IP-Adresse, User-Agent und Zeitstempel bei Aufrufen
-                        des API-Endpunkts <code>/api</code>
+                        IP-Adresse, User-Agent und Zeitstempel bei Aufrufen des
+                        API-Endpunkts <code>/api</code>
                     </li>
                     <li>
                         Login-Benachrichtigungen per E-Mail mit IP und
@@ -147,8 +147,8 @@ const lastUpdated = "27. Mai 2026";
                         Cross-Site-Request-Forgery
                     </li>
                     <li>
-                        <code>remember_web_*</code> — optional, wenn
-                        „Angemeldet bleiben" gewählt wurde
+                        <code>remember_web_*</code> — optional, wenn „Angemeldet
+                        bleiben" gewählt wurde
                     </li>
                 </ul>
                 <p>
@@ -193,9 +193,7 @@ const lastUpdated = "27. Mai 2026";
 
                 <h2>7. Speicherdauer</h2>
                 <ul>
-                    <li>
-                        Account-Daten: bis zur Löschung des Accounts.
-                    </li>
+                    <li>Account-Daten: bis zur Löschung des Accounts.</li>
                     <li>
                         API-Request-Logs: 30 Tage, anschließend automatische
                         Löschung.
@@ -229,17 +227,17 @@ const lastUpdated = "27. Mai 2026";
 
                 <h2>9. Sicherheit</h2>
                 <p>
-                    Übertragung erfolgt ausschließlich verschlüsselt per
-                    HTTPS. Passwörter werden mit bcrypt gehasht. Passkeys
-                    werden als WebAuthn-Credentials gespeichert; private
-                    Schlüssel verlassen Ihr Gerät niemals.
+                    Übertragung erfolgt ausschließlich verschlüsselt per HTTPS.
+                    Passwörter werden mit bcrypt gehasht. Passkeys werden als
+                    WebAuthn-Credentials gespeichert; private Schlüssel
+                    verlassen Ihr Gerät niemals.
                 </p>
 
                 <h2>10. Änderungen</h2>
                 <p>
-                    Diese Erklärung kann angepasst werden, wenn sich
-                    technische oder rechtliche Rahmenbedingungen ändern. Die
-                    aktuelle Fassung ist immer auf dieser Seite einsehbar.
+                    Diese Erklärung kann angepasst werden, wenn sich technische
+                    oder rechtliche Rahmenbedingungen ändern. Die aktuelle
+                    Fassung ist immer auf dieser Seite einsehbar.
                 </p>
             </article>
         </main>

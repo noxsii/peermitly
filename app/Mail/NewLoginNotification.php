@@ -12,8 +12,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\Attributes\Queue;
 use Illuminate\Queue\SerializesModels;
 
+#[Queue('mail')]
 final class NewLoginNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;

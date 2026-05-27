@@ -6,9 +6,12 @@ namespace App\Notifications;
 
 use App\Enums\LicenseValidityUnit;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\Attributes\Queue;
 
-final class LicenseKeysBulkExtended extends Notification
+#[Queue('notifications')]
+final class LicenseKeysBulkExtended extends Notification implements ShouldQueue
 {
     use Queueable;
 
