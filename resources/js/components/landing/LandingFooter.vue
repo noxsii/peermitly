@@ -9,10 +9,18 @@ const year = new Date().getFullYear();
         >
             <p>© {{ year }} Peermitly</p>
             <nav class="flex items-center gap-5">
-                <a class="hover:text-foreground transition-colors" href="#"
+                <a
+                    class="hover:text-foreground transition-colors"
+                    href="https://peermitly.de/api/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     >Documentation</a
                 >
-                <a class="hover:text-foreground transition-colors" href="#"
+                <a
+                    class="hover:text-foreground transition-colors"
+                    href="https://peermitly.betteruptime.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     >Status</a
                 >
                 <a class="hover:text-foreground transition-colors" href="#"
