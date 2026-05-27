@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\Health\HealthCheckController;
 use App\Http\Controllers\Api\LicenseKeyCheckController;
 use App\Http\Controllers\Api\LicenseKeyController;
 use App\Http\Controllers\Api\LicenseKeyTypeController;
+use App\Http\Middleware\LogApiRequest;
 use App\Support\TokenAbility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', fn (Request $request) => $request->user())->middleware('auth:sanctum');
+Route::get('/health', [HealthCheckController::class, 'status'])
+    ->withoutMiddleware(LogApiRequest::class)
+    ->name('health');
+
+Route::get('/user', static fn (Request $request) => $request->user())->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/license-keys/check', [LicenseKeyCheckController::class, 'check'])
