@@ -63,9 +63,9 @@ even admin tokens only see data of the team they were issued under.
 
 - **IDs in URLs are UUIDs** (not numeric primary keys).
 - **Timestamps** are ISO-8601 strings in UTC (`2026-05-21T08:30:00+00:00`).
-- **Pagination** follows Laravel defaults — request `?page=2`, response
+- **Pagination** is page-based — request `?page=2`, response
   contains `data`, `meta`, and `links` keys. Page size is 25.
-- **Errors** follow Laravel's validation convention: HTTP `422` with a
+- **Errors** for invalid input return HTTP `422` with a
   `message` and an `errors` map keyed by field name.
 
 ## Rate limits
