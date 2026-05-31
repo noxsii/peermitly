@@ -14,10 +14,10 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class TeamController
+final readonly class TeamController
 {
     public function __construct(
-        private readonly UpdateTeamAction $updateTeam,
+        private UpdateTeamAction $updateTeam,
     ) {}
 
     public function index(Request $request): Response

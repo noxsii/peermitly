@@ -11,6 +11,10 @@ final class LandingController
 {
     public function show(): Response
     {
-        return Inertia::render('landing/Index');
+        return Inertia::render('landing/Index', [
+            'siteName' => 'Peermitly',
+            'canonical' => url('/'),
+            'ogImage' => url('/og-image.png'),
+        ]);
     }
 }

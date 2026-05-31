@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
 import { Button } from "@/components/ui/button";
+
+const links = [
+    { label: "How it works", href: "#how" },
+    { label: "API", href: "#api" },
+    { label: "FAQ", href: "#faq" },
+];
 </script>
 
 <template>
@@ -21,6 +27,19 @@ import { Button } from "@/components/ui/button";
                 >
                 Peermitly
             </Link>
+
+            <nav
+                class="text-muted-foreground absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 text-sm md:flex"
+            >
+                <a
+                    v-for="link in links"
+                    :key="link.href"
+                    :href="link.href"
+                    class="hover:text-foreground transition-colors"
+                >
+                    {{ link.label }}
+                </a>
+            </nav>
 
             <Button as-child size="sm" variant="default">
                 <Link :href="route('login')">Sign in</Link>

@@ -29,11 +29,7 @@ defineProps<{
                 v-if="teams && teams.length > 0"
                 class="grid grid-cols-1 items-start gap-4 lg:grid-cols-2"
             >
-                <TeamCard
-                    v-for="team in teams"
-                    :key="team.uuid"
-                    :team="team"
-                />
+                <TeamCard v-for="team in teams" :key="team.uuid" :team="team" />
             </div>
 
             <p v-else class="text-muted-foreground text-sm">
