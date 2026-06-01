@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { Pencil, Trash2 } from "@lucide/vue";
+import { Loader2, Pencil, RotateCcw, Trash2 } from "@lucide/vue";
+import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
 import Card from "@/components/Card.vue";
 import { Button } from "@/components/ui/button";
 import type { LicenseKey } from "@/types";
@@ -13,7 +15,20 @@ defineEmits<{
     delete: [];
 }>();
 
-const canRestore = ["revoked", "expired"].includes(props.licenseKey.status);
+const canRestore = props.licenseKey.status === "revoked";
+const restoring = ref(false);
+
+function restore(): void {
+    router.post(
+        `/license-keys/${props.licenseKey.uuid}/restore`,
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (restoring.value = true),
+            onFinish: () => (restoring.value = false),
+        },
+    );
+}
 </script>
 
 <template>
@@ -28,19 +43,18 @@ const canRestore = ["revoked", "expired"].includes(props.licenseKey.status);
                 <Pencil class="size-4" />
                 Edit settings
             </Button>
-            <form
+            <Button
                 v-if="canRestore"
-                method="post"
-                :action="`/license-keys/${licenseKey.uuid}/restore`"
+                variant="ghost"
+                class="w-full justify-start"
+                type="button"
+                :disabled="restoring"
+                @click="restore"
             >
-                <Button
-                    type="submit"
-                    variant="ghost"
-                    class="w-full justify-start"
-                >
-                    Restore
-                </Button>
-            </form>
+                <Loader2 v-if="restoring" class="size-4 animate-spin" />
+                <RotateCcw v-else class="size-4" />
+                Restore
+            </Button>
             <Button
                 variant="ghost"
                 class="text-destructive hover:text-destructive w-full justify-start"
