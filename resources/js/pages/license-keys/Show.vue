@@ -61,7 +61,7 @@ const confirmDelete = () => {
             </div>
 
             <div v-if="licenseKey?.data" class="space-y-4">
-                <RevokeCard :uuid="licenseKey.data.uuid" />
+                <RevokeCard :license-key="licenseKey.data" />
 
                 <ExtendCard
                     :uuid="licenseKey.data.uuid"

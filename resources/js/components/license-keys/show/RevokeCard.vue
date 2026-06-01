@@ -1,27 +1,33 @@
 <script setup lang="ts">
 import { useForm } from "@inertiajs/vue3";
 import { Check } from "@lucide/vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Card from "@/components/Card.vue";
 import InputError from "@/components/InputError.vue";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type { LicenseKey } from "@/types";
 
 const props = defineProps<{
-    uuid: string;
+    licenseKey: LicenseKey;
 }>();
+
+const isRevoked = computed(() => props.licenseKey.status === "revoked");
 
 const success = ref(false);
 
-const form = useForm<{ reason: string }>({ reason: "" });
+const form = useForm<{ reason: string }>({
+    reason: props.licenseKey.revoked_reason ?? "",
+});
 
 const submit = () => {
-    form.post(`/license-keys/${props.uuid}/revoke`, {
+    if (isRevoked.value) return;
+
+    form.post(`/license-keys/${props.licenseKey.uuid}/revoke`, {
         preserveScroll: true,
         onSuccess: () => {
             success.value = true;
-            form.reset();
             setTimeout(() => (success.value = false), 3000);
         },
     });
@@ -36,16 +42,21 @@ const submit = () => {
                 id="reason"
                 v-model="form.reason"
                 :aria-invalid="!!form.errors.reason"
+                :disabled="isRevoked"
                 placeholder="Customer cancelled the subscription…"
             />
             <InputError :message="form.errors.reason" />
             <Button
+                v-if="!isRevoked"
                 type="submit"
                 variant="destructive"
                 :disabled="form.processing"
             >
                 Revoke key
             </Button>
+            <p v-else class="text-muted-foreground text-xs">
+                This key is revoked. The reason is read-only.
+            </p>
             <p
                 v-if="success"
                 class="flex items-center gap-1 text-xs text-emerald-500"
